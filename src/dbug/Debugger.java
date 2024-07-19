@@ -36,7 +36,7 @@ public class Debugger extends Table {
 				//
 				if (v.get() instanceof Debuggable d) {
 					//
-					String[] arr = (Debuggable v.get()).type.toString().split(".");
+					String[] arr = (Debuggable (v.get())).type.toString().split(".");
 					String type = arr[arr.length - 1];
 					//
 					t.table(tf -> {
