@@ -80,7 +80,7 @@ public class Debugger extends Table {
 		}
 		
 		//some sort of parsing shenanigans
-		public Debuggable(String type, String val) {
+		public Debuggable(String type, String val) throws ClassNotFoundException {
 			var old = value;
 			//
 			if (type == "String") {
@@ -95,11 +95,13 @@ public class Debugger extends Table {
 					var sample = this.type.getConstructor().newInstance();
 					//
 					value = () -> this.type.cast(method.invoke(sample, val));
-				} catch (ClassNotFoundException | IllegalAccessException | NoSuchMethodException | InstantiationException | InvocationTargetException ex) {
+				} catch (Exception e) {
+					//
 					value = () -> old;
 					//warn();
 				}
 			}
 		}
+		
 	}
 }
