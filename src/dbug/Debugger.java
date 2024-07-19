@@ -95,9 +95,9 @@ public class Debugger extends Table {
 					var sample = this.type.getConstructor().newInstance();
 					//
 					value = () -> this.type.cast(method.invoke(sample, val));
-				} catch (ClassNotFoundException cnfx) {
-					//
+				} catch (ClassNotFoundException | IllegalAccessException | NoSuchMethodException | InstantiationException ex) {
 					value = () -> old;
+					//warn();
 				}
 			}
 		}
