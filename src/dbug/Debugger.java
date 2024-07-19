@@ -104,9 +104,10 @@ public class Debugger extends Table {
 						}
 					}
 					//
-				} catch (Exception e);
+				} catch (Exception e) {
+					//Impossible
+				}
 			}
 		}
-		
 	}
 }
