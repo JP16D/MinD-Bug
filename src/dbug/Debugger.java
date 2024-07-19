@@ -19,7 +19,7 @@ public class Debugger extends Table {
 	
 	public void load() {
 		//
-		Events.run(EventType.Trigger.update, e -> {
+		Events.run(EventType.Trigger.update, () -> {
 			this.update();
 		});
 	}
@@ -36,7 +36,7 @@ public class Debugger extends Table {
 				//
 				if (v.get() instanceof Debuggable d) {
 					//
-					String[] arr = v.get().type.toString().split(".");
+					String[] arr = (Debuggable v.get()).type.toString().split(".");
 					String type = arr[arr.length - 1];
 					//
 					t.table(tf -> {
@@ -64,8 +64,8 @@ public class Debugger extends Table {
 	}
 	
 	//add debuggable primitive value (writable)
-	public static Prov<?> dw(String name, Prov<?> val) {
-		map.put(name, () -> new Debuggable(val));
+	public static Prov<?> dw(Class<?> type, String name, Prov<?> val) {
+		map.put(name, () -> new Debuggable(type, val));
 		//
 		return ((Debuggable) map.get(name).get()).value;
 	}
@@ -74,9 +74,9 @@ public class Debugger extends Table {
 		public Prov<?> value;
 		public Class<?> type;
 		
-		public Debuggable(Prov<?> val) {
+		public Debuggable(Class<?> type, Prov<?> val) {
 			value = val;
-			type = val.get().getClass();
+			this.type = type;
 		}
 		
 		//some sort of parsing shenanigans

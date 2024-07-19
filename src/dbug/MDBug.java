@@ -10,7 +10,8 @@ public class MDBug extends Mod {
 		//debugger.load();
 	}
 	
-	public static void init() {
-		BLSetup.addTable(debugger);
+	@Override
+	public void init() {
+		BLSetup.addTable(table -> table.add(debugger));
 	}
 }
