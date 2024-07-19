@@ -16,6 +16,7 @@ import mindustry.ui.dialogs.*;
 
 public class Debugger extends Table {
 	private static final ObjectMap<String, Prov<?>> map = new ObjectMap<>();
+	
 	public void load() {
 		//
 		Events.run(EventType.Trigger.update, e -> {
@@ -35,7 +36,7 @@ public class Debugger extends Table {
 				//
 				if (v.get() instanceof Debuggable d) {
 					//
-					String arr = v.get().type.toString().split(".");
+					String[] arr = v.get().type.toString().split(".");
 					String type = arr[arr.length - 1];
 					//
 					t.table(tf -> {
@@ -90,7 +91,7 @@ public class Debugger extends Table {
 				this.type = Class.forName(type);
 				try {
 					var method = this.type.getMethod("valueOf", String.class);
-					var sample = this.type.getConstructor().newInstance;
+					var sample = this.type.getConstructor().newInstance();
 					//
 					value = () -> this.type.cast(method.invoke(sample, val));
 				} catch (Exception e) {

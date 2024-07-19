@@ -4,7 +4,7 @@ import blui.ui.*;
 import mindustry.mod.*;
 
 public class MDBug extends Mod {
-	public Debugger debugger = new Debugger();
+	public static Debugger debugger = new Debugger();
 	
 	public MDBug() {
 		//debugger.load();
