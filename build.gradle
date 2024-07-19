@@ -115,20 +115,3 @@ task deploy(type: Jar){
         }
     }
 }
-
-/*
-task move doLast{
-    String os = System.getProperty("os.name").toLowerCase(Locale.ROOT)
-    if(os.contains("windows")) {
-        ant.move file: "${buildDir}\\libs\\${project.archivesBaseName}Desktop.jar",
-                todir: "${System.env.USERPROFILE}\\AppData\\Roaming\\Mindustry\\mods"
-    } else if(os.contains("linux")) { //from Router
-        ant.move file: "${buildDir}/libs/${project.archivesBaseName}Desktop.jar",
-                todir: "${System.env.USERPROFILE}/.local/share/Mindustry/mods"
-    } else if (os.contains("mac")) {
-        ant.move file: "${buildDir}/libs/${project.archivesBaseName}Desktop.jar",
-                todir: "${System.env.USERPROFILE}/./Library/Application Support/Mindustry/mods"
-    }
-}
-
-task jarMove dependsOn "jar", "move"*/
