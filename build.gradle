@@ -130,7 +130,7 @@ task move doLast{
                 todir: "${System.env.USERPROFILE}/.local/share/Mindustry/mods"
     }else if (os.contains("mac"){
         ant.move file: "${buildDir}/libs/${project.archivesBaseName}Desktop.jar",
-                todir: "${System.env.USERPROFILE}/."/Library/Application Support/Mindustry/mods"
+                todir: "${System.env.USERPROFILE}/./Library/Application Support/Mindustry/mods"
     }
 }
 
