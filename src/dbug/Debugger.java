@@ -88,13 +88,14 @@ public class Debugger extends Table {
 				value = () -> val;
 				//
 			} else {
-				this.type = Class.forName(type);
 				try {
+					this.type = Class.forName(type);
+					//
 					var method = this.type.getMethod("valueOf", String.class);
 					var sample = this.type.getConstructor().newInstance();
 					//
 					value = () -> this.type.cast(method.invoke(sample, val));
-				} catch (Exception e) {
+				} catch (ClassNotFoundException cnfx) {
 					//
 					value = () -> old;
 				}
