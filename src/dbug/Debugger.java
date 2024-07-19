@@ -95,11 +95,16 @@ public class Debugger extends Table {
 					var method = this.type.getMethod("valueOf", String.class);
 					var sample = this.type.getConstructor().newInstance();
 					//
-					value = () -> this.type.cast(method.invoke(sample, val));
-				} catch (ReflectiveOperationException | RuntimeException rx) {
-					//Exceptions are so cursed can't even catch them using only the main Exception class
-					//warn();
-				}
+					value = () -> {
+						try {
+							return this.type.cast(method.invoke(sample, val));
+						} catch (Exception e) {
+							return old;
+							//warn();
+						}
+					}
+					//
+				} catch (Exception e);
 			}
 		}
 		
