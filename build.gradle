@@ -1,7 +1,7 @@
-#Idk what shenanigans is needed in build.gradle to make a Mod Lib for mindustry
-#so... I just stole and modified... err, I mean used one as a template :D
-#at the same time the mod lib I used~~ as a template is also a dependency for this debugging lib :P
-#so huge credits to!: MEEPofFaith's bottom-ui-lib
+/* Idk what shenanigans is needed in build.gradle to make a Mod Lib for mindustry
+ * so... I just stole and modified... err, I mean used one as a template :D
+ * at the same time the mod lib I used~~ as a template is also a dependency for this debugging lib :P
+ * so huge credits to!: MEEPofFaith's bottom-ui-lib */
 
 plugins{
     id 'java'
@@ -44,6 +44,8 @@ dependencies{
     compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
 
     annotationProcessor "com.github.Anuken:jabel:$jabelVersion"
+
+    compileOnly "com.github.MEEPofFaith:bottom-left-ui:$bluiVersion"
 }
 
 //force arc version
