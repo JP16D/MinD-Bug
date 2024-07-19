@@ -125,10 +125,10 @@ task move doLast{
     if(os.contains("windows")) {
         ant.move file: "${buildDir}\\libs\\${project.archivesBaseName}Desktop.jar",
                 todir: "${System.env.USERPROFILE}\\AppData\\Roaming\\Mindustry\\mods"
-    }else if(os.contains("linux")) { //from Router
+    } else if(os.contains("linux")) { //from Router
         ant.move file: "${buildDir}/libs/${project.archivesBaseName}Desktop.jar",
                 todir: "${System.env.USERPROFILE}/.local/share/Mindustry/mods"
-    }else if (os.contains("mac"){
+    } else if (os.contains("mac")) {
         //MEEP doesn't know how to do mac so originally this line is not here, and ofc, me being me, Idk too! :P
         //So instead I just looked for references being Zelaux's GasLibrary as example
         //not sure if it works but eh well I can read enough gibberish to know what is what
