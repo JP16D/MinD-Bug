@@ -1,8 +1,3 @@
-/* Idk what shenanigans is needed in build.gradle to make a Mod Library for mindustry
- * so... I just stole and modified... err, I mean used one as a template :D
- * at the same time the mod lib I used~~ as a template is also a dependency for this debugging lib :P
- * so huge credits to!: MEEPofFaith's bottom-left-ui lib*/
-
 plugins{
     id 'java'
     id 'maven-publish'
@@ -121,6 +116,7 @@ task deploy(type: Jar){
     }
 }
 
+/*
 task move doLast{
     String os = System.getProperty("os.name").toLowerCase(Locale.ROOT)
     if(os.contains("windows")) {
@@ -130,13 +126,9 @@ task move doLast{
         ant.move file: "${buildDir}/libs/${project.archivesBaseName}Desktop.jar",
                 todir: "${System.env.USERPROFILE}/.local/share/Mindustry/mods"
     } else if (os.contains("mac")) {
-        //MEEP doesn't know how to do mac so originally this line is not here, and ofc, me being me, Idk too! :P
-        //So instead I just looked for references being Zelaux's GasLibrary as example
-        //not sure if it works but eh well I can read enough gibberish to know what is what
-        //I don't even know what is the purpose of this thing too, I just know it might be important
         ant.move file: "${buildDir}/libs/${project.archivesBaseName}Desktop.jar",
                 todir: "${System.env.USERPROFILE}/./Library/Application Support/Mindustry/mods"
     }
 }
 
-task jarMove dependsOn "jar", "move"
+task jarMove dependsOn "jar", "move"*/
