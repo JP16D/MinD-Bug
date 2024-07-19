@@ -102,7 +102,7 @@ public class Debugger extends Table {
 							return old;
 							//warn();
 						}
-					}
+					};
 					//
 				} catch (Exception e) {
 					//Impossible
