@@ -5,7 +5,9 @@ import mindustry.gen.*;
 import mindustry.mod.*;
 
 public class MDBug extends Mod {
-	public static Debugger debugger = new Debugger();
+	public static Debugger debugger = new Debugger() {{
+		setSize(BLVars.fieldWidth, BLVars.buttonSize);
+	}};
 	
 	public MDBug() {
 		debugger.load();
