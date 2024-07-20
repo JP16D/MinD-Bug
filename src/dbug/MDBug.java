@@ -7,7 +7,7 @@ public class MDBug extends Mod {
 	public static Debugger debugger = new Debugger();
 	
 	public MDBug() {
-		//debugger.load();
+		debugger.load();
 	}
 	
 	@Override
