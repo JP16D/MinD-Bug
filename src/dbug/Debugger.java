@@ -34,7 +34,7 @@ public class Debugger extends Table {
 			var v = map.get(k);
 			//
 			table(Tex.pane, t -> {
-				t setSize(360f, BLVars.iconSize * 0.8f);
+				t.setSize(360f, BLVars.iconSize * 0.8f);
 				t.add(k).left().pad(0f, 2f, 0f, 2f);
 				t.add(":").pad(0f, 8f, 0f, 8f);
 				//
