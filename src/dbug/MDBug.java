@@ -6,9 +6,7 @@ import mindustry.gen.*;
 import mindustry.mod.*;
 
 public class MDBug extends Mod {
-	public static Debugger debugger = new Debugger() {{
-		setSize(BLVars.fieldWidth, BLVars.buttonSize);
-	}};
+	public static Debugger debugger = new Debugger();
 	
 	public MDBug() {
 		debugger.load();
@@ -19,7 +17,8 @@ public class MDBug extends Mod {
 		BLSetup.addTable(table -> {
 			debugger.update();
 			table.table(Tex.pane, t -> {
-				t.pane(debugger);
+				var p = t.pane(debugger);
+				p.setSize(BLVars.fieldWidth, BLVars.buttonSize);
 			});
 		});
 	}
