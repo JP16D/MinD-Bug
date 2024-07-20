@@ -1,6 +1,7 @@
 package dbug;
 
 import arc.scene.ui.*;
+import blui.*;
 import blui.ui.*;
 import mindustry.gen.*;
 import mindustry.mod.*;
