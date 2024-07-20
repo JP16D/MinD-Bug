@@ -19,7 +19,7 @@ public class MDBug extends Mod {
 			table.table(Tex.pane, t -> {
 				var p = t.pane(new ScrollPane(debugger) {{
 					setScrollingDisabledY(true);
-				}})
+				}});
 				p.size(360f, BLVars.iconSize);
 				p.get().setScrollingDisabledX(true);
 			});
