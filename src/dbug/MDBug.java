@@ -17,9 +17,11 @@ public class MDBug extends Mod {
 		BLSetup.addTable(table -> {
 			debugger.update();
 			table.table(Tex.pane, t -> {
-				t.pane(new ScrollPane(debugger) {{
+				var p = t.pane(new ScrollPane(debugger) {{
 					setScrollingDisabledY(true);
-				}}).get().setScrollingDisabledX(true);
+				}})
+				p.size(360f, BLVars.iconSize);
+				p.get().setScrollingDisabledX(true);
 			});
 		});
 	}

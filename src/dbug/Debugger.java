@@ -29,12 +29,10 @@ public class Debugger extends Table {
 	public void update() {
 		//
 		clearChildren();
-		setSize(360f, BLVars.iconSize);
 		for (var k : map.keys()) {
 			var v = map.get(k);
 			//
 			table(Tex.pane, t -> {
-				t.setSize(360f, BLVars.iconSize * 0.8f);
 				t.add(k).left().pad(0f, 2f, 0f, 2f);
 				t.add(":").pad(0f, 8f, 0f, 8f);
 				//
@@ -56,7 +54,9 @@ public class Debugger extends Table {
 					//
 					t.add("" + v.get()).pad(0f, 2f, 0f, 2f);
 				}
-			}).row();
+			}).size(360f, BLVars.iconSize * 0.8f);
+			//
+			row();
 		}
 	}
 	
