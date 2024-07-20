@@ -1,7 +1,6 @@
 package dbug;
 
 import arc.scene.ui.*;
-import blui.*;
 import blui.ui.*;
 import mindustry.gen.*;
 import mindustry.mod.*;
@@ -21,7 +20,7 @@ public class MDBug extends Mod {
 				t.pane(new ScrollPane(debugger) {{
 					setScrollingDisabledY(true);
 				}}).get().setScrollingDisabledX(true);
-			}).size(360f, BLVars.iconSize);
+			});
 		});
 	}
 }
