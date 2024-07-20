@@ -12,6 +12,6 @@ public class MDBug extends Mod {
 	
 	@Override
 	public void init() {
-		BLSetup.addTable(table -> table.add(debugger));
+		BLSetup.addTable(table -> table.pane(debugger));
 	}
 }
