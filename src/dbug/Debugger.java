@@ -16,7 +16,7 @@ import mindustry.ui.dialogs.*;
 import java.lang.*;
 
 public class Debugger extends Table {
-	private static final ObjectMap<String, Prov<?>> map = new ObjectMap<>();
+	private static final OrderedMap<String, Prov<?>> map = new OrderedMap<>();
 	
 	public void load() {
 		//
@@ -28,10 +28,10 @@ public class Debugger extends Table {
 	public void update() {
 		//
 		clearChildren();
-		table(Tex.pane, t -> {
-			for (var k : map.keys()) {
-				var v = map.get(k);
-				//
+		for (var k : map.keys()) {
+			var v = map.get(k);
+			//
+			table(Tex.pane, t -> {
 				t.add(k).left().pad(0f, 2f, 0f, 2f);
 				t.add(":").pad(0f, 8f, 0f, 8f);
 				//
@@ -47,14 +47,14 @@ public class Debugger extends Table {
 							map.put(k, () -> new Debuggable(type, txt));
 							//
 						}).get().setAlignment(Align.center);
-					}).pad(0f, 2f, 0f, 2f).row();
+					}).pad(0f, 2f, 0f, 2f);
 					//
 				} else {
 					//
-					t.add("" + v.get()).pad(0f, 2f, 0f, 2f).row();
+					t.add("" + v.get()).pad(0f, 2f, 0f, 2f);
 				}
-			}
-		});
+			}).row();
+		}
 	}
 	
 	//add debuggable object (read-only)

@@ -1,5 +1,6 @@
 package dbug;
 
+import arc.scene.ui.*;
 import blui.*;
 import blui.ui.*;
 import mindustry.gen.*;
@@ -17,8 +18,8 @@ public class MDBug extends Mod {
 		BLSetup.addTable(table -> {
 			debugger.update();
 			table.table(Tex.pane, t -> {
-				t.pane(debugger).size(180f, BLVars.iconSize);
-			});
+				t.pane(new ScrollPane(debugger) {{ setScrollingDisabledY(true) }}).setScrollingDisabledX(true);
+			}).size(360f, BLVars.iconSize);
 		});
 	}
 }
