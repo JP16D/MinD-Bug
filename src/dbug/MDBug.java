@@ -1,5 +1,6 @@
 package dbug;
 
+import blui.*;
 import blui.ui.*;
 import mindustry.gen.*;
 import mindustry.mod.*;
