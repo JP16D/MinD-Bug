@@ -15,7 +15,7 @@ import mindustry.ui.*;
 import mindustry.ui.dialogs.*;
 import java.lang.*;
 
-public class Debugger extends Table {
+public class Debugger extends ScrollPane {
 	private static final ObjectMap<String, Prov<?>> map = new ObjectMap<>();
 	
 	public void load() {
@@ -28,7 +28,7 @@ public class Debugger extends Table {
 	public void update() {
 		//
 		clearChildren();
-		table(Tex.pane, t -> {
+		setWidget(new Table(Tex.pane, t -> {
 			for (var k : map.keys()) {
 				var v = map.get(k);
 				//
@@ -54,7 +54,7 @@ public class Debugger extends Table {
 					t.add("" + v.get()).pad(0f, 2f, 0f, 2f).row();
 				}
 			}
-		});
+		}));
 	}
 	
 	//add debuggable object (read-only)
