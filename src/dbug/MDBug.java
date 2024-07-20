@@ -1,6 +1,7 @@
 package dbug;
 
 import blui.ui.*;
+import mindustry.gen.*;
 import mindustry.mod.*;
 
 public class MDBug extends Mod {
