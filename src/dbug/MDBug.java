@@ -17,8 +17,7 @@ public class MDBug extends Mod {
 		BLSetup.addTable(table -> {
 			debugger.update();
 			table.table(Tex.pane, t -> {
-				var p = t.pane(debugger);
-				p.size(BLVars.fieldWidth, BLVars.buttonSize);
+				t.pane(debugger).size(180f, BLVars.iconSize);
 			});
 		});
 	}
