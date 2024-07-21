@@ -7,7 +7,6 @@ import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
-import blui.*;
 import mindustry.*;
 import mindustry.core.*;
 import mindustry.game.*;
@@ -59,8 +58,7 @@ public class Debugger extends Table {
 				kt.row();
 				vt.row();
 			}
-			//
-		}).size(360f, BLVars.iconSize * 0.8f);
+		});
 		//
 		var display = new ScrollPane(main);
 		display.setClamp(true);
@@ -68,7 +66,7 @@ public class Debugger extends Table {
 		table(Tex.pane, t -> {
 			t.button(expand ? Icon.up : Icon.down, () -> expand = !expand);
 			//
-			t.add(display).size(360f, expand ? 50f : Core.scene.getHeight() * 0.25f);
+			t.add(display).size(360f, expand ? 40f : Core.scene.getHeight() * 0.25f);
 		});
 	}
 	
