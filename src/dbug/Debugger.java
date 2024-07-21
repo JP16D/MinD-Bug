@@ -18,7 +18,8 @@ import java.lang.*;
 public class Debugger extends Table {
 	private static final OrderedMap<String, Prov<?>> map = new OrderedMap<>();
 	public static boolean expand = false;
-	
+	private float scale;
+	//
 	public void call(Table table) {
 		//
 		var display = new ScrollPane(this);
@@ -30,9 +31,9 @@ public class Debugger extends Table {
 				table.clearChildren();
 				call(table);
 				return;
-			});
+			}).top();
 			//
-			t.add(display).size(360f, expand ? Core.scene.getHeight() * 0.25f : 40f);
+			t.add(display).size(360f, expand ? scale * 0.25f : 40f);
 		});
 	}
 	
@@ -40,6 +41,13 @@ public class Debugger extends Table {
 		//
 		Events.run(EventType.Trigger.update, () -> {
 			this.update();
+			//
+			if (scale != Core.scene.getHeight) {
+				scale = Core.scene.getHeight;
+				//
+				this.parent.clearChildren();
+				call(this.parent);
+			}
 		});
 	}
 	
