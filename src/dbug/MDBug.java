@@ -26,7 +26,7 @@ public class MDBug extends Mod {
 				//
 				var p = t.pane(debugger);
 
-				p.size(360f, expand ? Core.scene.getHeight * 0.5f : BLVars.iconSize);
+				p.size(360f, expand ? Core.scene.getHeight() * 0.5f : BLVars.iconSize);
 				p.get().setScrollingDisabledX(true);
 			});
 		});
