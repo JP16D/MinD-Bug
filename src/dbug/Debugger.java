@@ -42,11 +42,11 @@ public class Debugger extends Table {
 		Events.run(EventType.Trigger.update, () -> {
 			this.update();
 			//
-			if (scale != Core.scene.getHeight) {
-				scale = Core.scene.getHeight;
+			if (scale != Core.scene.getHeight()) {
+				scale = Core.scene.getHeight();
 				//
 				this.parent.clearChildren();
-				call(this.parent);
+				call((Table) this.parent);
 			}
 		});
 	}
