@@ -92,7 +92,7 @@ public class Debugger extends Table {
 				//
 				removeChild(label);
 				main.setColor(Color.sky);
-				val.add("" + v.get()).pad(4f).width(kt.getWidth());
+				val.add("" + v.get()).pad(4f).width(main.getWidth());
 			}
 			//
 			label.add(k).left().pad(2f);
