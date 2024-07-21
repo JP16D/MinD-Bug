@@ -28,7 +28,7 @@ public class Debugger extends Table {
 		display.setClamp(true);
 		//
 		table.table(Tex.pane, t -> {
-			t.button(expand ? Icon.down : Icon.up, () -> {
+			t.button(expand ? Icon.downOpen : Icon.upOpen, () -> {
 				expand = !expand;
 				table.clearChildren();
 				call(table);
