@@ -78,7 +78,7 @@ public class Debugger extends Table {
 				String[] arr = ((Debuggable) v.get()).type.toString().split(".");
 				String type = arr[arr.length - 1];
 				//
-				label.set(Color.black);
+				label.setColor(Color.black);
 				label.add(type);
 				//
 				kt.setColor(Color.blue);
