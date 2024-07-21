@@ -7,6 +7,7 @@ import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
+import blui.*;
 import mindustry.*;
 import mindustry.core.*;
 import mindustry.game.*;
