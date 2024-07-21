@@ -7,7 +7,6 @@ import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
-import blui.*;
 import mindustry.*;
 import mindustry.core.*;
 import mindustry.game.*;
@@ -18,6 +17,7 @@ import java.lang.*;
 
 public class Debugger extends Table {
 	private static final OrderedMap<String, Prov<?>> map = new OrderedMap<>();
+	public static boolean expand = false;
 	
 	public void load() {
 		//
@@ -29,12 +29,12 @@ public class Debugger extends Table {
 	public void update() {
 		//
 		clearChildren();
-		for (var k : map.keys()) {
-			var v = map.get(k);
+		var main = new Table(Tex.pane, t -> {
+			var kt = t.table(Tex.pane).get();
+			var vt = t.table(Tex.pane).get();
 			//
-			table(Tex.pane, t -> {
-				var kt = t.table().get();
-				var vt = t.table().get();
+			for (var k : map.keys()) {
+				var v = map.get(k);
 				//
 				kt.add(k).center().pad(0f, 2f, 0f, 2f);
 				//
@@ -54,10 +54,21 @@ public class Debugger extends Table {
 					//
 					vt.add("" + v.get()).pad(0f, 2f, 0f, 2f);
 				}
-			}).size(360f, BLVars.iconSize * 0.8f);
+				//
+				kt.row();
+				vt.row();
+			}
 			//
-			row();
-		}
+		}).size(360f, BLVars.iconSize * 0.8f);
+		//
+		var display = new ScrollPane(main);
+		display.setClamp(true);
+		//
+		table(Tex.pane, t -> {
+			t.button(expand ? Icon.up : Icon.down, () -> expand = !expand);
+			//
+			t.add(display).size(360f, expand ? 50f : Core.scene.getHeight() * 0.25f);
+		});
 	}
 	
 	//add debuggable object (read-only)
