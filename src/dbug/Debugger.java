@@ -45,8 +45,10 @@ public class Debugger extends Table {
 			if (scale != Core.scene.getHeight()) {
 				scale = Core.scene.getHeight();
 				//
-				this.parent.clearChildren();
-				call((Table) this.parent);
+				 if (parent != null) {
+				 	this.parent.clearChildren();
+					call((Table) this.parent);
+				 }
 			}
 		});
 	}
