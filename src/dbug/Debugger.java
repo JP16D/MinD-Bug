@@ -2,6 +2,7 @@ package dbug;
 
 import arc.*;
 import arc.func.*;
+import arc.graphics.*;
 import arc.scene.event.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
@@ -61,33 +62,40 @@ public class Debugger extends Table {
 		clearChildren();
 		//
 		var kt = table(Tex.pane).get();
-		var vt = table(Tex.pane).get();
+		var kc1 = kt.add().left().pad(2f);
+		var kc2 = kt.add().left().pad(2f);
+		//
+		kt.row();
+		//
+		var vt = kt.table(Tex.pane).get();
 		//
 		for (var k : map.keys()) {
 			var v = map.get(k);
 			//
-			kt.add(k).center().pad(1f, 2f, 1f, 2f);
+			kc2.setElement(new Label(k));
 			//
 			if (v.get() instanceof Debuggable d) {
 				//
 				String[] arr = ((Debuggable) v.get()).type.toString().split(".");
 				String type = arr[arr.length - 1];
 				//
-				vt.add(type).center();
+				kc1.setElement(new Label(type));
+				//
+				kt.setColor(Color.blue);
 				vt.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
 					//
 					map.put(k, () -> new Debuggable(type, txt));
 					//
-				}).center().pad(1f, 2f, 1f, 2f);
+				}).center().pad(2f);
 				//
 			} else {
 				//
-				vt.add("" + v.get()).pad(1f, 2f, 1f, 2f);
+				kt.setColor(Color.slate);
+				vt.add("" + v.get()).pad(2f);
 			}
-			//
-			kt.row();
-			vt.row();
 		}
+		//
+		row();
 	}
 	
 	//add debuggable object (read-only)
