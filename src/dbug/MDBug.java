@@ -17,7 +17,19 @@ public class MDBug extends Mod {
 	@Override
 	public void init() {
 		BLSetup.addTable(table -> {
-			table.add(debugger);
+			var expand = debugger.expand;
+			//
+			var display = new ScrollPane(main);
+			display.setClamp(true);
+			//
+			table(Tex.pane, t -> {
+				t.add(display).size(360f, expand ? Core.scene.getHeight() * 0.25f : 40f);
+				//
+				t.button(expand ? Icon.down : Icon.up, () -> {
+					debugger.expand = !expand;
+					table.clearChildrend();
+				});
+			});
 		});
 	}
 }

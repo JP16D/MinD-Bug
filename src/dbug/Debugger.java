@@ -29,7 +29,9 @@ public class Debugger extends Table {
 	public void update() {
 		//
 		clearChildren();
-		var main = new Table(Tex.pane, t -> {
+		//
+		table(Tex.pane, t -> {
+			//
 			var kt = t.table(Tex.pane).get();
 			var vt = t.table(Tex.pane).get();
 			//
@@ -58,15 +60,6 @@ public class Debugger extends Table {
 				kt.row();
 				vt.row();
 			}
-		});
-		//
-		var display = new ScrollPane(main);
-		display.setClamp(true);
-		//
-		table(Tex.pane, t -> {
-			t.button(expand ? Icon.up : Icon.down, () -> expand = !expand);
-			//
-			t.add(display).size(360f, expand ? 40f : Core.scene.getHeight() * 0.25f);
 		});
 	}
 	
