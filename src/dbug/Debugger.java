@@ -93,7 +93,7 @@ public class Debugger extends Table {
 				//
 			} else {
 				//
-				remove(label);
+				removeChild(label);
 				kt.setColor(Color.blue);
 				vt.add("" + v.get()).pad(2f);
 			}
