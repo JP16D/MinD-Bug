@@ -65,19 +65,20 @@ public class Debugger extends Table {
 			var v = map.get(k);
 			//
 			var kt = table(Tex.whiteui).get();
-			var label = kt.table().left().pad(2f);
+			var label = kt.table(Tex.pane).left().pad(2f).get();
 			//
 			kt.add(k);
 			kt.row();
 			//
 			var vt = kt.table(Tex.pane).get();
 			//
-			vt.setColor(black);
+			vt.setColor(Color.black);
 			if (v.get() instanceof Debuggable d) {
 				//
 				String[] arr = ((Debuggable) v.get()).type.toString().split(".");
 				String type = arr[arr.length - 1];
 				//
+				label.set(Color.black);
 				label.add(type);
 				//
 				kt.setColor(Color.blue);
