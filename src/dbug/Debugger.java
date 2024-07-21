@@ -21,7 +21,7 @@ public class Debugger extends Table {
 	public static boolean expand = false;
 	private float scale;
 	private Table caller;
-	//
+	
 	public void call(Table table) {
 		//
 		var display = new ScrollPane(this);
@@ -61,25 +61,24 @@ public class Debugger extends Table {
 		//
 		clearChildren();
 		//
-		var kt = table(Tex.pane).get();
-		var kc1 = kt.add().left().pad(2f);
-		var kc2 = kt.add().left().pad(2f);
-		//
-		kt.row();
-		//
-		var vt = kt.table(Tex.pane).get();
-		//
 		for (var k : map.keys()) {
 			var v = map.get(k);
 			//
-			kc2.setElement(new Label(k));
+			var kt = table(Tex.whiteui).get();
+			var label = kt.table().left().pad(2f);
 			//
+			kt.add(k);
+			kt.row();
+			//
+			var vt = kt.table(Tex.pane).get();
+			//
+			vt.setColor(black);
 			if (v.get() instanceof Debuggable d) {
 				//
 				String[] arr = ((Debuggable) v.get()).type.toString().split(".");
 				String type = arr[arr.length - 1];
 				//
-				kc1.setElement(new Label(type));
+				label.add(type);
 				//
 				kt.setColor(Color.blue);
 				vt.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
