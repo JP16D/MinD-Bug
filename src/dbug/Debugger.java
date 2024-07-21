@@ -19,48 +19,62 @@ public class Debugger extends Table {
 	private static final OrderedMap<String, Prov<?>> map = new OrderedMap<>();
 	public static boolean expand = false;
 	
-	public void load() {
+	public static void call(Table table) {
+		//
+		var display = new ScrollPane(debugger);
+		display.setClamp(true);
+		//
+		table.table(Tex.pane, t -> {
+			t.button(expand ? Icon.down : Icon.up, () -> {
+				expand = !expand;
+				table.clearChildren();
+				call(table);
+				return;
+			});
+			//
+			t.add(display).size(360f, expand ? Core.scene.getHeight() * 0.25f : 40f);
+		});
+	}
+	
+	public static void load() {
 		//
 		Events.run(EventType.Trigger.update, () -> {
 			this.update();
 		});
 	}
 	
-	public void update() {
+	public static void update() {
 		//
 		clearChildren();
 		//
-		table(Tex.pane, t -> {
+		var kt = table(Tex.pane).get();
+		var vt = table(Tex.pane).get();
+		//
+		for (var k : map.keys()) {
+			var v = map.get(k);
 			//
-			var kt = t.table(Tex.pane).get();
-			var vt = t.table(Tex.pane).get();
+			kt.add(k).center().pad(1f, 2f, 1f, 2f);
 			//
-			for (var k : map.keys()) {
-				var v = map.get(k);
+			if (v.get() instanceof Debuggable d) {
 				//
-				kt.add(k).center().pad(0f, 2f, 0f, 2f);
+				String[] arr = ((Debuggable) v.get()).type.toString().split(".");
+				String type = arr[arr.length - 1];
 				//
-				if (v.get() instanceof Debuggable d) {
+				vt.add(type).center();
+				vt.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
 					//
-					String[] arr = ((Debuggable) v.get()).type.toString().split(".");
-					String type = arr[arr.length - 1];
+					map.put(k, () -> new Debuggable(type, txt));
 					//
-					vt.add(type).center();
-					vt.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
-						//
-						map.put(k, () -> new Debuggable(type, txt));
-						//
-					}).center().pad(0f, 2f, 0f, 2f);
-					//
-				} else {
-					//
-					vt.add("" + v.get()).pad(0f, 2f, 0f, 2f);
-				}
+				}).center().pad(1f, 2f, 1f, 2f);
 				//
-				kt.row();
-				vt.row();
+			} else {
+				//
+				vt.add("" + v.get()).pad(1f, 2f, 1f, 2f);
 			}
-		});
+			//
+			kt.row();
+			vt.row();
+		}
 	}
 	
 	//add debuggable object (read-only)
