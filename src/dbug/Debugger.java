@@ -33,26 +33,26 @@ public class Debugger extends Table {
 			var v = map.get(k);
 			//
 			table(Tex.pane, t -> {
-				t.add(k).left().pad(0f, 2f, 0f, 2f);
-				t.add(":").pad(0f, 8f, 0f, 8f);
+				var kt = t.table();
+				var vt = t.table();
+				//
+				kt.add(k).center().pad(0f, 2f, 0f, 2f);
 				//
 				if (v.get() instanceof Debuggable d) {
 					//
 					String[] arr = ((Debuggable) v.get()).type.toString().split(".");
 					String type = arr[arr.length - 1];
 					//
-					t.table(tf -> {
-						tf.add(type);
-						tf.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
-							//
-							map.put(k, () -> new Debuggable(type, txt));
-							//
-						}).get().setAlignment(Align.center);
-					}).pad(0f, 2f, 0f, 2f);
+					vt.add(type).center();
+					vt.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
+						//
+						map.put(k, () -> new Debuggable(type, txt));
+						//
+					}).center().pad(0f, 2f, 0f, 2f);
 					//
 				} else {
 					//
-					t.add("" + v.get()).pad(0f, 2f, 0f, 2f);
+					vt.add("" + v.get()).pad(0f, 2f, 0f, 2f);
 				}
 			}).size(360f, BLVars.iconSize * 0.8f);
 			//
