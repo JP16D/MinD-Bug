@@ -19,9 +19,9 @@ public class Debugger extends Table {
 	private static final OrderedMap<String, Prov<?>> map = new OrderedMap<>();
 	public static boolean expand = false;
 	
-	public static void call(Table table) {
+	public void call(Table table) {
 		//
-		var display = new ScrollPane(debugger);
+		var display = new ScrollPane(this);
 		display.setClamp(true);
 		//
 		table.table(Tex.pane, t -> {
@@ -36,14 +36,14 @@ public class Debugger extends Table {
 		});
 	}
 	
-	public static void load() {
+	public void load() {
 		//
 		Events.run(EventType.Trigger.update, () -> {
 			this.update();
 		});
 	}
 	
-	public static void update() {
+	public void update() {
 		//
 		clearChildren();
 		//
