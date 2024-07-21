@@ -19,6 +19,7 @@ public class Debugger extends Table {
 	private static final OrderedMap<String, Prov<?>> map = new OrderedMap<>();
 	public static boolean expand = false;
 	private float scale;
+	private Table caller;
 	//
 	public void call(Table table) {
 		//
@@ -35,6 +36,8 @@ public class Debugger extends Table {
 			//
 			t.add(display).size(360f, expand ? scale * 0.25f : 40f);
 		});
+		//
+		caller = table;
 	}
 	
 	public void load() {
@@ -45,9 +48,9 @@ public class Debugger extends Table {
 			if (scale != Core.scene.getHeight()) {
 				scale = Core.scene.getHeight();
 				//
-				 if (parent != null) {
-				 	this.parent.clearChildren();
-					call((Table) this.parent);
+				 if (caller != null) {
+				 	caller.clearChildren();
+					call(caller);
 				 }
 			}
 		});
