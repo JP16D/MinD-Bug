@@ -35,7 +35,7 @@ public class Debugger extends Table {
 				return;
 			}).top();
 			//
-			t.add(display).size(360f, expand ? scale * 0.25f : 40f);
+			t.add(display).size(240f, expand ? scale * 0.25f : 40f);
 		});
 		//
 		caller = table;
@@ -64,28 +64,25 @@ public class Debugger extends Table {
 		for (var k : map.keys()) {
 			var v = map.get(k);
 			//
-			var kt = table(Tex.whiteui).get();
-			var label = kt.table(Tex.whiteui).left().pad(2f).get();
+			var main = table(Tex.whiteui).get();
+			var label = main.table().left().pad(2f).get();
 			//
-			kt.add(k).left();
+			main.row();
 			//
-			kt.row();
-			//
-			var vt = kt.table(Tex.whiteui).get();
-			//
-			vt.setColor(Color.gray);
-			vt.setWidth(getWidth());
+			var val = main.table(Tex.pane).pad(2f).get();
 			//
 			if (v.get() instanceof Debuggable d) {
 				//
 				String[] arr = ((Debuggable) v.get()).type.toString().split(".");
 				String type = arr[arr.length - 1];
 				//
-				label.setColor(Color.navy);
-				label.add(type);
+				label.table(Tex.whiteui, t -> {
+					t.add(type);
+					t.setColor(Color.royal);
+				});
 				//
-				kt.setColor(Color.slate);
-				vt.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
+				main.setColor(Color.slate);
+				val.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
 					//
 					map.put(k, () -> new Debuggable(type, txt));
 					//
@@ -94,10 +91,11 @@ public class Debugger extends Table {
 			} else {
 				//
 				removeChild(label);
-				kt.setColor(Color.blue);
-				vt.add("" + v.get()).pad(2f);
+				main.setColor(Color.sky);
+				val.add("" + v.get()).pad(4f).width(kt.getWidth());
 			}
 			//
+			label.add(k).left().pad(2f);
 			row();
 		}
 	}
