@@ -33,8 +33,8 @@ public class Debugger extends Table {
 			var v = map.get(k);
 			//
 			table(Tex.pane, t -> {
-				var kt = t.table();
-				var vt = t.table();
+				var kt = t.table().get();
+				var vt = t.table().get();
 				//
 				kt.add(k).center().pad(0f, 2f, 0f, 2f);
 				//

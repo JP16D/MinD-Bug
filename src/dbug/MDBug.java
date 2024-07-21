@@ -20,11 +20,12 @@ public class MDBug extends Mod {
 		BLSetup.addTable(table -> {
 			debugger.update();
 			table.table(Tex.pane, t -> {
-				t.button(Icon.elevation, () -> {
+				t.button(expand ? Icon.down : Icon.up, () -> {
 					expand = !expand;
 				});
 				//
 				var p = t.pane(debugger);
+
 				p.size(360f, expand ? Core.scene.getHeight * 0.5f : BLVars.iconSize);
 				p.get().setScrollingDisabledX(true);
 			});
