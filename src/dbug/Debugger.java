@@ -65,23 +65,26 @@ public class Debugger extends Table {
 			var v = map.get(k);
 			//
 			var kt = table(Tex.whiteui).get();
-			var label = kt.table(Tex.pane).left().pad(2f).get();
+			var label = kt.table(Tex.whiteui).left().pad(2f).get();
 			//
-			kt.add(k);
+			kt.add(k).left();
+			//
 			kt.row();
 			//
-			var vt = kt.table(Tex.pane).get();
+			var vt = kt.table(Tex.whiteui).get();
 			//
-			vt.setColor(Color.black);
+			vt.setColor(Color.gray);
+			vt.setWidth(getWidth());
+			//
 			if (v.get() instanceof Debuggable d) {
 				//
 				String[] arr = ((Debuggable) v.get()).type.toString().split(".");
 				String type = arr[arr.length - 1];
 				//
-				label.setColor(Color.black);
+				label.setColor(Color.navy);
 				label.add(type);
 				//
-				kt.setColor(Color.blue);
+				kt.setColor(Color.slate);
 				vt.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
 					//
 					map.put(k, () -> new Debuggable(type, txt));
@@ -90,12 +93,13 @@ public class Debugger extends Table {
 				//
 			} else {
 				//
-				kt.setColor(Color.slate);
+				remove(label);
+				kt.setColor(Color.blue);
 				vt.add("" + v.get()).pad(2f);
 			}
+			//
+			row();
 		}
-		//
-		row();
 	}
 	
 	//add debuggable object (read-only)
