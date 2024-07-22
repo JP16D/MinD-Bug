@@ -64,12 +64,10 @@ public class Debugger extends Table {
 		for (var k : map.keys()) {
 			var v = map.get(k);
 			//
-			var main = table(Tex.whiteui).get();
+			var main = table(Tex.whiteui).left().pad(4f).get();
 			var label = main.table().left().pad(2f).get();
 			//
-			main.row();
-			//
-			var val = main.table(Tex.pane).pad(2f).get();
+			var val = main.table(Tex.pane).pad(2f).color,(Color.black).get();
 			//
 			if (v.get() instanceof Debuggable d) {
 				//
@@ -77,7 +75,7 @@ public class Debugger extends Table {
 				String type = arr[arr.length - 1];
 				//
 				label.table(Tex.whiteui, t -> {
-					t.add(type);
+					t.add(type).pad(2f);
 					t.setColor(Color.royal);
 				});
 				//
@@ -90,12 +88,11 @@ public class Debugger extends Table {
 				//
 			} else {
 				//
-				removeChild(label);
 				main.setColor(Color.sky);
-				val.add("" + v.get()).pad(4f).width(main.getWidth());
+				val.add("" + v.get()).pad(2f).width(main.getWidth());
 			}
 			//
-			label.add(k).left().pad(2f);
+			label.add(new Label(k, Styles.outlineLabel)).left().pad(4f).get().setColor(main.color);
 			row();
 		}
 	}
