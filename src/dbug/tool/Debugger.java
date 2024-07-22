@@ -1,4 +1,4 @@
-package dbug;
+package dbug.tool.*;
 
 import arc.*;
 import arc.func.*;
@@ -13,11 +13,10 @@ import mindustry.core.*;
 import mindustry.game.*;
 import mindustry.gen.*;
 import mindustry.ui.*;
-import mindustry.ui.dialogs.*;
-import java.lang.*;
 
 public class Debugger extends Table {
 	private static final OrderedMap<String, Prov<?>> map = new OrderedMap<>();
+	//
 	public static boolean expand = false;
 	private float scale;
 	private Table caller;
@@ -64,10 +63,9 @@ public class Debugger extends Table {
 		for (var k : map.keys()) {
 			var v = map.get(k);
 			//
-			var main = table(Tex.whiteui).left().pad(4f).get();
+			var main = table(Tex.whiteui).left().pad(4f).width(width).get();
 			var label = main.table().left().pad(2f).get();
-			//
-			var val = main.table(Tex.pane).pad(2f).color(Color.black).get();
+			var value = main.table(Tex.whiteui).width(width - label.width).pad(2f).color(Color.black).get();
 			//
 			if (v.get() instanceof Debuggable d) {
 				//
@@ -80,7 +78,7 @@ public class Debugger extends Table {
 				});
 				//
 				main.setColor(Color.slate);
-				val.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
+				value.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
 					//
 					map.put(k, () -> new Debuggable(type, txt));
 					//
@@ -89,7 +87,7 @@ public class Debugger extends Table {
 			} else {
 				//
 				main.setColor(Color.sky);
-				val.add("" + v.get()).pad(2f).width(main.getWidth());
+				value.add("" + v.get()).pad(2f).width(main.getWidth());
 			}
 			//
 			label.add(new Label(k, Styles.outlineLabel)).left().pad(4f).get().setColor(main.color);
@@ -109,45 +107,5 @@ public class Debugger extends Table {
 		map.put(name, () -> new Debuggable(type, val));
 		//
 		return ((Debuggable) map.get(name).get()).value;
-	}
-	
-	private static class Debuggable {
-		public Prov<?> value;
-		public Class<?> type;
-		
-		public Debuggable(Class<?> type, Prov<?> val) {
-			value = val;
-			this.type = type;
-		}
-		
-		//some sort of parsing shenanigans
-		public Debuggable(String type, String val) {
-			var old = value;
-			//
-			if (type == "String") {
-				this.type = String.class;
-				value = () -> val;
-				//
-			} else {
-				try {
-					this.type = Class.forName(type);
-					//
-					var method = this.type.getMethod("valueOf", String.class);
-					var sample = this.type.getConstructor().newInstance();
-					//
-					value = () -> {
-						try {
-							return this.type.cast(method.invoke(sample, val));
-						} catch (Exception e) {
-							return old;
-							//warn();
-						}
-					};
-					//
-				} catch (Exception e) {
-					//Impossible
-				}
-			}
-		}
 	}
 }

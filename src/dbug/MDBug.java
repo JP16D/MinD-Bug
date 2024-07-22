@@ -4,6 +4,7 @@ import arc.*;
 import arc.scene.ui.*;
 import blui.*;
 import blui.ui.*;
+import dbug.tool.*;
 import mindustry.gen.*;
 import mindustry.mod.*;
 
