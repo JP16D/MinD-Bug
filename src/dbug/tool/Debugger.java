@@ -63,9 +63,9 @@ public class Debugger extends Table {
 		for (var k : map.keys()) {
 			var v = map.get(k);
 			//
-			var main = table(Tex.whiteui).left().pad(4f).width(width).get();
+			var main = table(Tex.whiteui).left().pad(4f).width(getWidth()).get();
 			var label = main.table().left().pad(2f).get();
-			var value = main.table(Tex.whiteui).width(width - label.width).pad(2f).color(Color.black).get();
+			var value = main.table(Tex.whiteui).width(getWidth() - label.getWidth()).pad(2f).color(Color.black).get();
 			//
 			if (v.get() instanceof Debuggable d) {
 				//
