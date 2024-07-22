@@ -1,6 +1,6 @@
 package dbug.tool;
 
-import.arc.func.*;
+import arc.func.*;
 import java.lang.*;
 
 public class Debuggable {

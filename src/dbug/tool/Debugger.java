@@ -1,4 +1,4 @@
-package dbug.tool.*;
+package dbug.tool;
 
 import arc.*;
 import arc.func.*;
