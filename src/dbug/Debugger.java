@@ -67,7 +67,7 @@ public class Debugger extends Table {
 			var main = table(Tex.whiteui).left().pad(4f).get();
 			var label = main.table().left().pad(2f).get();
 			//
-			var val = main.table(Tex.pane).pad(2f).color,(Color.black).get();
+			var val = main.table(Tex.pane).pad(2f).color.(Color.black).get();
 			//
 			if (v.get() instanceof Debuggable d) {
 				//
