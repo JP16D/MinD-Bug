@@ -8,17 +8,17 @@ public class Debuggable {
 	public Class<?> type;
 	
 	public Debuggable(Class<?> type, Prov<?> val) {
-		value = val;
+		this.value = val;
 		this.type = type;
 	}
 	
 	//some sort of parsing shenanigans
 	public Debuggable(Class<?> type, String val) {
-		var old = value;
+		var old = this.value;
 		//
 		if (type == String.class) {
 			this.type = String.class;
-			value = () -> val;
+			this.value = () -> val;
 			//
 		} else {
 			try {

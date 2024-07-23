@@ -63,25 +63,24 @@ public class Debugger extends Table {
 		for (var k : map.keys()) {
 			var v = map.get(k);
 			//
-			var main = table(Tex.whiteui).left().pad(4f).width(getWidth()).get();
+			var main = table(Tex.whiteui).left().pad(4f)/*.width(getWidth()).get()*/;
 			var label = main.table().left().pad(2f).get();
 			var value = main.table(Tex.whiteui)./*width(getWidth() - label.getWidth()).*/pad(2f).color(Color.black).get();
 			//
-			if (v.get() instanceof Debuggable) {
-				var dbg = (Debuggable) v.get();
+			if (v.get() instanceof Debuggable d) {
 				//
-				//String[] arr = dbg.type.getName().split(".");
+				//String[] arr = d.type.getName().split(".");
 				//String type = arr[arr.length - 1];
 				//
 				label.table(Tex.whiteui, t -> {
-					t.add(dbg.type.getName()).pad(2f);
+					t.add(d.type.getName()).pad(2f);
 					t.setColor(Color.royal);
 				});
 				//
 				main.setColor(Color.slate);
-				value.field(dbg.value.get().toString(), Styles.defaultField, (String txt) -> {
+				value.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
 					//
-					map.put(k, () -> new Debuggable(dbg.type, txt));
+					map.put(k, () -> new Debuggable(d.type, txt));
 					//
 				}).center().pad(2f);
 				//
