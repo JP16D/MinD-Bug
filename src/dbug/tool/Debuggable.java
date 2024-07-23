@@ -25,11 +25,10 @@ public class Debuggable {
 				this.type = type;
 				//
 				var method = this.type.getMethod("valueOf", String.class);
-				var sample = this.type.getConstructor().newInstance();
 				//
 				value = () -> {
 					try {
-						return this.type.cast(method.invoke(sample, val));
+						return this method.invoke(sample, val);
 					} catch (Exception e) {
 						return old;
 						//warn();

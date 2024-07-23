@@ -34,7 +34,7 @@ public class Debugger extends Table {
 				return;
 			}).top();
 			//
-			t.add(display).size(240f, expand ? scale * 0.25f : 40f);
+			t.add(display).size(240f, expand ? scale * 0.25f : 50f);
 		});
 		//
 		caller = table;
@@ -63,17 +63,16 @@ public class Debugger extends Table {
 		for (var k : map.keys()) {
 			var v = map.get(k);
 			//
-			var main = table(Tex.whiteui).left().pad(4f)/*.width(getWidth())*/.get();
+			var main = table(Tex.whiteui).left().pad(4f).get();
 			var label = main.table().left().pad(2f).get();
-			var value = main.table(Tex.whiteui)/*.width(getWidth() - label.getWidth()).*/.pad(2f).color(Color.black).get();
+			var value = main.table(Tex.whiteui).width(getWidth() - label.getWidth())..pad(2f).color(Color.black).get();
 			//
-			if (v.get() instanceof Debuggable d && d.value != null) {
+			if (v.get() instanceof Debuggable d) {
 				//
-				String[] arr = d.type.getName().split(".");
-				String type = arr[arr.length - 1];
+				String type = d.type.getSimpleName();
 				//
 				label.table(Tex.whiteui, t -> {
-					t.add(d.type.getName()).pad(2f);
+					t.add(d.type).pad(2f);
 					t.setColor(Color.royal);
 				});
 				//
@@ -87,10 +86,11 @@ public class Debugger extends Table {
 			} else {
 				//
 				main.setColor(Color.sky);
-				value.add("" + v.get()).pad(2f)/*.width(main.getWidth())*/;
+				value.add("" + v.get()).pad(4f);
 			}
 			//
-			label.add(new Label(k, Styles.outlineLabel)).left().pad(4f).get().setColor(main.color);
+			label.add(new Label(k, Styles.outlineLabel)).left().pad(4f, 8f, 4f, 8f).get().setColor(main.color);
+			main.setWidth(getWidth());
 			row();
 		}
 	}
