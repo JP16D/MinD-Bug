@@ -64,7 +64,7 @@ public class Debugger extends Table {
 			var v = map.get(k);
 			//
 			var main = table(Tex.whiteui).left().pad(4f).get();
-			var label = main.table().left().pad(2f).get();
+			var label = main.table().center().pad(4f).get();
 			var value = main.table(Tex.whiteui).pad(2f).color(Color.black).get();
 			//
 			if (v.get() instanceof Debuggable d) {
@@ -86,7 +86,7 @@ public class Debugger extends Table {
 			} else {
 				//
 				main.setColor(Color.sky);
-				value.add("" + v.get()).pad(6f);
+				value.add("" + v.get()).pad(8f);
 			}
 			//
 			label.add(new Label(k, Styles.outlineLabel)).center().pad(4f, 8f, 4f, 8f).get().setColor(main.color);
@@ -96,14 +96,14 @@ public class Debugger extends Table {
 		float lw = 0f;
 		float vw = 0f;
 		for (var main : getCells()) {
-			var label = ((Table) main.get()).getCells().get(0);
-			var value = ((Table) main.get()).getCells().get(1);
 			//
-			lw = Math.max(lw, label.get().getWidth());
-			vw = Math.max(vw, value.get().getWidth());
-			//
-			label.width(lw);
-			value.width(vw);
+			lw = Math.max(lw, ((Table) main.get()).getCells().get(0).get().getWidth());
+			vw = Math.max(vw, ((Table) main.get()).getCells().get(1).get().getWidth());
+		}
+		//
+		for (var main : getCells()) {
+			((Table) main.get()).getCells().get(0).get().setWidth(lw);
+			((Table) main.get()).getCells().get(1).get().setWidth(vw);
 		}
 	}
 	
