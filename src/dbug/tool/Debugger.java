@@ -67,10 +67,10 @@ public class Debugger extends Table {
 			var label = main.table().left().pad(2f).get();
 			var value = main.table(Tex.whiteui)/*.width(getWidth() - label.getWidth()).*/.pad(2f).color(Color.black).get();
 			//
-			if (v.get() instanceof Debuggable d) {
+			if (v.get() instanceof Debuggable d && d.value != null) {
 				//
-				//String[] arr = d.type.getName().split(".");
-				//String type = arr[arr.length - 1];
+				String[] arr = d.type.getName().split(".");
+				String type = arr[arr.length - 1];
 				//
 				label.table(Tex.whiteui, t -> {
 					t.add(d.type.getName()).pad(2f);

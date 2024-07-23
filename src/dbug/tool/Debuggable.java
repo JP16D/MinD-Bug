@@ -8,7 +8,7 @@ public class Debuggable {
 	public Class<?> type;
 	
 	public Debuggable(Class<?> type, Prov<?> val) {
-		this.value = val;
+		value = val;
 		this.type = type;
 	}
 	
@@ -18,7 +18,7 @@ public class Debuggable {
 		//
 		if (type == String.class) {
 			this.type = String.class;
-			this.value = () -> val;
+			value = () -> val;
 			//
 		} else {
 			try {
@@ -37,7 +37,7 @@ public class Debuggable {
 				};
 				//
 			} catch (Exception e) {
-				//Primitives only
+				//Primitives only!
 			}
 		}
 	}
