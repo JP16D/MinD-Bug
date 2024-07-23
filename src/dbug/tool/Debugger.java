@@ -65,9 +65,9 @@ public class Debugger extends Table {
 			//
 			var main = table(Tex.whiteui).left().pad(4f).width(getWidth()).get();
 			var label = main.table().left().pad(2f).get();
-			var value = main.table(Tex.whiteui).width(getWidth() - label.getWidth()).pad(2f).color(Color.black).get();
+			var value = main.table(Tex.whiteui)./*width(getWidth() - label.getWidth()).*/pad(2f).color(Color.black).get();
 			//
-			if (v.get() instanceof Debuggable d) {
+			if (v.get() instanceof Debuggable) {
 				var dbg = (Debuggable) v.get();
 				//
 				//String[] arr = dbg.type.getName().split(".");
@@ -79,7 +79,7 @@ public class Debugger extends Table {
 				});
 				//
 				main.setColor(Color.slate);
-				value.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
+				value.field(dbg.value.get().toString(), Styles.defaultField, (String txt) -> {
 					//
 					map.put(k, () -> new Debuggable(dbg.type, txt));
 					//
@@ -88,7 +88,7 @@ public class Debugger extends Table {
 			} else {
 				//
 				main.setColor(Color.sky);
-				value.add("" + v.get()).pad(2f).width(main.getWidth());
+				value.add("" + v.get()).pad(2f)/*.width(main.getWidth())*/;
 			}
 			//
 			label.add(new Label(k, Styles.outlineLabel)).left().pad(4f).get().setColor(main.color);
