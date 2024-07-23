@@ -72,7 +72,7 @@ public class Debugger extends Table {
 				String type = d.type.getSimpleName();
 				//
 				label.table(Tex.whiteui, t -> {
-					t.add(d.type).pad(2f);
+					t.add(type).pad(2f);
 					t.setColor(Color.royal);
 				});
 				//
