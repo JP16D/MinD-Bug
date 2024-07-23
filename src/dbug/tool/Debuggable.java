@@ -28,7 +28,7 @@ public class Debuggable {
 				//
 				value = () -> {
 					try {
-						return this method.invoke(sample, val);
+						return method.invoke(sample, val);
 					} catch (Exception e) {
 						return old;
 						//warn();
