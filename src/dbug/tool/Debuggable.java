@@ -13,16 +13,16 @@ public class Debuggable {
 	}
 	
 	//some sort of parsing shenanigans
-	public Debuggable(String type, String val) {
+	public Debuggable(Class<?> type, String val) {
 		var old = value;
 		//
-		if (type == "String") {
+		if (type == String.class) {
 			this.type = String.class;
 			value = () -> val;
 			//
 		} else {
 			try {
-				this.type = Class.forName(type);
+				this.type = type;
 				//
 				var method = this.type.getMethod("valueOf", String.class);
 				var sample = this.type.getConstructor().newInstance();
@@ -37,7 +37,7 @@ public class Debuggable {
 				};
 				//
 			} catch (Exception e) {
-				//Impossible
+				//Primitives only
 			}
 		}
 	}

@@ -68,19 +68,20 @@ public class Debugger extends Table {
 			var value = main.table(Tex.whiteui).width(getWidth() - label.getWidth()).pad(2f).color(Color.black).get();
 			//
 			if (v.get() instanceof Debuggable d) {
+				var dbg = (Debuggable) v.get();
 				//
-				String[] arr = ((Debuggable) v.get()).type.toString().split(".");
-				String type = arr[arr.length - 1];
+				//String[] arr = dbg.type.getName().split(".");
+				//String type = arr[arr.length - 1];
 				//
 				label.table(Tex.whiteui, t -> {
-					t.add(type).pad(2f);
+					t.add(dbg.type.getName()).pad(2f);
 					t.setColor(Color.royal);
 				});
 				//
 				main.setColor(Color.slate);
 				value.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
 					//
-					map.put(k, () -> new Debuggable(type, txt));
+					map.put(k, () -> new Debuggable(dbg.type, txt));
 					//
 				}).center().pad(2f);
 				//
