@@ -65,7 +65,7 @@ public class Debugger extends Table {
 			//
 			var main = table(Tex.whiteui).left().pad(4f).get();
 			var label = main.table().left().pad(2f).get();
-			var value = main.table(Tex.whiteui).width(getWidth() - label.getWidth()).pad(2f).color(Color.black).get();
+			var value = main.table(Tex.whiteui).pad(2f).color(Color.black).get();
 			//
 			if (v.get() instanceof Debuggable d) {
 				//
@@ -74,7 +74,7 @@ public class Debugger extends Table {
 				label.table(Tex.whiteui, t -> {
 					t.add(type).pad(2f);
 					t.setColor(Color.royal);
-				});
+				}).left();
 				//
 				main.setColor(Color.slate);
 				value.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
@@ -86,12 +86,24 @@ public class Debugger extends Table {
 			} else {
 				//
 				main.setColor(Color.sky);
-				value.add("" + v.get()).pad(4f);
+				value.add("" + v.get()).pad(6f);
 			}
 			//
-			label.add(new Label(k, Styles.outlineLabel)).left().pad(4f, 8f, 4f, 8f).get().setColor(main.color);
-			main.setWidth(getWidth());
+			label.add(new Label(k, Styles.outlineLabel)).center().pad(4f, 8f, 4f, 8f).get().setColor(main.color);
 			row();
+		}
+		//
+		float lw = 0f;
+		float vw = 0f;
+		for (var main : getCells()) {
+			var label = main.getCells().get(0);
+			var value = main.getCells().get(1);
+			//
+			lw = Math.max(lw, label.get().getWidth());
+			vw = Math.max(vw, value.get().getWidth());
+			//
+			label.width(lw);
+			value.width(vw);
 		}
 	}
 	
