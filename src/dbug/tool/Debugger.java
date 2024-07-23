@@ -96,8 +96,8 @@ public class Debugger extends Table {
 		float lw = 0f;
 		float vw = 0f;
 		for (var main : getCells()) {
-			var label = main.get().getCells().get(0);
-			var value = main.get().getCells().get(1);
+			var label = ((Table) main.get()).getCells().get(0);
+			var value = ((Table) main.get()).getCells().get(1);
 			//
 			lw = Math.max(lw, label.get().getWidth());
 			vw = Math.max(vw, value.get().getWidth());
