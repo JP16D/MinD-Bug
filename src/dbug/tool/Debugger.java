@@ -16,6 +16,7 @@ import mindustry.ui.*;
 
 public class Debugger extends Table {
 	private static final OrderedMap<String, Prov<?>> map = new OrderedMap<>();
+	private static final OrderedMap<Table, Table> list = new OrderedMap<>();
 	//
 	public static boolean expand = false;
 	private float scale;
@@ -63,20 +64,17 @@ public class Debugger extends Table {
 		for (var k : map.keys()) {
 			var v = map.get(k);
 			//
-			var main = table(Tex.whiteui).left().pad(4f).get();
-			var label = main.table().center().pad(2f, 4f, 2f, 4f).get();
-			var value = main.table(Tex.whiteui).pad(4f).color(Color.black).get();
+			var label = new Table(Tex.whiteui);
+			var value = new Table(Tex.pane);
 			//
 			if (v.get() instanceof Debuggable d) {
 				//
-				String type = d.type.getSimpleName();
-				//
+				label.setColor(Color.sky);
 				label.table(Tex.whiteui, t -> {
-					t.add(type).pad(2f);
+					t.add(type.getSimpleName());
 					t.setColor(Color.royal);
-				}).left();
+				}).left().pad(4f);
 				//
-				main.setColor(Color.slate);
 				value.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
 					//
 					map.put(k, () -> new Debuggable(d.type, txt));
@@ -85,29 +83,26 @@ public class Debugger extends Table {
 				//
 			} else {
 				//
-				main.setColor(Color.sky);
+				label.setColor(Color.slate);
 				value.add("" + v.get()).pad(8f);
 			}
 			//
-			label.add(new Label(k, Styles.outlineLabel)).center().pad(2f, 8f, 2f, 8f).get().setColor(main.color);
-			row();
+			label.add(k, Styles.outlineLabel).center().pad(8f);
+			//
+			list.put(label, value);
 		}
 		//
-		float mw = 0f;
-		float lw = 0f;
+		float kw = 0f;
 		float vw = 0f;
-		for (var main : getCells()) {
-			mw = Math.max(mw, main.get().getWidth());
-			//
-			lw = Math.max(lw, ((Table) main.get()).getCells().get(0).get().getWidth());
-			vw = Math.max(vw, ((Table) main.get()).getCells().get(1).get().getWidth());
+		//
+		for (var entry : list) {
+			kw = Math.max(kw, entry.key.width);
+			vw = Math.max(vw, entry.value.width)
 		}
 		//
-		for (var main : getCells()) {
-			main.get().setWidth(mw);
-			//
-			((Table) main.get()).getCells().get(0).get().setWidth(lw);
-			((Table) main.get()).getCells().get(1).get().setWidth(vw);
+		for (var entry : list) {
+			add(entry.key.fill()).width(kw).height(52);
+			add(entry.value.fill()).width(vw).height(52);
 		}
 	}
 	
