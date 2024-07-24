@@ -97,7 +97,7 @@ public class Debugger extends Table {
 		//
 		for (var entry : list) {
 			kw = Math.max(kw, entry.key.width);
-			vw = Math.max(vw, entry.value.width)
+			vw = Math.max(vw, entry.value.width);
 		}
 		//
 		for (var entry : list) {
