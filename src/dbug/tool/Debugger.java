@@ -71,7 +71,7 @@ public class Debugger extends Table {
 				//
 				label.setColor(Color.sky);
 				label.table(Tex.whiteui, t -> {
-					t.add(type.getSimpleName());
+					t.add(d.type.getSimpleName());
 					t.setColor(Color.royal);
 				}).left().pad(4f);
 				//
@@ -96,8 +96,8 @@ public class Debugger extends Table {
 		float vw = 0f;
 		//
 		for (var entry : list) {
-			kw = Math.max(kw, entry.key.width);
-			vw = Math.max(vw, entry.value.width);
+			kw = Math.max(kw, entry.key.getWidth());
+			vw = Math.max(vw, entry.value.getWidth());
 		}
 		//
 		for (var entry : list) {
