@@ -71,8 +71,10 @@ public class Debugger extends Table {
 				//
 				label.setColor(Color.sky);
 				label.table(Tex.whiteui, t -> {
+					//
 					t.add(d.type.getSimpleName());
 					t.setColor(Color.royal);
+					//
 				}).left().pad(4f);
 				//
 				value.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
@@ -101,8 +103,9 @@ public class Debugger extends Table {
 		}
 		//
 		for (var entry : entries.values()) {
-			add(entry.get(0).fill()).width(kw).height(52);
-			add(entry.get(1).fill()).width(vw).height(52);
+			add(entry.get(0)).width(kw).height(52);
+			add(entry.get(1)).width(vw).height(52);
+			//
 			row();
 		}
 	}
