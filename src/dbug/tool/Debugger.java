@@ -16,7 +16,7 @@ import mindustry.ui.*;
 
 public class Debugger extends Table {
 	private static final OrderedMap<String, Prov<?>> map = new OrderedMap<>();
-	private static final OrderedMap<String, Table[]> list = new OrderedMap<>();
+	private static final OrderedMap<String, Seq<Table>> entries = new OrderedMap<>();
 	//
 	public static boolean expand = false;
 	private float scale;
@@ -89,20 +89,21 @@ public class Debugger extends Table {
 			//
 			label.add(k, Styles.outlineLabel).center().pad(8f);
 			//
-			list.put(k, new Table[]{label, value});
+			entries.put(k, new Seq<Table>(true).add(label, value));
 		}
 		//
 		float kw = 0f;
 		float vw = 0f;
 		//
-		for (var entry : list) {
-			kw = Math.max(kw, entry.value[0].getWidth());
-			vw = Math.max(vw, entry.value[1].getWidth());
+		for (var entry : entries.values()) {
+			kw = Math.max(kw, entry.get(0).getWidth());
+			vw = Math.max(vw, entry.get(1).getWidth());
 		}
 		//
-		for (var entry : list) {
-			add(entry.value[0].fill()).width(kw).height(52);
-			add(entry.value[1].fill()).width(vw).height(52);
+		for (var entry : entries.values()) {
+			add(entry.get(0).fill()).width(kw).height(52);
+			add(entry.get(1).fill()).width(vw).height(52);
+			row();
 		}
 	}
 	
