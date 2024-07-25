@@ -99,7 +99,7 @@ public class Debugger extends Table {
 		}
 		//
 		for (var entry : entries.values()) {
-			var t = table(Tex.pane).size(cw + 160f, 48f).pad(2f).get();
+			var t = table(Tex.pane).pad(2f).get();
 			//
 			t.add(entry.get(0)).size(cw, 48f).grow();
 			t.add(entry.get(1)).size(160f, 48f).grow();
