@@ -35,7 +35,7 @@ public class Debugger extends Table {
 				return;
 			}).top();
 			//
-			t.add(display).size(240f, expand ? scale * 0.25f : 50f);
+			t.add(display).size(240f, expand ? scale * 0.25f : 52f);
 		});
 		//
 		caller = table;
@@ -65,7 +65,7 @@ public class Debugger extends Table {
 			var v = map.get(k);
 			//
 			var label = new Table(Tex.whiteui);
-			var value = new Table(Tex.pane);
+			var value = new Table(Tex.scroll);
 			//
 			value.setColor(Color.black);
 			if (v.get() instanceof Debuggable d) {
@@ -82,7 +82,7 @@ public class Debugger extends Table {
 					//
 					map.put(k, () -> new Debuggable(d.type, txt));
 					//
-				}).center().pad(2f);
+				}).center().pad;
 				//
 			} else {
 				//
@@ -90,22 +90,23 @@ public class Debugger extends Table {
 				value.add("" + v.get()).pad(8f);
 			}
 			//
-			label.add(k, Styles.outlineLabel).center().pad(8f);
+			label.add(k, Styles.outlineLabel).center();
 			//
 			entries.put(k, new Table[]{label, value});
 		}
 		//
-		float w = 0f;
+		float cw = 0f;
 		//
 		for (var entry : entries.values()) {
-			//
-			w = Math.max(w, entry[0].getWidth());
+			cw = Math.max(cw, entry[0].getWidth());
 		}
 		//
 		for (var entry : entries.values()) {
+			var t = table(Tex.pane).width(w + 160f)
+			.height(48).pad(2f).fil().get();
 			//
-			add(entry[0]).width(w).height(48).grow();
-			pane(entry[1]).width(80f).height(48).grow();
+			t.add(entry[0]).width(w).grow();
+			t.add(entry[1]).width(160f).grow();
 			//
 			row();
 		}
