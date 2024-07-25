@@ -75,7 +75,7 @@ public class Debugger extends Table {
 					t.add(d.type.getSimpleName());
 					t.setColor(Color.royal);
 					//
-				}).left().pad(4f);
+				}).left();
 				//
 				value.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
 					//
