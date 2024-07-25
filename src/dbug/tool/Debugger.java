@@ -86,7 +86,7 @@ public class Debugger extends Table {
 				//
 			} else {
 				//
-				label.swtColor(Color.slate);
+				label.setColor(Color.slate);
 				value.add("" + v.get()).pad(8f);
 			}
 			//
