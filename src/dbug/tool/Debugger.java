@@ -32,7 +32,7 @@ public class Debugger extends Table {
 				table.clearChildren();
 				call(table);
 				return;
-			}).top();
+			}).pad(4f).top();
 			//
 			t.add(display).size(240f, expand ? scale * 0.25f : 52f);
 		});
@@ -83,7 +83,7 @@ public class Debugger extends Table {
 					//
 					map.put(k, () -> new Debuggable(d.type, txt));
 					//
-				}).center().pad(2f);
+				}).center().pad(4f);
 				//
 			} else {
 				//
@@ -91,14 +91,14 @@ public class Debugger extends Table {
 				val.add("" + v.get()).pad(8f);
 			}
 			//
-			tag.add(k, Styles.outlineLabel).center().pad(2f);
+			tag.add(k, Styles.outlineLabel).center().pad(4f);
 			//
 			table(Tex.pane, t -> {
 				//
 				t.add(tag).grow();
 				t.add(val).size(160f, 48f);
 				//
-			}).pad(4f).grow();
+			}).grow();
 			//
 			row();
 		}
