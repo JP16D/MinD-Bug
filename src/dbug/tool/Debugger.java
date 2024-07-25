@@ -82,7 +82,7 @@ public class Debugger extends Table {
 					//
 					map.put(k, () -> new Debuggable(d.type, txt));
 					//
-				}).center().pad;
+				}).center();
 				//
 			} else {
 				//
