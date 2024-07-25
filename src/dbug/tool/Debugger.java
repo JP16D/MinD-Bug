@@ -65,11 +65,12 @@ public class Debugger extends Table {
 			var v = map.get(k);
 			//
 			var label = new Table(Tex.whiteui);
-			var value = new Table(Tex.pane);
+			var value = new Table(Tex.scroll);
 			//
+			value.setColor(Color.black);
 			if (v.get() instanceof Debuggable d) {
 				//
-				label.setColor(Color.sky);
+				label.setColor(Color.slate);
 				label.table(Tex.whiteui, t -> {
 					//
 					t.add(d.type.getSimpleName()).pad(4f);
@@ -85,7 +86,6 @@ public class Debugger extends Table {
 				//
 			} else {
 				//
-				label.setColor(Color.slate);
 				value.add("" + v.get()).pad(8f);
 			}
 			//
@@ -103,8 +103,10 @@ public class Debugger extends Table {
 		}
 		//
 		for (var entry : entries.values()) {
-			add(entry[0]).width(kw).height(52).grow();
-			add(entry[1]).width(vw).height(52).grow();
+			table(Tex.pane, t -> {
+				t.add(entry[0]).width(kw).height(42).grow();
+				t.add(entry[1]).width(vw).height(42).grow();
+				});
 			//
 			row();
 		}
