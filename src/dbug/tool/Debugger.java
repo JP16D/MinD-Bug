@@ -109,6 +109,7 @@ public class Debugger extends Table {
 			t.add(entry[1]).width(160f).grow();
 			//
 			row();
+			cw = dw(float.class, "ui", () -> t.getWidth());
 		}
 	}
 	
