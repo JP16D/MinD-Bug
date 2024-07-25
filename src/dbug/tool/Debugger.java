@@ -16,7 +16,7 @@ import mindustry.ui.*;
 
 public class Debugger extends Table {
 	private static final OrderedMap<String, Prov<?>> map = new OrderedMap<>();
-	private static final OrderedMap<String, Table> entries = new OrderedMap<>();
+	private static final OrderedMap<String, Cell<Table>> entries = new OrderedMap<>();
 	//
 	public static boolean expand = false;
 	private float scale;
@@ -99,15 +99,15 @@ public class Debugger extends Table {
 				t.add(tag);
 				t.add(val).size(160f, 48f);
 				//
-			}).pad(4f).get());
+			}).pad(4f));
 			//
 			cw = Math.max(cw, tag.getWidth());
 		}
 		//
 		for (var entry : entries.values()) {
 			//
-			entry.width(cw + 160f).grow();
-			entry.getCells().get(0).width(cw).grow();
+			entry.get().width(cw + 160f).grow();
+			entry.get().getCells().get(0).width(cw).grow();
 			//
 			row();
 		}
