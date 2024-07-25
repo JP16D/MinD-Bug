@@ -102,10 +102,10 @@ public class Debugger extends Table {
 		}
 		//
 		for (var entry : entries.values()) {
-			var t = table(Tex.pane).width(w + 160f)
+			var t = table(Tex.pane).width(cw + 160f)
 			.height(48).pad(2f).fil().get();
 			//
-			t.add(entry[0]).width(w).grow();
+			t.add(entry[0]).width(cw).grow();
 			t.add(entry[1]).width(160f).grow();
 			//
 			row();
