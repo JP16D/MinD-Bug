@@ -98,10 +98,10 @@ public class Debugger extends Table {
 			cw = Math.max(cw, tag.getWidth());
 		}
 		//
-		for (var entry : entries) {
+		for (var entry : entries.values()) {
 			//
-			t.add(entry.get(0)).width(cw).height(48f).pad(2f).grow();
-			t.add(entry.get(0)).width(160f).height(48f).pad(2f).grow();
+			add(entry.get(0)).width(cw).height(48f).pad(2f).grow();
+			add(entry.get(1)).width(160f).height(48f).pad(2f).grow();
 			//
 			row();
 		}
