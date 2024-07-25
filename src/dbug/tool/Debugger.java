@@ -16,7 +16,7 @@ import mindustry.ui.*;
 
 public class Debugger extends Table {
 	private static final OrderedMap<String, Prov<?>> map = new OrderedMap<>();
-	private static final OrderedMap<String, Table[]> entries = new OrderedMap<>();
+	private static final OrderedMap<String, Seq<Table>> entries = new OrderedMap<>();
 	//
 	public static boolean expand = false;
 	private float scale;
@@ -61,24 +61,25 @@ public class Debugger extends Table {
 		//
 		clearChildren();
 		//
+		float cw = 0f;
 		for (var k : map.keys()) {
 			var v = map.get(k);
 			//
-			var label = new Table(Tex.whiteui);
-			var value = new Table(Tex.scroll);
+			var tag = new Table(Tex.whiteui);
+			var val = new Table(Tex.pane);
 			//
-			value.setColor(Color.black);
+			val.setColor(Color.black);
 			if (v.get() instanceof Debuggable d) {
 				//
-				label.setColor(Color.maroon);
-				label.table(Tex.whiteui, t -> {
+				tag.setColor(Color.maroon);
+				tag.table(Tex.whiteui, t -> {
 					//
 					t.add(d.type.getSimpleName(), Styles.outlineLabel).pad(4f);
 					t.setColor(Color.royal);
 					//
 				}).left();
 				//
-				value.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
+				val.field(d.value.get().toString(), Styles.defaultField, (String txt) -> {
 					//
 					map.put(k, () -> new Debuggable(d.type, txt));
 					//
@@ -86,30 +87,23 @@ public class Debugger extends Table {
 				//
 			} else {
 				//
-				label.setColor(Color.slate);
-				value.add("" + v.get()).pad(8f);
+				tag.setColor(Color.slate);
+				val.add("" + v.get()).pad(8f);
 			}
 			//
-			label.add(k, Styles.outlineLabel).center();
+			tag.add(k, Styles.outlineLabel).center();
 			//
-			entries.put(k, new Table[]{label, value});
+			entries(k, (new Seq(true)).add(tag, val));
+			//
+			cw = Math.max(cw, tag.getWidth());
 		}
 		//
-		float cw = 0f;
-		//
-		for (var entry : entries.values()) {
-			cw = Math.max(cw, entry[0].getWidth());
-		}
-		//
-		for (var entry : entries.values()) {
-			var t = table(Tex.pane).width(cw + 160f)
-			.height(48).pad(2f).get();
+		for (var entry : entries) {
 			//
-			t.add(entry[0]).width(cw).grow();
-			t.add(entry[1]).width(160f).grow();
+			t.add(entry[0]).width(cw).height(48f).pad(2f).grow();
+			t.add(entry[1]).width(160f).height(48f).pad(2f).grow();
 			//
 			row();
-			cw = dw(float.class, "ui", () -> (float) t.getWidth());
 		}
 	}
 	
