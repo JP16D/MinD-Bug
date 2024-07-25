@@ -91,7 +91,7 @@ public class Debugger extends Table {
 			//
 			label.add(k, Styles.outlineLabel).center().pad(8f);
 			//
-			entries.put(k, new Table(){label, value});
+			entries.put(k, new Table[]{label, value});
 		}
 		//
 		float kw = 0f;
