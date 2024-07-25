@@ -70,10 +70,10 @@ public class Debugger extends Table {
 			value.setColor(Color.black);
 			if (v.get() instanceof Debuggable d) {
 				//
-				label.setColor(Color.slate);
+				label.setColor(Color.maroon);
 				label.table(Tex.whiteui, t -> {
 					//
-					t.add(d.type.getSimpleName()).pad(4f);
+					t.add(d.type.getSimpleName(), Styles.outlineLabel).pad(4f);
 					t.setColor(Color.royal);
 					//
 				}).left();
@@ -86,6 +86,7 @@ public class Debugger extends Table {
 				//
 			} else {
 				//
+				label.swtColor(Color.slate);
 				value.add("" + v.get()).pad(8f);
 			}
 			//
@@ -103,7 +104,7 @@ public class Debugger extends Table {
 		}
 		//
 		for (var entry : entries.values()) {
-			var t = table(Tex.pane).pad(2f).get();
+			var t = table(Tex.pane).pad(2f).grow().get();
 			//
 			t.add(entry[0]).width(kw).height(42).grow();
 			t.add(entry[1]).width(vw).height(42).grow();
