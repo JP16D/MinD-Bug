@@ -72,7 +72,7 @@ public class Debugger extends Table {
 				label.setColor(Color.sky);
 				label.table(Tex.whiteui, t -> {
 					//
-					t.add(d.type.getSimpleName());
+					t.add(d.type.getSimpleName()).pad(4f);
 					t.setColor(Color.royal);
 					//
 				}).left();
@@ -98,13 +98,13 @@ public class Debugger extends Table {
 		float vw = 0f;
 		//
 		for (var entry : entries.values()) {
-			kw = Math.max(kw, entry.get(0).getWidth());
-			vw = Math.max(vw, entry.get(1).getWidth());
+			kw = Math.max(kw, entry[0].getWidth());
+			vw = Math.max(vw, entry[1].getWidth());
 		}
 		//
 		for (var entry : entries.values()) {
-			add(entry.get(0)).width(kw).height(52);
-			add(entry.get(1)).width(vw).height(52);
+			add(entry[0]).width(kw).height(52).grow();
+			add(entry[1]).width(vw).height(52).grow();
 			//
 			row();
 		}
