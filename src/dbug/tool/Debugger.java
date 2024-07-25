@@ -83,7 +83,7 @@ public class Debugger extends Table {
 					//
 					map.put(k, () -> new Debuggable(d.type, txt));
 					//
-				}).center();
+				}).center().pad(2f);
 				//
 			} else {
 				//
@@ -91,7 +91,7 @@ public class Debugger extends Table {
 				val.add("" + v.get()).pad(8f);
 			}
 			//
-			tag.add(k, Styles.outlineLabel).center();
+			tag.add(k, Styles.outlineLabel).center().pad(2f);
 			//
 			entries.put(k, (new Seq(true)).add(tag, val));
 			//
@@ -99,9 +99,10 @@ public class Debugger extends Table {
 		}
 		//
 		for (var entry : entries.values()) {
+			var t = table(Tex.pane).size(cw + 160f, 48f).pad(2f).get();
 			//
-			add(entry.get(0)).width(cw).height(48f).pad(2f).grow();
-			add(entry.get(1)).width(160f).height(48f).pad(2f).grow();
+			t.add(entry.get(0)).size(cw, 48f).grow();
+			t.add(entry.get(1)).size(160f, 48f).grow();
 			//
 			row();
 		}
