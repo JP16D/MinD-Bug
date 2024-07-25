@@ -65,7 +65,7 @@ public class Debugger extends Table {
 			var v = map.get(k);
 			//
 			var label = new Table(Tex.whiteui);
-			var value = new Table(Tex.scroll);
+			var value = new Table(Tex.pane);
 			//
 			value.setColor(Color.black);
 			if (v.get() instanceof Debuggable d) {
@@ -82,7 +82,7 @@ public class Debugger extends Table {
 					//
 					map.put(k, () -> new Debuggable(d.type, txt));
 					//
-				}).center();
+				}).center().pad(2f);
 				//
 			} else {
 				//
@@ -95,19 +95,17 @@ public class Debugger extends Table {
 			entries.put(k, new Table[]{label, value});
 		}
 		//
-		float kw = 0f;
-		float vw = 0f;
+		float w = 0f;
 		//
 		for (var entry : entries.values()) {
-			kw = Math.max(kw, entry[0].getWidth());
-			vw = Math.max(vw, entry[1].getWidth());
+			//
+			w = Math.max(w, entry[0].getWidth());
 		}
 		//
 		for (var entry : entries.values()) {
-			var t = table(Tex.pane).pad(2f).grow().get();
 			//
-			t.add(entry[0]).width(kw).height(42).grow();
-			t.add(entry[1]).width(vw).height(42).grow();
+			add(entry[0]).width(w).height(48).grow();
+			pane(entry[1]).width(80f).height(48).grow();
 			//
 			row();
 		}
