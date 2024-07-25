@@ -106,7 +106,7 @@ public class Debugger extends Table {
 		//
 		for (var entry : entries.values()) {
 			//
-			entry.get().width(cw + 160f).grow();
+			entry.width(cw + 160f).grow();
 			entry.get().getCells().get(0).width(cw).grow();
 			//
 			row();
