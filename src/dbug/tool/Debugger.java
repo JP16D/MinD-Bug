@@ -93,7 +93,7 @@ public class Debugger extends Table {
 			//
 			tag.add(k, Styles.outlineLabel).center();
 			//
-			entries(k, (new Seq(true)).add(tag, val));
+			entries.put(k, (new Seq(true)).add(tag, val));
 			//
 			cw = Math.max(cw, tag.getWidth());
 		}
