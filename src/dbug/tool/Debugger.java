@@ -100,8 +100,8 @@ public class Debugger extends Table {
 		//
 		for (var entry : entries) {
 			//
-			t.add(entry[0]).width(cw).height(48f).pad(2f).grow();
-			t.add(entry[1]).width(160f).height(48f).pad(2f).grow();
+			t.add(entry.get(0)).width(cw).height(48f).pad(2f).grow();
+			t.add(entry.get(0)).width(160f).height(48f).pad(2f).grow();
 			//
 			row();
 		}
