@@ -16,7 +16,7 @@ import mindustry.ui.*;
 
 public class Debugger extends Table {
 	private static final OrderedMap<String, Prov<?>> map = new OrderedMap<>();
-	private static final OrderedMap<String, Seq<Table>> entries = new OrderedMap<>();
+	private static final OrderedMap<String, Table> entries = new OrderedMap<>();
 	//
 	public static boolean expand = false;
 	private float scale;
@@ -62,11 +62,12 @@ public class Debugger extends Table {
 		clearChildren();
 		//
 		float cw = 0f;
+		//
 		for (var k : map.keys()) {
 			var v = map.get(k);
 			//
 			var tag = new Table(Tex.whiteui);
-			var val = new Table(Tex.pane);
+			var val = new Table();
 			//
 			val.setColor(Color.black);
 			if (v.get() instanceof Debuggable d) {
@@ -93,16 +94,20 @@ public class Debugger extends Table {
 			//
 			tag.add(k, Styles.outlineLabel).center().pad(2f);
 			//
-			entries.put(k, (new Seq(true)).add(tag, val));
+			entries.put(k, table(Tex.pane, t -> {
+				//
+				t.add(tag);
+				t.add(val).size(160f, 48f);
+				//
+			}).pad(4f).get());
 			//
 			cw = Math.max(cw, tag.getWidth());
 		}
 		//
 		for (var entry : entries.values()) {
-			var t = table(Tex.pane).pad(2f).get();
 			//
-			t.add(entry.get(0)).size(cw, 48f).grow();
-			t.add(entry.get(1)).size(160f, 48f).grow();
+			entry.width(cw + 160f).grow();
+			entry.getCells().get(0).width(cw).grow();
 			//
 			row();
 		}
