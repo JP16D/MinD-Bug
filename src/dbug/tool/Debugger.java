@@ -32,7 +32,7 @@ public class Debugger extends Table {
 				table.clearChildren();
 				call(table);
 				return;
-			}).pad(4f).top();
+			}).padRight(8f).top();
 			//
 			t.add(display).size(240f, expand ? scale * 0.25f : 52f);
 		});
@@ -93,12 +93,12 @@ public class Debugger extends Table {
 			//
 			tag.add(k, Styles.outlineLabel).center().pad(4f);
 			//
-			table(Tex.pane, t -> {
+			table(Tex.paneSolid, t -> {
 				//
 				t.add(tag).grow();
 				t.add(val).size(160f, 48f);
 				//
-			}).grow();
+			}).pad(4f).grow();
 			//
 			row();
 		}
