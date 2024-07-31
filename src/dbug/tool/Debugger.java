@@ -116,12 +116,11 @@ public class Debugger extends Table {
 		map.put(name, () -> {
 			if (map.containsKey(name)) {
 				var v = (Debuggable) map.get(name).get();
-					//
-					if (v.priority) {
+				//
+				if (v.priority) {
 						v.priority = false;
 						//
 						return v;
-					}
 				}
 			}
 			//
