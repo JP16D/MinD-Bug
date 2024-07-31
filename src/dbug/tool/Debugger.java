@@ -116,7 +116,7 @@ public class Debugger extends Table {
 		if (map.containsKey(name) && map.get(name).get() instanceof Debuggable d) {
 			//
 			if (d.priority) {
-				v = () -> new Debuggable(name, () -> d);
+				v = () -> d;
 				//
 				d.priority = false;
 			}
