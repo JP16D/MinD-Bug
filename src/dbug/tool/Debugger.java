@@ -123,6 +123,6 @@ public class Debugger extends Table {
 		}
 		//
 		map.put(name, v);
-		return v.get();
+		return v.get().value;
 	}
 }
