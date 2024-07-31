@@ -4,6 +4,7 @@ import arc.func.*;
 import java.lang.*;
 
 public class Debuggable {
+	public boolean priority;
 	public Prov<?> value;
 	public Class<?> type;
 	
@@ -39,5 +40,7 @@ public class Debuggable {
 				//Primitives only!
 			}
 		}
+		//
+		priority = true;
 	}
 }
