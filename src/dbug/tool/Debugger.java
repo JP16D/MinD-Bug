@@ -111,18 +111,18 @@ public class Debugger extends Table {
 	
 	//add debuggable primitive value (writable)
 	public static Prov<?> dw(Class<?> type, String name, Prov<?> val) {
-		var v = () -> new Debuggable(name, val);
+		val = () -> new Debuggable(name, val);
 		//
 		if (map.containsKey(name) && map.get(name).get() instanceof Debuggable d) {
 			//
 			if (d.priority) {
-				v = () -> d;
+				val = () -> d;
 				//
 				d.priority = false;
 			}
 		}
 		//
-		map.put(name, v);
-		return v;
+		map.put(name, val);
+		return val;
 	}
 }
