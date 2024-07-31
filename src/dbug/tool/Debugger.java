@@ -118,7 +118,7 @@ public class Debugger extends Table {
 			if (d.priority) {
 				v = () -> d;
 				//
-				priority= false;
+				priority = false;
 			}
 		}
 		//
