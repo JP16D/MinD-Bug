@@ -115,14 +115,12 @@ public class Debugger extends Table {
 	public static Prov<?> dw(Class<?> type, String name, Prov<?> val) {
 		map.put(name, () -> {
 			if (map.containsKey(name)) {
-				var obj = map.get(name).get();
-				//
-				if (obj instanceof Debuggable d) {
+				var v = (Debuggable) map.get(name).get();
 					//
-					if (d.priority) {
-						d.priority = false;
+					if (v.priority) {
+						v.priority = false;
 						//
-						return d;
+						return v;
 					}
 				}
 			}
