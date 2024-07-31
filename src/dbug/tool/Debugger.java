@@ -122,6 +122,7 @@ public class Debugger extends Table {
 			}
 		}
 		//
-		return ((Debuggable) map.put(name, v).get()).value;
+		map.put(name, v);
+		return v;
 	}
 }
