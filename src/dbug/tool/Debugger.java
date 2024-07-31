@@ -115,7 +115,7 @@ public class Debugger extends Table {
 	public static Prov<?> dw(Class<?> type, String name, Prov<?> val) {
 		map.put(name, () -> {
 			if (map.containsKey(name)) {
-				Debugganle v = map.get(name).get();
+				Debuggable v = map.get(name).get();
 				//
 				if (v.priority) {
 					v.priority = false;
