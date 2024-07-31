@@ -114,8 +114,7 @@ public class Debugger extends Table {
 	//add debuggable primitive value (writable)
 	public static Prov<?> dw(Class<?> type, String name, Prov<?> val) {
 		map.put(name, () -> {
-			if (map.containsKey(name)) {
-				Debuggable v = map.get(name).get();
+			if (map.containsKey(name) && map.get(name).get() instanceof Debuggable v) {
 				//
 				if (v.priority) {
 					v.priority = false;
