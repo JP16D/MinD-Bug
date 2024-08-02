@@ -119,9 +119,13 @@ public class Debugger extends Table {
 				v = () -> d;
 				//
 				d.priority = false;
+				//
+				map.put(name, v);
+				return v.get().value;
 			}
 		}
 		//
-		return map.put(name, v).get().value;
+		map.put(name, v);
+		return v.get().value;
 	}
 }
