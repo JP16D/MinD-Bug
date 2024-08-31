@@ -19,7 +19,7 @@ public class MDBug extends Mod {
 	
 	public MDBug() {
 		Events.run(EventType.Trigger.update, () -> {
-			this.update();
+			MDBug
 			//
 			if (scale != Core.scene.getHeight()) {
 				scale = Core.scene.getHeight();

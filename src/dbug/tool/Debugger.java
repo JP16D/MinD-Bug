@@ -18,7 +18,7 @@ public class Debugger {
 	//returns a default value if main value is null to avoid null error crashes
 	public static <T extends Object> T nullCatch(T val, T def) {
 		//
-		return val != null ? val : placeholder;
+		return val != null ? val : def;
 	}
 	
 	//add debuggable object (read-only)
@@ -26,15 +26,15 @@ public class Debugger {
 		ui.put(name, new Table(display -> {
 			//
 			var tag = new Table(Tex.whiteui);
-			var val = new Table();
+			var value = new Table();
 			//
 			tag.setColor(Color.slate);
-			tag.add(k, Styles.outlineLabel).center().pad(4f);
+			tag.add(name, Styles.outlineLabel).center().pad(4f);
 			//
-			val.add("" + v.get()).pad(8f);
+			value.add("" + val.get()).pad(8f);
 			//
 			display.add(tag).grow().row();
-			display.add(val).growX().height(48f);
+			display.add(value).growX().height(48f);
 		}));
 		//
 		return val;
@@ -44,7 +44,7 @@ public class Debugger {
 	public static Prov<?> dw(Class<?> type, String name, Prov<?> val) {
 		Prov<Debuggable> v = () -> new Debuggable(type, val);
 		//
-		if (map.containsKey(name) && map.get(name).get() instanceof Debuggable d) {
+		if (ui.containsKey(name) && ui.get(name).get() instanceof Debuggable d) {
 			//
 			if (d.priority) {
 				v = () -> d;
@@ -56,7 +56,7 @@ public class Debugger {
 		ui.put(name, new Table(display -> {
 				//
 			var tag = new Table(Tex.whiteui);
-			var val = new Table();
+			var value = new Table();
 				//
 			tag.setColor(Color.maroon);
 			tag.table(Tex.whiteui, t -> {
@@ -68,7 +68,7 @@ public class Debugger {
 			//
 			tag.add(name, Styles.outlineLabel).center().pad(4f);
 			//
-			val.field(value.get().toString(), Styles.defaultField, (String txt) -> {
+			value.field(v.get().toString(), Styles.defaultField, (String txt) -> {
 				//
 				map.put(name, () -> new Debuggable(type, txt));
 				//
