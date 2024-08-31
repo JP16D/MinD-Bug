@@ -32,11 +32,11 @@ public class MDBug extends Mod {
 	}
 	public void call(Table table) {
 		//
-		var display = new Table(t -> {
-			for (var v : MDBug.ui.values()) {
+		var display = new ScrollPane(new Table(t -> {
+			for (var v : MDBugVars.ui.values()) {
 				t.add(v).pad(4f).grow().row();
 			}
-		});
+		}));
 		//
 		display.setClamp(true);
 		//
@@ -48,7 +48,7 @@ public class MDBug extends Mod {
 				return;
 			}).padRight(8f).top();
 			//
-			t.add(new ScrollPane(display)).size(240f, expand ? scale * 0.25f : 52f);
+			t.add(display).size(240f, expand ? scale * 0.25f : 52f);
 		});
 		//
 		caller = table;

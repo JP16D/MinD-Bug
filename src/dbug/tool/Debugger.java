@@ -75,7 +75,7 @@ public class Debugger {
 			}).center().pad(4f);
 			//
 			display.add(tag).grow().row();
-			display.add(val).growX().height(48f);
+			display.add(value).growX().height(48f);
 		}));
 		//
 		return v.get().value;
