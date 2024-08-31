@@ -12,7 +12,7 @@ import mindustry.game.*;
 import mindustry.gen.*;
 import mindustry.ui.*;
 
-import static dbug.MDBugVars;
+import static dbug.MDBugVars.*;
 
 public class Debugger {
 	//returns a default value if main value is null to avoid null error crashes
