@@ -44,18 +44,18 @@ public class Debugger {
 	
 	//add debuggable primitive value (writable)
 	public static Prov<?> dw(Class<?> type, String name, Prov<?> val) {
-		Prov<Debuggable> v = () -> new Debuggable(type, val);
+		var v = new Debuggable(type, val);
 		//
-		if (writable.containsKey(name) && writable.get(name) instanceof Debuggable d) {
+		if (writable.containsKey(name)) {
 			//
 			if (d.priority) {
-				v = () -> d;
+				v = d;
 				//
 				d.priority = false;
 			}
 		}
 		//
-		writable.put(name, v.get());
+		writable.put(name, v);
 		//
 		ui.put(name, new Table(display -> {
 				//
@@ -65,16 +65,16 @@ public class Debugger {
 			tag.setColor(Color.maroon);
 			tag.table(Tex.whiteui, t -> {
 				//
-				t.add(type.getSimpleName(), Styles.outlineLabel).pad(4f);
+				t.add(v.type.getSimpleName(), Styles.outlineLabel).pad(4f);
 				t.setColor(Color.royal);
 					//
 			}).left();
 			//
 			tag.add(name, Styles.outlineLabel).center().pad(4f);
 			//
-			value.field(v.get().toString(), Styles.defaultField, (String txt) -> {
+			value.field(v.value.toString(), Styles.defaultField, (String txt) -> {
 				//
-				map.put(name, () -> new Debuggable(type, txt));
+				writable.put(name, new Debuggable(type, txt));
 				//
 			}).center().pad(4f);
 			//
@@ -82,6 +82,6 @@ public class Debugger {
 			display.add(value).growX().height(48f);
 		}));
 		//
-		return v.get().value;
+		return v.value;
 	}
 }
