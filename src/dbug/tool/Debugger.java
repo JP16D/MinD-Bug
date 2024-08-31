@@ -14,8 +14,9 @@ import mindustry.game.*;
 import mindustry.gen.*;
 import mindustry.ui.*;
 
-public class Debugger extends Table {
-	private static final OrderedMap<String, Prov<?>> map = new OrderedMap<>();
+import static dbug.MDBugVars.*;
+
+public class Debugger {
 	//
 	public static boolean expand = false;
 	private float scale;
@@ -95,13 +96,19 @@ public class Debugger extends Table {
 			//
 			table(Tex.paneSolid, t -> {
 				//
-				t.add(tag).grow();
-				t.add(val).size(160f, 48f);
+				t.add(tag).grow().row();
+				t.add(val).growX().height(48f);
 				//
-			}).pad(4f).grow();
+			}).cell.pad(4f).growX();
 			//
 			row();
 		}
+	}
+	
+	//returns the placeholder value if main value is null to avoid null error crashes
+	public static <T extends Object> T nullCatch(T val, T def) {
+		//
+		return val != null ? val : placeholder;
 	}
 	
 	//add debuggable object (read-only)
@@ -122,7 +129,31 @@ public class Debugger extends Table {
 			}
 		}
 		//
-		map.put(name, v);
+		UI.put(name, new Table(display -> {
+				//
+			var tag = new Table(Tex.whiteui);
+			var val = new Table();
+				//
+			tag.setColor(Color.maroon);
+			tag.table(Tex.whiteui, t -> {
+				//
+				t.add(type.getSimpleName(), Styles.outlineLabel).pad(4f);
+				t.setColor(Color.royal);
+					//
+			}).left();
+			//
+			tag.add(name, Styles.outlineLabel).center().pad(4f);
+			//
+			val.field(value.get().toString(), Styles.defaultField, (String txt) -> {
+				//
+				map.put(name, () -> new Debuggable(type, txt));
+				//
+			}).center().pad(4f);
+			//
+			display.add(tag).grow().row();
+			display.add(val).growX().height(48f);
+		}));
+		//
 		return v.get().value;
 	}
 }
