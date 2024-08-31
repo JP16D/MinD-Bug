@@ -47,6 +47,7 @@ public class Debugger {
 		var v = new Debuggable(type, val);
 		//
 		if (writable.containsKey(name)) {
+			var d = writable.get(name);
 			//
 			if (d.priority) {
 				v = d;
