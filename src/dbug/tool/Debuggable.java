@@ -1,6 +1,7 @@
 package dbug.tool;
 
 import arc.func.*;
+
 import java.lang.*;
 
 public class Debuggable {
@@ -42,5 +43,10 @@ public class Debuggable {
 		}
 		//
 		priority = true;
+	}
+	
+	public void set(Class<?> type, Prov<?> val) {
+		value = val;
+		this.type = type;
 	}
 }

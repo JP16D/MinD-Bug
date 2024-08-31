@@ -50,7 +50,7 @@ public class Debugger {
 			var d = writable.get(name);
 			//
 			if (d.priority) {
-				v = d;
+				set(d.type, d.value);
 				//
 				d.priority = false;
 			}
