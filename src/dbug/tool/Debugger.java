@@ -15,7 +15,7 @@ import mindustry.ui.*;
 import static dbug.MDBugVars.*;
 
 public class Debugger {
-	private final OrderedMap<String, Debuggable> writable = new OrderedMap<>();
+	private static final OrderedMap<String, Debuggable> writable = new OrderedMap<>();
 	
 	//returns a default value if main value is null to avoid null error crashes
 	public static <T extends Object> T nullCatch(T val, T def) {
