@@ -44,7 +44,7 @@ public class MDBug extends Mod {
 			t.button(expand ? Icon.downOpen : Icon.upOpen, () -> {
 				expand = !expand;
 				table.clearChildren();
-				call(table)
+				call(table);
 				return;
 			}).padRight(8f).top();
 			//
