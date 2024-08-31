@@ -15,6 +15,8 @@ import mindustry.ui.*;
 import static dbug.MDBugVars.*;
 
 public class Debugger {
+	private final OrderedMap<String, Debuggable> writable = new OrderedMap<>();
+	
 	//returns a default value if main value is null to avoid null error crashes
 	public static <T extends Object> T nullCatch(T val, T def) {
 		//
@@ -44,7 +46,7 @@ public class Debugger {
 	public static Prov<?> dw(Class<?> type, String name, Prov<?> val) {
 		Prov<Debuggable> v = () -> new Debuggable(type, val);
 		//
-		if (ui.containsKey(name) && ui.get(name).get() instanceof Debuggable d) {
+		if (writable.containsKey(name) && writable.get(name) instanceof Debuggable d) {
 			//
 			if (d.priority) {
 				v = () -> d;
@@ -52,6 +54,8 @@ public class Debugger {
 				d.priority = false;
 			}
 		}
+		//
+		writable.put(name, v.get());
 		//
 		ui.put(name, new Table(display -> {
 				//
