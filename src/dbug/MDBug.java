@@ -19,7 +19,6 @@ public class MDBug extends Mod {
 	
 	public MDBug() {
 		Events.run(EventType.Trigger.update, () -> {
-			MDBug
 			//
 			if (scale != Core.scene.getHeight()) {
 				scale = Core.scene.getHeight();
@@ -31,25 +30,34 @@ public class MDBug extends Mod {
 			}
 		});
 	}
+	public void call(Table table) {
+		//
+		var display = new Table(t -> {
+			for (var v : MDBug.ui.values()) {
+				t.add(v).pad(4f).grow().row();
+			}
+		});
+		//
+		display.setClamp(true);
+		//
+		table.table(Tex.pane, t -> {
+			t.button(expand ? Icon.downOpen : Icon.upOpen, () -> {
+				expand = !expand;
+				table.clearChildren();
+				call(table)
+				return;
+			}).padRight(8f).top();
+			//
+			t.add(new ScrollPane(display)).size(240f, expand ? scale * 0.25f : 52f);
+		});
+		//
+		caller = table;
+	}
 	
 	@Override
 	public void init() {
 		BLSetup.addTable(table -> {
-			var display = new ScrollPane(this);
-			display.setClamp(true);
-			//
-			table.table(Tex.pane, t -> {
-				t.button(expand ? Icon.downOpen : Icon.upOpen, () -> {
-					expand = !expand;
-					table.clearChildren();
-					call(table);
-					return;
-				}).padRight(8f).top();
-				//
-				t.add(display).size(240f, expand ? scale * 0.25f : 52f);
-			});
-			//
-			caller = table;
+			call(table);
 		});
 	}
 }
