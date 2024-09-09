@@ -69,7 +69,7 @@ public class Debugger {
 				tg.add(name, Styles.outlineLabel).center().pad(4f);
 			}).growX().row();
 			//
-			table.field(v.value.toString(), Styles.defaultField, (String txt) -> {
+			table.field(v.value.get().toString(), Styles.defaultField, (String txt) -> {
 				//
 				writable.put(name, new Debuggable(type, txt));
 				//
