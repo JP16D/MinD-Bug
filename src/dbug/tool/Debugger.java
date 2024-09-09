@@ -25,7 +25,7 @@ public class Debugger {
 	
 	//add debuggable object (read-only)
 	public static Prov<?> dv(String name, Prov<?> val) {
-		ui.put(name, new Table(table -> {
+		ui.put(name, new Table(Tex.pane, table -> {
 			//
 			table.table(Tex.whiteui, tg -> {
 				tg.setColor(Color.slate);
@@ -55,7 +55,7 @@ public class Debugger {
 		//
 		writable.put(name, v);
 		//
-		ui.put(name, new Table(table -> {
+		ui.put(name, new Table(Tex.pane, table -> {
 			//
 			table.table(Tex.whiteui, tg -> {
 				tg.setColor(Color.maroon);
