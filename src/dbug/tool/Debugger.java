@@ -79,7 +79,7 @@ public class Debugger {
 				//
 			}).center().pad(4f);
 			//
-			display.add(tag).grow().row();
+			display.add(tag).growX().row();
 			display.add(value).growX().height(48f);
 		}));
 		//
