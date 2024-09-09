@@ -25,18 +25,15 @@ public class Debugger {
 	
 	//add debuggable object (read-only)
 	public static Prov<?> dv(String name, Prov<?> val) {
-		ui.put(name, new Table(display -> {
+		ui.put(name, new Table(table -> {
 			//
-			var tag = new Table(Tex.whiteui);
-			var value = new Table();
+			table.table(Tex.whiteui, tg -> {
+				tg.setColor(Color.slate);
+				tg.add(name, Styles.outlineLabel).center().pad(4f);
+			}).growX().row()
 			//
-			tag.setColor(Color.slate);
-			tag.add(name, Styles.outlineLabel).center().pad(4f);
+			table.add("" + val.get()).pad(8f).growX().height(48f);
 			//
-			value.add("" + val.get()).pad(8f);
-			//
-			display.add(tag).grow().row();
-			display.add(value).growX().height(48f);
 		}));
 		//
 		return val;
@@ -58,29 +55,25 @@ public class Debugger {
 		//
 		writable.put(name, v);
 		//
-		ui.put(name, new Table(display -> {
-				//
-			var tag = new Table(Tex.whiteui);
-			var value = new Table();
-				//
-			tag.setColor(Color.maroon);
-			tag.table(Tex.whiteui, t -> {
-				//
-				t.add(v.type.getSimpleName(), Styles.outlineLabel).pad(4f);
-				t.setColor(Color.royal);
+		ui.put(name, new Table(table -> {
+			//
+			table.table(Tex.whiteui, tg -> {
+				tg.setColor(Color.maroon);
+				tg.table(Tex.whiteui, t -> {
 					//
-			}).left();
+					t.add(v.type.getSimpleName(), Styles.outlineLabel).pad(4f);
+					t.setColor(Color.royal);
+					//
+				}).left();
+				//
+				tg.add(name, Styles.outlineLabel).center().pad(4f);
+			}).growX().row();
 			//
-			tag.add(name, Styles.outlineLabel).center().pad(4f);
-			//
-			value.field(v.value.toString(), Styles.defaultField, (String txt) -> {
+			table.field(v.value.toString(), Styles.defaultField, (String txt) -> {
 				//
 				writable.put(name, new Debuggable(type, txt));
 				//
-			}).center().pad(4f);
-			//
-			display.add(tag).growX().row();
-			display.add(value).growX().height(48f);
+			}).center().pad(4f).growX().height(48f);
 		}));
 		//
 		return v.value;
