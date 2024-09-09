@@ -30,7 +30,7 @@ public class Debugger {
 			table.table(Tex.whiteui, tg -> {
 				tg.setColor(Color.slate);
 				tg.add(name, Styles.outlineLabel).center().pad(4f);
-			}).growX().row()
+			}).growX().row();
 			//
 			table.add("" + val.get()).pad(8f).growX().height(48f);
 			//
