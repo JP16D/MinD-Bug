@@ -34,7 +34,7 @@ public class MDBug extends Mod {
 		//
 		var display = new ScrollPane(new Table(t -> {
 			for (var v : MDBugVars.ui.values()) {
-				t.add(v).pad(4f).grow().row();
+				t.add(v).pad(4f).row();
 			}
 		}));
 		//

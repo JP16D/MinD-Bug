@@ -64,10 +64,10 @@ public class Debugger {
 					t.add(v.type.getSimpleName(), Styles.outlineLabel).pad(4f);
 					t.setColor(Color.royal);
 					//
-				}).left();
+				});
 				//
 				tg.add(name, Styles.outlineLabel).center().pad(4f);
-			}).growX().row();
+			}).left().growX().row();
 			//
 			table.field(v.value.get().toString(), Styles.defaultField, (String txt) -> {
 				//
