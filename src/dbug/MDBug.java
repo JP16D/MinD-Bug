@@ -34,22 +34,23 @@ public class MDBug extends Mod {
 		//
 		var display = new ScrollPane(new Table(t -> {
 			for (var v : MDBugVars.ui.values()) {
-				t.add(v).growX().pad(4f).row();
+				t.add(v).growX().pad(4f).top().row();
 			}
 		}));
 		//
 		display.setClamp(true);
 		//
 		table.table(Tex.pane, t -> {
-			t.button(expand ? Icon.downOpen : Icon.upOpen, () -> {
-				expand = !expand;
-				table.clearChildren();
-				call(table);
-				return;
-			}).padRight(8f).top();
 			//
 			t.add(display).size(240f, expand ? scale * 0.25f : 52f);
 		});
+		//
+		table.button(expand ? Icon.downOpen : Icon.upOpen, () -> {
+			expand = !expand;
+			table.clearChildren();
+			call(table);
+			return;
+		}).padRight(8f);
 		//
 		caller = table;
 	}

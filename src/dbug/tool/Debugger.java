@@ -30,7 +30,7 @@ public class Debugger {
 			table.table(Tex.whiteui, tg -> {
 				tg.setColor(Color.slate);
 				tg.add(name, Styles.outlineLabel).center().pad(4f);
-			}).growX().row();
+			}).growX();
 			//
 			table.add("" + val.get()).pad(8f).growX().height(48f);
 			//
@@ -64,10 +64,10 @@ public class Debugger {
 					t.add(v.type.getSimpleName(), Styles.outlineLabel).pad(4f);
 					t.setColor(Color.royal);
 					//
-				}).pad(4f);
+				}).pad(4f, 4f, 0f, 4f);
 				//
 				tg.add(name, Styles.outlineLabel).center().pad(4f);
-			}).left().growX().row();
+			}).growX();
 			//
 			table.field(v.value.get().toString(), Styles.defaultField, (String txt) -> {
 				//
