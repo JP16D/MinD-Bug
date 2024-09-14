@@ -64,16 +64,18 @@ public class Debugger {
 					t.add(v.type.getSimpleName(), Styles.outlineLabel).pad(4f);
 					t.setColor(Color.royal);
 					//
-				}).pad(4f, 4f, 0f, 4f);
+				}).pad(2f, 2f, 0f, 2f);
 				//
 				tg.add(name, Styles.outlineLabel).center().pad(4f);
 			}).grow();
 			//
-			table.field(v.value.get().toString(), Styles.defaultField, (String txt) -> {
+			table.table(Tex.pane, t -> {
+				t.field(v.value.get().toString(), Styles.defaultField, (String txt) -> {
+					//
+					writable.put(name, new Debuggable(type, txt));
 				//
-				writable.put(name, new Debuggable(type, txt));
-				//
-			}).center().pad(4f).growX().height(48f);
+				}).center().pad(2f);
+			}).pad(2f).growX().height(48f);
 		}));
 		//
 		return v.value;
