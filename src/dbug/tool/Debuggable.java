@@ -15,8 +15,7 @@ public class Debuggable {
 	}
 	
 	//some sort of parsing shenanigans
-	public Debuggable(Class<?> type, String val) {
-		var old = this.value;
+	public void parse(Class<?> type, String val) {
 		//
 		if (type == String.class) {
 			this.type = String.class;
@@ -32,7 +31,7 @@ public class Debuggable {
 					try {
 						return method.invoke(type, val);
 					} catch (Exception e) {
-						return old;
+						return value;
 						//warn();
 					}
 				};

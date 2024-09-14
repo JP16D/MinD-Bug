@@ -1,6 +1,7 @@
 package dbug;
 
 import arc.*;
+import arc.graphics.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import blui.*;
@@ -34,7 +35,10 @@ public class MDBug extends Mod {
 		//
 		var display = new ScrollPane(new Table(t -> {
 			for (var v : MDBugVars.ui.values()) {
-				t.add(v).growX().pad(4f).top().row();
+				t.table(Tex.whiteui, t -> {
+					t.add(v);
+					t.setColor(Color.gray);
+				}).growX().pad(2f).top().row();
 			}
 		}));
 		//
@@ -49,7 +53,7 @@ public class MDBug extends Mod {
 		//
 		table.table(Tex.pane, t -> {
 			//
-			t.add(display).size(320f, expand ? scale * 0.25f : 52f);
+			t.add(display).size(320f, expand ? scale * 0.25f : 64f);
 		});
 		//
 		caller = table;

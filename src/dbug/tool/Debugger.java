@@ -18,9 +18,10 @@ public class Debugger {
 	private static final OrderedMap<String, Debuggable> writable = new OrderedMap<>();
 	
 	//returns a default value if main value is null to avoid null error crashes
-	public static <T extends Object> T nullCatch(T val, T def) {
+	public static <T extends Object> T check(T val, T def) {
 		//
 		return val != null ? val : def;
+		//warn();
 	}
 	
 	//add debuggable object (read-only)
@@ -55,27 +56,27 @@ public class Debugger {
 		//
 		writable.put(name, v);
 		//
-		ui.put(name, new Table(Tex.pane, table -> {
+		ui.put(name, new Table(Tex.whiteui, panel -> {
+			panel.setColor(Color.maroon);
 			//
-			table.table(Tex.whiteui, tg -> {
-				tg.setColor(Color.maroon);
-				tg.table(Tex.whiteui, t -> {
+			panel.table(view -> {
+				view.table(Tex.whiteui, type -> {
 					//
-					t.add(v.type.getSimpleName(), Styles.outlineLabel).pad(4f);
-					t.setColor(Color.royal);
+					type.add(v.type.getSimpleName(), Styles.outlineLabel).pad(4f);
+					type.setColor(Color.royal);
 					//
 				}).pad(2f, 2f, 0f, 2f);
 				//
-				tg.add(name, Styles.outlineLabel).center().pad(4f);
+				view.add(name, Styles.outlineLabel).center().pad(4f);
 			}).grow();
 			//
-			table.table(Tex.pane, t -> {
+			panel.table(Tex.pane, t -> {
 				t.field(v.value.get().toString(), Styles.defaultField, (String txt) -> {
 					//
-					writable.put(name, new Debuggable(type, txt));
+					writable.put(name, v.parse(type, txt));
 				//
-				}).center().pad(2f);
-			}).pad(2f).growX().height(48f);
+				}).center().pad(4f);
+			}).size(48f, 90f);
 		}));
 		//
 		return v.value;
