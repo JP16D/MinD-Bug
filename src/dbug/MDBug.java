@@ -40,17 +40,17 @@ public class MDBug extends Mod {
 		//
 		display.setClamp(true);
 		//
-		table.table(Tex.pane, t -> {
-			//
-			t.add(display).size(240f, expand ? scale * 0.25f : 52f);
-		});
-		//
 		table.button(expand ? Icon.downOpen : Icon.upOpen, () -> {
 			expand = !expand;
 			table.clearChildren();
 			call(table);
 			return;
-		}).padRight(8f);
+		}).padRight(8f).row();
+		//
+		table.table(Tex.pane, t -> {
+			//
+			t.add(display).size(320f, expand ? scale * 0.25f : 52f);
+		});
 		//
 		caller = table;
 	}

@@ -67,7 +67,7 @@ public class Debugger {
 				}).pad(4f, 4f, 0f, 4f);
 				//
 				tg.add(name, Styles.outlineLabel).center().pad(4f);
-			}).growX();
+			}).grow();
 			//
 			table.field(v.value.get().toString(), Styles.defaultField, (String txt) -> {
 				//
