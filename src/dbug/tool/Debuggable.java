@@ -15,7 +15,7 @@ public class Debuggable {
 	}
 	
 	//some sort of parsing shenanigans
-	public void parse(Class<?> type, String val) {
+	public Debuggable parse(Class<?> type, String val) {
 		//
 		if (type == String.class) {
 			this.type = String.class;
@@ -42,6 +42,7 @@ public class Debuggable {
 		}
 		//
 		priority = true;
+		return this;
 	}
 	
 	public void set(Class<?> type, Prov<?> val) {

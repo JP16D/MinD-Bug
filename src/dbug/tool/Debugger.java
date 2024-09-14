@@ -60,10 +60,10 @@ public class Debugger {
 			panel.setColor(Color.maroon);
 			//
 			panel.table(view -> {
-				view.table(Tex.whiteui, type -> {
+				view.table(Tex.whiteui, tag -> {
 					//
-					type.add(v.type.getSimpleName(), Styles.outlineLabel).pad(4f);
-					type.setColor(Color.royal);
+					tag.add(v.type.getSimpleName(), Styles.outlineLabel).pad(4f);
+					tag.setColor(Color.royal);
 					//
 				}).pad(2f, 2f, 0f, 2f);
 				//
