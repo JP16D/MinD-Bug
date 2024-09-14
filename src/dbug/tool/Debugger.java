@@ -59,7 +59,7 @@ public class Debugger {
 		ui.put(name, new Table(Tex.whiteui, panel -> {
 			//
 			panel.table(view -> {
-				view.
+				view.setColor(Color.maroon);
 				view.table(Tex.whiteui, tag -> {
 					//
 					tag.add(v.type.getSimpleName(), Styles.outlineLabel).pad(4f);
