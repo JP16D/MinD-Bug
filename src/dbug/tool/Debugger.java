@@ -56,7 +56,7 @@ public class Debugger {
 		//
 		writable.put(name, v);
 		//
-		ui.put(name, new Table(Tex.pane,panel -> {
+		ui.put(name, new Table(Tex.pane, panel -> {
 			//
 			panel.table(Tex.whiteui, view -> {
 				view.setColor(Color.maroon);
@@ -76,7 +76,7 @@ public class Debugger {
 					writable.put(name, v.parse(type, txt));
 				//
 				}).center().pad(4f);
-			}).size(160f, 48f);
+			}).padLeft(4f).size(160f, 48f);
 		}));
 		//
 		return v.value;
