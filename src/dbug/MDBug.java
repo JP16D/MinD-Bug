@@ -34,11 +34,12 @@ public class MDBug extends Mod {
 	public void call(Table table) {
 		//
 		var display = new ScrollPane(new Table(t -> {
-			for (var v : MDBugVars.ui.values()) {
-				t.add(v).growX().pad(2f).top().row();
+			for (var v : MDBugVars.debugger.values()) {
+				t.add(v).growX().pad(2f).row();
 			}
 		}));
 		//
+		display.setOverscroll(false, true);
 		display.setClamp(true);
 		//
 		table.button(expand ? Icon.downOpen : Icon.upOpen, () -> {
@@ -50,7 +51,7 @@ public class MDBug extends Mod {
 		//
 		table.table(Tex.pane, t -> {
 			//
-			t.add(display).size(320f, expand ? scale * 0.25f : 64f);
+			t.add(display).size(320f, expand ? scale * 0.25f : 72f).top();
 		});
 		//
 		caller = table;

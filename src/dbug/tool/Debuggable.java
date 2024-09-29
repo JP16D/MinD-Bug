@@ -17,27 +17,26 @@ public class Debuggable {
 	//some sort of parsing shenanigans
 	public Debuggable parse(Class<?> type, String val) {
 		//
-		if (type == String.class) {
-			this.type = String.class;
+		if (this.type == type) if (type == String.class) {
 			value = () -> val;
 			//
 		} else {
 			try {
-				this.type = type;
 				//
-				var method = this.type.getMethod("valueOf", String.class);
+				var method = type.getMethod("valueOf", String.class);
 				//
-				value = () -> {
-					try {
-						return method.invoke(type, val);
-					} catch (Exception e) {
-						return value;
-						//warn();
+				if (!type.isInstance(method.getReturnType())) {
+					value = () -> {
+						try {
+							return method.invoke(type, val);
+						} catch (Exception e) {
+							return value;
+							//warn();
+						}
 					}
-				};
-				//
+				}
 			} catch (Exception e) {
-				//Primitives only!
+				//warn();
 			}
 		}
 		//

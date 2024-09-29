@@ -15,27 +15,18 @@ import mindustry.ui.*;
 import static dbug.MDBugVars.*;
 
 public class Debugger {
-	private static final OrderedMap<String, Debuggable> writable = new OrderedMap<>();
+	default static final OrderedMap<String, Debuggable> writable = new OrderedMap<>();
 	
 	//returns a default value if main value is null to avoid null error crashes
 	public static <T extends Object> T check(T val, T def) {
 		//
 		return val != null ? val : def;
-		//warn();
+		//if (val == null) warn();
 	}
 	
 	//add debuggable object (read-only)
 	public static Prov<?> dv(String name, Prov<?> val) {
-		ui.put(name, new Table(Tex.pane, table -> {
-			//
-			table.table(Tex.whiteui, tg -> {
-				tg.setColor(Color.slate);
-				tg.add(name, Styles.outlineLabel).center().pad(4f);
-			}).growX();
-			//
-			table.add("" + val.get()).pad(8f).growX().height(48f);
-			//
-		}));
+		debugger.put(name, display(Color.slate, name, new Table(Tex.pane, t -> t.add("" + val.get())));
 		//
 		return val;
 	}
@@ -56,13 +47,25 @@ public class Debugger {
 		//
 		writable.put(name, v);
 		//
-		ui.put(name, new Table(Tex.pane, panel -> {
+		debugger.put(name, display(Color.maroon, name, new Table(Tex.pane, t -> {
+				t.field(v.value.get().toString(), Styles.defaultField, (String txt) -> {
+					//
+					writable.put(name, v.parse(type, txt));
+				//
+				}).center().pad(4f);
+			})));
+		//
+		return v.value;
+	}
+	
+	public static Table display(Color color, String name, Table val) {
+		return new Table(Tex.pane, panel -> {
 			//
 			panel.table(Tex.whiteui, view -> {
-				view.setColor(Color.maroon);
-				view.table(Tex.whiteui, tag -> {
+				view.setColor(color);
+				if (writable.containsKey(name)) view.table(Tex.whiteui, tag -> {
 					//
-					tag.add(v.type.getSimpleName(), Styles.outlineLabel).pad(4f);
+					tag.add(writable.get(name).type.getSimpleName(), Styles.outlineLabel).pad(4f);
 					tag.setColor(Color.royal);
 					//
 				}).pad(2f, 2f, 0f, 2f);
@@ -70,15 +73,7 @@ public class Debugger {
 				view.add(name, Styles.outlineLabel).center().pad(4f);
 			}).grow();
 			//
-			panel.table(Tex.pane, t -> {
-				t.field(v.value.get().toString(), Styles.defaultField, (String txt) -> {
-					//
-					writable.put(name, v.parse(type, txt));
-				//
-				}).center().pad(4f);
-			}).padLeft(4f).size(160f, 48f);
-		}));
-		//
-		return v.value;
+			panel.add(val).padLeft(8f).size(160f, 48f);
+		});
 	}
 }
