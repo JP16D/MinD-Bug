@@ -33,7 +33,7 @@ public class Debuggable {
 							return value;
 							//warn();
 						}
-					}
+					};
 				}
 			} catch (Exception e) {
 				//warn();

@@ -12,7 +12,7 @@ public class Compound {
 	public Prov<?> build(Class<?> type, String name, Prov<?> val) {
 		var fields = type.getFields();
 		//
-		debugger.put(name, Debugger.display(
+		debugger.put(name, Debugger.display(Color.slate, name, new Table(t -> {
 			for (var c : fields) {
 				var v = new Debuggable(c.getDeclaringClass(), () -> c.get(val.get()));
 				//
@@ -27,7 +27,8 @@ public class Compound {
 				}
 				//
 				components.put(c.getName(), v);
-		});
+			}
+		}));
 		//
 		return val;
 	}

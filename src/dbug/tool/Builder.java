@@ -10,7 +10,7 @@ import java.lang.*;
 public class Builder {
 	default static final Seq<Runnable> functions = new Seq<>();
 	
-	public static table() {
+	public static Table table() {
 		return new Table(t -> {
 			t.button("Add", Icon.plus, () -> {
 				

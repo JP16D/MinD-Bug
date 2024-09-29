@@ -26,7 +26,7 @@ public class Debugger {
 	
 	//add debuggable object (read-only)
 	public static Prov<?> dv(String name, Prov<?> val) {
-		debugger.put(name, display(Color.slate, name, new Table(Tex.pane, t -> t.add("" + val.get())));
+		debugger.put(name, display(Color.slate, name, new Table(Tex.pane, t -> t.add("" + val.get()))));
 		//
 		return val;
 	}
