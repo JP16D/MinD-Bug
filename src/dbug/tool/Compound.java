@@ -16,9 +16,12 @@ public class Compound {
 		//
 		debugger.put(name, Debugger.display(Color.slate, name, new Table(t -> {
 			for (var c : fields) {
-				var v = new Debuggable(c.getDeclaringClass(), () -> try { return c.get(val.get());
-				} catch {
-					return null;
+				var v = new Debuggable(c.getDeclaringClass(), () -> {
+					try {
+						return c.get(val.get());
+					} catch (Exception e) {
+						return null;
+					}
 				});
 				//
 				if (components.containsKey(c.getName())) {
