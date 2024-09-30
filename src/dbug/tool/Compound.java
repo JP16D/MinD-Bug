@@ -28,7 +28,7 @@ public class Compound {
 				//
 				components.put(c.getName(), v);
 			}
-		}));
+		})));
 		//
 		return val;
 	}
