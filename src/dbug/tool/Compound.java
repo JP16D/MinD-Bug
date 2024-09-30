@@ -2,9 +2,11 @@ package dbug.tool;
 
 import arc.func.*;
 import arc.graphics.*;
+import arc.scene.ui.*;
+import arc.scene.ui.layout.*;
 import arc.struct.*;
 
-import static MDBugVars.*;
+import static dbug.MDBugVars.*;
 
 public class Compound {
 	private OrderedMap<String, Debuggable> components = new OrderedMap<>();
