@@ -15,7 +15,7 @@ import mindustry.ui.*;
 import static dbug.MDBugVars.*;
 
 public class Debugger {
-	static final OrderedMap<String, ? extends Debuggable> writable = new OrderedMap<>();
+	static final OrderedMap<String, Debuggable> writable = new OrderedMap<>();
 	
 	//returns a default value if main value is null to avoid null error crashes
 	public static <T extends Object> T check(T val, T def) {
@@ -62,7 +62,7 @@ public class Debugger {
 		var table = v.actor();
 		//
 		if (writable.containsKey(name)) {
-			var d = writable.get(name);
+			var d = (Compound) writable.get(name);
 			//
 			v.prioritize(d);
 			table = d.actor();
