@@ -41,14 +41,17 @@ public class Compound extends Debuggable {
 	}
 	
 	public void prioritize(Compound p) {
-		for (var k : components.keys()) {
-			var comp = components.get(k);
-			//
-			if (priority) {
+		if (priority) {
+			for (var k : components.keys()) {
+				var comp = components.get(k);
 				//
-				p.set(comp.type, comp.value);
-				priority = false;
+				if (priority) {
+					//
+					p.set(comp.type, comp.value);
+				}
 			}
+			//
+			priority = false;
 		}
 	}
 	
