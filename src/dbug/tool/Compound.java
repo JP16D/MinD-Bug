@@ -52,14 +52,17 @@ public class Compound {
 	
 	public Table actor() {
 		return new Table(Tex.pane, t -> {
-			for (k : components.keys()) {
+			for (var k : components.keys()) {
 				var v = components.get(k);
 				//
-				t.field(v.value.get().toString(), Styles.defaultField, (String txt) -> {
-					//
-					v.parse(v.type, txt);
-				//
-				}).center().pad(4f);
+				t.add(Debugger.display(Color.darkGray, k, new Table(comp -> {
+					comp.field(v.value.get().toString(), Styles.defaultField, (String txt) -> {
+						//
+						v.parse(v.type, txt);
+						//
+					}).center().pad(4f);
+				})));
+				t.row();
 			}
 			t.button("Set", () -> toggle = true);
 		});
