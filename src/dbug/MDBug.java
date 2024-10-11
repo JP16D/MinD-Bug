@@ -31,6 +31,7 @@ public class MDBug extends Mod {
 			}
 		});
 	}
+	
 	public void call(Table table) {
 		//
 		var display = new ScrollPane(new Table(t -> {

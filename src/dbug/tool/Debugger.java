@@ -40,8 +40,6 @@ public class Debugger {
 			//
 			if (d.priority) {
 				v.set(d.type, d.value);
-				//
-				d.priority = false;
 			}
 		}
 		//
@@ -54,6 +52,23 @@ public class Debugger {
 				//
 				}).center().pad(4f);
 			})));
+		//
+		return v.value;
+	}
+	
+	//add debuggable object (writable)
+	public static Prov<?> dwo(Class<?> type, String name, Prov<?> val) {
+		var v = new Compound(type, val);
+		var table = v.actor();
+		//
+		if (writable.containsKey(name)) {
+			var d = writable.get(name);
+			//
+			v.prioritize(d);
+			table = d.actor();
+		}
+		//
+		debugger.put(name, display(Color.maroon, name, table));
 		//
 		return v.value;
 	}
