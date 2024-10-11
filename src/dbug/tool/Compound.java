@@ -10,14 +10,17 @@ import mindustry.ui.*;
 
 import static dbug.MDBugVars.*;
 
-public class Compound extends Debuggable{
+public class Compound extends Debuggable {
 	//
 	private OrderedMap<String, Debuggable> components = new OrderedMap<>();
 	
 	public Compound(Class<?> type, Prov<?> val) {
+		super(type, val);
+		//
 		set(type, val);
 	}
 	
+	@Override
 	public void set(Class<?> type, Prov<?> val) {
 		this.type = type;
 		this.value = val;
@@ -63,7 +66,7 @@ public class Compound extends Debuggable{
 				})));
 				t.row();
 			}
-			t.button("Set", () -> toggle = true);
+			t.button("Set", () -> priority = true);
 		});
 	}
 }
