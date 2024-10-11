@@ -5,15 +5,14 @@ import arc.graphics.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
+import mindustry.gen.*;
+import mindustry.ui.*;
 
 import static dbug.MDBugVars.*;
 
-public class Compound {
-	public Class<?> type;
-	public Prov<?> value;
+public class Compound extends Debuggable{
 	//
 	private OrderedMap<String, Debuggable> components = new OrderedMap<>();
-	private boolean toggle;
 	
 	public Compound(Class<?> type, Prov<?> val) {
 		set(type, val);
@@ -42,10 +41,10 @@ public class Compound {
 		for (var k : components.keys()) {
 			var comp = components.get(k);
 			//
-			if (toggle) {
+			if (priority) {
 				//
 				p.set(comp.type, comp.value);
-				toggle = false;
+				priority = false;
 			}
 		}
 	}
