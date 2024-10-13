@@ -41,7 +41,7 @@ public class Compound extends Debuggable {
 	}
 	
 	public void prioritize(Compound p) {
-		if (p.type == type && priority) {
+		if (type.isInstance(p) && priority) {
 			set(p.type, p.value);
 			//
 			priority = false;

@@ -88,7 +88,7 @@ public class Debugger {
 				}).pad(2f, 2f, 0f, 2f);
 				//
 				view.add(name, Styles.outlineLabel).center().pad(4f);
-			}).grow();
+			}).growX();
 			//
 			panel.add(val).padLeft(8f).size(160f, 48f);
 		});
@@ -104,12 +104,12 @@ public class Debugger {
 					tag.add(writable.get(name).type.getSimpleName(), Styles.outlineLabel).pad(4f);
 					tag.setColor(Color.royal);
 					//
-				}).pad(2f, 2f, 0f, 2f);
+				}).pad(2f, 2f, 0f, 2f).height(24f);
 				//
 				view.add(name, Styles.outlineLabel).center().pad(4f);
-			}).grow().row();
+			}).growX().row();
 			//
-			panel.add(val).pad(1).width(148f);
+			panel.add(val).pad(2f).width(148f);
 		});
 	}
 }
