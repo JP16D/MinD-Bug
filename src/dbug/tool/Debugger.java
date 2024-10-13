@@ -103,7 +103,7 @@ public class Debugger {
 					tag.add(writable.get(name).type.getSimpleName(), Styles.outlineLabel).pad(4f);
 					tag.setColor(Color.royal);
 					//
-				}).pad(2f, 2f, 0f, 2f).height(f);
+				}).pad(2f, 2f, 0f, 2f).height(48f);
 				//
 				view.add(name, Styles.outlineLabel).center().pad(4f);
 			}).growX().row();
