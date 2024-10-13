@@ -64,13 +64,13 @@ public class Compound extends Debuggable {
 				t.add(Debugger.display(Color.darkGray, k, new Table(comp -> {
 					comp.field(v.value.get().toString(), Styles.defaultField, (String txt) -> {
 						//
-						v.parse(v.type, txt);
+						components.put(k, v.parse(v.type, txt));
 						//
 					}).center().pad(4f);
 				}))).left().pad(4f).row();
 			}
-			t.button("Set", () -> priority = true).right();
-			t.button("×", () -> revert = true).right();
+			t.button("Set", () -> priority = true).right().pad(2f);
+			t.button("×", () -> revert = true).right().pad(2f);
 		}) ;
 	}
 }

@@ -86,8 +86,8 @@ public class Debugger {
 					//
 				}).pad(2f, 2f, 0f, 2f);
 				//
-				view.add(name, Styles.outlineLabel).center().pad(4f);
-			}).growX();
+				view.add(name, Styles.outlineLabel).pad(4f).center();
+			}).grow();
 			//
 			panel.add(val).padLeft(8f).size(160f, 48f);
 		});
@@ -100,15 +100,15 @@ public class Debugger {
 				view.setColor(color);
 				if (writable.containsKey(name)) view.table(Tex.whiteui, tag -> {
 					//
-					tag.add(writable.get(name).type.getSimpleName(), Styles.outlineLabel).pad(4f);
+					tag.add(writable.get(name).type.getSimpleName(), Styles.outlineLabel).pad(4f).center();
 					tag.setColor(Color.royal);
 					//
-				}).pad(2f, 2f, 0f, 2f).height(48f);
+				}).pad(2f, 2f, 0f, 2f).height(24f);
 				//
-				view.add(name, Styles.outlineLabel).center().pad(4f);
-			}).growX().row();
+				view.add(name, Styles.outlineLabel).pad(4f).center();
+			}).grow().row();
 			//
-			panel.add(val).pad(2f).width(148f);
+			panel.add(val).pad(4f).width(148f);
 		});
 	}
 }
