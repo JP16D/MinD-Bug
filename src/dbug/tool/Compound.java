@@ -59,7 +59,7 @@ public class Compound extends Debuggable {
 						v.parse(v.type, txt);
 						//
 					}).center().pad(4f);
-				}))).left().row().pad(4f);
+				}))).left().pad(4f).row();
 			}
 			t.button("Set", () -> priority = true).right();
 		}) ;
