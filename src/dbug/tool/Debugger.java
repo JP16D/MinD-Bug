@@ -68,6 +68,8 @@ public class Debugger {
 			table = d.actor();
 		}
 		//
+		writable.put(name, v);
+		//
 		debugger.put(name, table(Color.maroon, name, table));
 		//
 		return v.value;
@@ -107,7 +109,7 @@ public class Debugger {
 				view.add(name, Styles.outlineLabel).center().pad(4f);
 			}).grow().row();
 			//
-			panel.add(val).pad(2f).width(148f);
+			panel.add(val).pad(1).width(148f);
 		});
 	}
 }
