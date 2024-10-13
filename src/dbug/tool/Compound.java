@@ -42,21 +42,14 @@ public class Compound extends Debuggable {
 	
 	public void prioritize(Compound p) {
 		if (priority) {
-			for (var k : components.keys()) {
-				var comp = components.get(k);
-				//
-				if (priority) {
-					//
-					p.set(comp.type, comp.value);
-				}
-			}
+			p.set(type, value);
 			//
 			priority = false;
 		}
 	}
 	
 	public Table actor() {
-		return new Table(Tex.pane, t -> {
+		return new Table(t -> {
 			for (var k : components.keys()) {
 				var v = components.get(k);
 				//
@@ -66,10 +59,9 @@ public class Compound extends Debuggable {
 						v.parse(v.type, txt);
 						//
 					}).center().pad(4f);
-				})));
-				t.row();
+				}))).left().row().pad(4f);
 			}
-			t.button("Set", () -> priority = true);
-		});
+			t.button("Set", () -> priority = true).right();
+		}) ;
 	}
 }
