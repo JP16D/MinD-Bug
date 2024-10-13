@@ -11,8 +11,9 @@ import mindustry.ui.*;
 import static dbug.MDBugVars.*;
 
 public class Compound extends Debuggable {
-	//
 	private OrderedMap<String, Debuggable> components = new OrderedMap<>();
+	//
+	boolean revert;
 	
 	public Compound(Class<?> type, Prov<?> val) {
 		super(type, val);
@@ -28,6 +29,7 @@ public class Compound extends Debuggable {
 		var fields = type.getFields();
 		//
 		for (var c : fields) {
+			if (Modifier.isFinal(c.getModifiers())) continue;
 			var v = new Debuggable(c.getDeclaringClass(), () -> {
 				try {
 					return c.get(val.get());
@@ -41,10 +43,15 @@ public class Compound extends Debuggable {
 	}
 	
 	public void prioritize(Compound p) {
-		if (type.isInstance(p) && priority) {
+		if (!type.isInstance(p)) return;
+		if (priority) {
 			set(p.type, p.value);
 			//
 			priority = false;
+		} else if (revert) {
+			p.set(type, value);
+			//
+			revert = false;
 		}
 	}
 	
@@ -62,6 +69,7 @@ public class Compound extends Debuggable {
 				}))).left().pad(4f).row();
 			}
 			t.button("Set", () -> priority = true).right();
+			t.button("×", () -> revert = true).right();
 		}) ;
 	}
 }
