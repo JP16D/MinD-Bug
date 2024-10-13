@@ -9,6 +9,7 @@ import mindustry.gen.*;
 import mindustry.ui.*;
 
 import static dbug.MDBugVars.*;
+import static java.lang.reflect.Modifier.*;
 
 public class Compound extends Debuggable {
 	private OrderedMap<String, Debuggable> components = new OrderedMap<>();
@@ -29,7 +30,7 @@ public class Compound extends Debuggable {
 		var fields = type.getFields();
 		//
 		for (var c : fields) {
-			if (Modifier.isFinal(c.getModifiers())) continue;
+			if (isFinal(c.getModifiers())) continue;
 			var v = new Debuggable(c.getDeclaringClass(), () -> {
 				try {
 					return c.get(val.get());
