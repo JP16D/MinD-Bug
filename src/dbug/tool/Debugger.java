@@ -66,9 +66,8 @@ public class Debugger {
 			//
 			v.prioritize(d);
 			table = d.actor();
-		}
-		//
-		writable.put(name, v);
+			//
+		} else writable.put(name, v);
 		//
 		debugger.put(name, table(Color.maroon, name, table));
 		//
@@ -104,7 +103,7 @@ public class Debugger {
 					tag.add(writable.get(name).type.getSimpleName(), Styles.outlineLabel).pad(4f);
 					tag.setColor(Color.royal);
 					//
-				}).pad(2f, 2f, 0f, 2f).height(24f);
+				}).pad(2f, 2f, 0f, 2f).height(f);
 				//
 				view.add(name, Styles.outlineLabel).center().pad(4f);
 			}).growX().row();
