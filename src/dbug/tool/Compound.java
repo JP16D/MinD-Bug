@@ -13,6 +13,7 @@ import static dbug.MDBugVars.*;
 
 public class Compound extends Debuggable {
 	protected OrderedMap<String, Debuggable> components = new OrderedMap<>();
+	protected OrderedMap<String, Field> fields = new OrderedMap<>();
 	//
 	boolean revert;
 	
@@ -65,7 +66,7 @@ public class Compound extends Debuggable {
 					comp.field(v.value.get().toString(), Styles.defaultField, (String txt) -> {
 						//
 						try {
-							Field.set(value.get(), v.parse(v.type, txt).value.get());
+							field.get(k).set(value.get(), v.parse(v.type, txt).value.get());
 						} catch (Exception e) {
 							//warn();
 						};
