@@ -67,6 +67,7 @@ public class Compound extends Debuggable {
 						//
 						try {
 							fields.get(k).set(value.get(), v.parse(v.type, txt).value.get());
+							//
 						} catch (Exception e) {
 							//warn();
 						};
@@ -74,6 +75,9 @@ public class Compound extends Debuggable {
 					}).center().pad(4f);
 				}))).left().pad(4f).row();
 			}
+			//
+			set(type, value);
+			//
 			t.button("Set", () -> priority = true).right().pad(2f);
 			t.button("×", () -> revert = true).right().pad(2f);
 		}) ;
