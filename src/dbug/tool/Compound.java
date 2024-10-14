@@ -66,7 +66,7 @@ public class Compound extends Debuggable {
 					comp.field(v.value.get().toString(), Styles.defaultField, (String txt) -> {
 						//
 						try {
-							field.get(k).set(value.get(), v.parse(v.type, txt).value.get());
+							fields.get(k).set(value.get(), v.parse(v.type, txt).value.get());
 						} catch (Exception e) {
 							//warn();
 						};
