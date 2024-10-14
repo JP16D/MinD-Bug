@@ -7,12 +7,12 @@ import arc.scene.ui.layout.*;
 import arc.struct.*;
 import mindustry.gen.*;
 import mindustry.ui.*;
+import java.lang.reflect.*;
 
 import static dbug.MDBugVars.*;
-import static java.lang.reflect.Modifier.*;
 
 public class Compound extends Debuggable {
-	private OrderedMap<String, Debuggable> components = new OrderedMap<>();
+	protected OrderedMap<String, Debuggable> components = new OrderedMap<>();
 	//
 	boolean revert;
 	
@@ -30,7 +30,7 @@ public class Compound extends Debuggable {
 		var fields = type.getFields();
 		//
 		for (var c : fields) {
-			if (isFinal(c.getModifiers())) continue;
+			if (Modifier.isFinal(c.getModifiers())) continue;
 			var v = new Debuggable(c.getDeclaringClass(), () -> {
 				try {
 					return c.get(val.get());
@@ -64,7 +64,11 @@ public class Compound extends Debuggable {
 				t.add(Debugger.display(Color.darkGray, k, new Table(comp -> {
 					comp.field(v.value.get().toString(), Styles.defaultField, (String txt) -> {
 						//
-						components.put(k, v.parse(v.type, txt));
+						try {
+							Field.set(value.get(), v.parse(v.type, txt).value.get());
+						} catch (Exception e) {
+							//warn();
+						};
 						//
 					}).center().pad(4f);
 				}))).left().pad(4f).row();

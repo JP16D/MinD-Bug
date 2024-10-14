@@ -84,7 +84,7 @@ public class Debugger {
 					tag.add(writable.get(name).type.getSimpleName(), Styles.outlineLabel).pad(4f);
 					tag.setColor(Color.royal);
 					//
-				}).pad(2f, 2f, 0f, 2f);
+				}).pad(4f);
 				//
 				view.add(name, Styles.outlineLabel).pad(4f).center();
 			}).grow();
@@ -100,10 +100,10 @@ public class Debugger {
 				view.setColor(color);
 				if (writable.containsKey(name)) view.table(Tex.whiteui, tag -> {
 					//
-					tag.add(writable.get(name).type.getSimpleName(), Styles.outlineLabel).pad(4f).center();
+					tag.add(writable.get(name).type.getSimpleName(), Styles.outlineLabel).pad(4f);
 					tag.setColor(Color.royal);
 					//
-				}).pad(2f, 2f, 0f, 2f).height(24f);
+				}).pad(4f).height(32f);
 				//
 				view.add(name, Styles.outlineLabel).pad(4f).center();
 			}).grow().row();
