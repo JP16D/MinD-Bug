@@ -68,7 +68,7 @@ public class Debugger {
 		//
 		writable.put(name, v);
 		//
-		debugger.put(name, table(Color.maroon, name, v.table));
+		debugger.put(name, table(Color.maroon, name, v.actor()));
 		//
 		return v.value;
 	}
