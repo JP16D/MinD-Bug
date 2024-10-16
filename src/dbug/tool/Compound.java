@@ -21,6 +21,7 @@ public class Compound extends Debuggable {
 		super(type, val);
 		//
 		set(type, val);
+		archive.putAll(components.copy());
 	}
 	
 	@Override
@@ -46,37 +47,42 @@ public class Compound extends Debuggable {
 	
 	public void prioritize(Compound p) {
 		if (!type.isInstance(p)) return;
+		//
 		if (priority) {
-			set(p.type, p.value);
+			for (var k : archive.keys()) {
+				var v = archive.get(k);
+				components.put(k, v);
+				//
+				try {
+					fields.get(k).set(value.get(), v);
+				} catch (Exception e) {
+					//warn();
+				}
+			}
 			//
 			priority = false;
-		} else if (revert) {
-			p.set(type, value);
 			//
-			revert = false;
+		} else if (revert) {
+			archive.putAll(p.archive);
 		}
+		//
+		p.set(type, value);
+		p.archive.putAll(archive);
 	}
 	
 	public Table actor() {
 		return new Table(t -> {
-			for (var k : components.keys()) {
-				var v = components.get(k);
+			for (var k : archive.keys()) {
+				var v = archive.get(k);
 				//
 				t.add(Debugger.display(Color.darkGray, k, new Table(comp -> {
 					comp.field(v.value.get().toString(), Styles.defaultField, (String txt) -> {
 						//
-						try {
-							fields.get(k).set(value.get(), v.parse(v.type, txt).value.get());
-							//
-						} catch (Exception e) {
-							//warn();
-						};
+						v.parse(v.type, txt);
 						//
 					}).center().pad(4f);
 				}))).left().pad(4f).row();
 			}
-			//
-			set(type, value);
 			//
 			t.button("Set", () -> priority = true).right().pad(2f);
 			t.button("×", () -> revert = true).right().pad(2f);

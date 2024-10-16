@@ -59,17 +59,16 @@ public class Debugger {
 	//add debuggable object (writable)
 	public static Prov<?> dwo(Class<?> type, String name, Prov<?> val) {
 		var v = new Compound(type, val);
-		var table = v.actor();
 		//
 		if (writable.containsKey(name)) {
 			var d = (Compound) writable.get(name);
 			//
-			v.prioritize(d);
-			table = d.actor();
-			//
-		} else writable.put(name, v);
+			d.prioritize(v);
+		}
 		//
-		debugger.put(name, table(Color.maroon, name, table));
+		writable.put(name, v);
+		//
+		debugger.put(name, table(Color.maroon, name, v.table));
 		//
 		return v.value;
 	}
