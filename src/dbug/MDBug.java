@@ -29,6 +29,8 @@ public class MDBug extends Mod {
 					call(caller);
 				 }
 			}
+			//
+			(new Experiment()).loadTest();
 		});
 	}
 	
