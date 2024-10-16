@@ -1,7 +1,8 @@
 package dbug;
 
 import arc.math.geom.*;
-import dbug.tool.*;
+
+import static dbug.tool.Debugger.*;
 
 public class Experimental {
 	public Vec2 test = new Vec2();

@@ -30,7 +30,7 @@ public class MDBug extends Mod {
 				 }
 			}
 			//
-			(new Experiment()).loadTest();
+			(new Experimental()).loadTest();
 		});
 	}
 	
