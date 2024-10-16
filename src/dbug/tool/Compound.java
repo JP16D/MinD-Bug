@@ -13,6 +13,7 @@ import static dbug.MDBugVars.*;
 
 public class Compound extends Debuggable {
 	protected OrderedMap<String, Debuggable> components = new OrderedMap<>();
+	protected OrderedMap<String, Debuggable> archive = new OrderedMap<>();
 	protected OrderedMap<String, Field> fields = new OrderedMap<>();
 	//
 	boolean revert;
