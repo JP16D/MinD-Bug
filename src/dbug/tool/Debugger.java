@@ -31,48 +31,20 @@ public class Debugger {
 		return val;
 	}
 	
-	//add debuggable primitive value (writable)
-	public static Prov<?> dw(Class<?> type, String name, Prov<?> val) {
-		var v = new Debuggable(type, val);
-		//
-		if (writable.containsKey(name)) {
-			var d = writable.get(name);
-			//
-			if (d.priority) {
-				v.set(d.type, d.value);
-			}
-		}
-		//
-		writable.put(name, v);
-		//
-		debugger.put(name, display(Color.maroon, name, new Table(Tex.pane, t -> {
-				t.field(v.value.get().toString(), Styles.defaultField, (String txt) -> {
-					//
-					writable.put(name, v.parse(type, txt));
-				//
-				}).center().pad(4f);
-			})));
-		//
-		return v.value;
-	}
-	
 	//add debuggable object (writable)
-	public static Prov<?> dwo(Class<?> type, String name, Prov<?> val) {
-		var v = new Compound(type, val);
-		//
-		if (writable.containsKey(name)) {
-			var d = (Compound) writable.get(name);
-			//
-			d.prioritize(v);
-		}
+	public static Prov<?> dw(Class<?> type, String name, Prov<?> val) {
+		var v = writable.containsKey(name) ? writable.get(name) : new Debuggable(type, val);
 		//
 		writable.put(name, v);
 		//
-		debugger.put(name, table(Color.maroon, name, v.actor()));
+		debugger.put(name, table(Color.maroon, name, new Table(Tex.pane, t -> {
+				v.actor(t);
+		})));
 		//
 		return v.value;
 	}
 	
+	//display interface
 	public static Table display(Color color, String name, Table val) {
 		return new Table(Tex.pane, panel -> {
 			//
@@ -92,6 +64,7 @@ public class Debugger {
 		});
 	}
 	
+	//table display interface
 	public static Table table(Color color, String name, Table val) {
 		return new Table(Tex.pane, panel -> {
 			//

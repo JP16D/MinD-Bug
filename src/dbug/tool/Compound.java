@@ -1,4 +1,4 @@
-package dbug.tool;
+/*package dbug.tool;
 
 import arc.func.*;
 import arc.graphics.*;
@@ -63,12 +63,9 @@ public class Compound extends Debuggable {
 			//
 			priority = false;
 			//
-		} else if (revert) {
-			archive.putAll(p.archive);
-		}
+		} else if
 		//
 		p.set(type, value);
-		p.archive.putAll(archive);
 	}
 	
 	public Table actor() {
@@ -89,4 +86,4 @@ public class Compound extends Debuggable {
 			t.button("×", () -> revert = true).right().pad(2f);
 		}) ;
 	}
-}
+}*/
