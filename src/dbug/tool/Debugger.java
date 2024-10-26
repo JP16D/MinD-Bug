@@ -35,7 +35,7 @@ public class Debugger {
 	public static Prov<?> dw(Class<?> type, String name, Prov<?> val) {
 		var v = new Debuggable(type, val);
 		//
-		if (writable.containsKey(name)) v = writable.get(name)
+		if (writable.containsKey(name)) v = writable.get(name);
 		//
 		writable.put(name, v);
 		//
