@@ -27,10 +27,10 @@ public class Debuggable {
 	
 	//some sort of parsing shenanigans
 	public Pair<Class<?>, Prov<?>> parse(Class<?> type, String val) {
-		var v = new Pair<Class<?>, Prov<?>>(type, null);
+		var v = new Pair<Class<?>, Prov<?>>(type, () -> null);
 		//
 		if (type == String.class) {
-			return v.set(type, () -> val);
+			v.set(type, () -> val);
 			//
 		} else if (type.isPrimitive()) {
 			//
@@ -40,7 +40,7 @@ public class Debuggable {
 				//
 				if (!type.isInstance(method.getReturnType())) {
 					//
-					return v.set(type, () -> {
+					v.set(type, () -> {
 						try {
 							return method.invoke(type, val);
 						} catch (Exception e) {
@@ -59,18 +59,20 @@ public class Debuggable {
 		set(pair.v1, pair.v2);
 	}
 	
-	public void set(Class<?> type, Prov<?> val) {
-		this.value = val;
+	public void set(Class<?> type, Prov<?> value) {
+		this.value = value;
 		this.type = type;
 		//
-		if (!type.isPrimitive()) for (var f : type.getFields()) {
+		if (type.isPrimitive()) return; 
+		//
+		for (var f : type.getFields()) {
 			//
-			if (Modifier.isFinal(f.getModifiers()) || !f.getDeclaringClass().isPrimitive()) continue;
+			if (Modifier.isFinal(f.getModifiers())) continue;
 			//
 			fields.put(f, () -> {
 				try {
 					return f.get(val.get());
-				} catch (Exception ex) {
+				} catch (Exception e) {
 					return null;
 				}
 			});
