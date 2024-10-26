@@ -98,9 +98,8 @@ public class Debuggable {
 						}).center().pad(4f);
 					}))).row();
 				}
-			}
-			//
-			t.button("Set", () -> {
+				//
+				t.button("Set", () -> {
 				for (var k : fields.keys()) {
 					try {
 						k.set(value.get(), fields.get(k).get());
@@ -108,7 +107,8 @@ public class Debuggable {
 						//warn();
 					}
 				}
-			}).right().pad(2f);
+				}).right().pad(2f);
+			}));
 		}
 	}
 	
