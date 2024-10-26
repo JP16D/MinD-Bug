@@ -33,13 +33,13 @@ public class Debugger {
 	
 	//add debuggable object (writable)
 	public static Prov<?> dw(Class<?> type, String name, Prov<?> val) {
-		var v = writable.containsKey(name) ? writable.get(name) : new Debuggable(type, val);
+		var v = new Debuggable(type, val);
+		//
+		if (writable.containsKey(name)) v = writable.get(name)
 		//
 		writable.put(name, v);
 		//
-		debugger.put(name, table(Color.maroon, name, new Table(Tex.pane, t -> {
-				v.field(t);
-		})));
+		debugger.put(name, table(name));
 		//
 		return v.value;
 	}

@@ -77,23 +77,27 @@ public class Debuggable {
 		}
 	}
 	
-	public void field(Table t) {
+	public Table table(String name) {
 		if (type.isPrimitive()) {
-			t.field(value.get().toString(), Styles.defaultField, (String txt) -> {
-				//
-				set(parse(type, txt));
-				//
-			}).center().pad(4f);
+			return Debugger.display(Color.maroon, name, new Table(t -> {
+				t.field(value.get().toString(), Styles.defaultField, (String txt) -> {
+					//
+					set(parse(type, txt));
+					//
+				}).center().pad(4f)
+			}));
 			//
 		} else {
-			for (var k : fields.keys()) {
-				Debugger.display(Color.darkGray, k.getName(), new Table(ft -> {
-					ft.field(fields.get(k).get().toString(), Styles.defaultField, (String txt) -> {
-						//
-						fields.put(k, parse(k.getDeclaringClass(), txt).v2);
-						//
-					}).center().pad(4f).row();
-				}));
+			return Debugger.table(Color.maroon, name, new Table(t -> {
+				for (var k : fields.keys()) {
+					t.add(Debugger.display(Color.darkGray, k.getName(), new Table(ft -> {
+						ft.field(fields.get(k).get().toString(), Styles.defaultField, (String txt) -> {
+							//
+							fields.put(k, parse(k.getDeclaringClass(), txt).v2);
+							//
+						}).center().pad(4f);
+					}))).row();
+				}
 			}
 			//
 			t.button("Set", () -> {
