@@ -87,7 +87,7 @@ public class Debuggable {
 			//
 		} else {
 			for (var k : fields.keys()) {
-				Debugger.display(Color.darkGray, k, new Table(ft -> {
+				Debugger.display(Color.darkGray, k.getName(), new Table(ft -> {
 					ft.field(fields.get(k).get().toString(), Styles.defaultField, (String txt) -> {
 						//
 						fields.put(k, parse(k.getDeclaringClass(), txt).v2);
