@@ -39,7 +39,7 @@ public class Debugger {
 		//
 		writable.put(name, v);
 		//
-		debugger.put(name, table(name));
+		debugger.put(name, v.table(name));
 		//
 		return v.value;
 	}
