@@ -38,7 +38,7 @@ public class Debugger {
 		writable.put(name, v);
 		//
 		debugger.put(name, table(Color.maroon, name, new Table(Tex.pane, t -> {
-				v.actor(t);
+				v.field(t);
 		})));
 		//
 		return v.value;

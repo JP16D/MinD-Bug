@@ -3,6 +3,9 @@ package dbug.tool;
 import arc.func.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
+import arc.struct.*;
+import arc.styles.*;
+import arc.util.*;
 import java.lang.reflect.*;
 
 import java.lang.*;
@@ -23,31 +26,32 @@ public class Debuggable {
 	
 	//some sort of parsing shenanigans
 	public Pair<Class<?>, Prov<?>> parse(Class<?> type, String val) {
-		
+		var v = new Pair<Class<?>, Prov<?>>(type, null);
+		//
 		if (type == String.class) {
-			return new Pair(type, () -> val);
+			return new v.set(type, val);
 			//
 		} else if (type.isPrimitive()) {
-			var v = () -> null;
 			//
 			try {
 				//
 				var method = type.getMethod("valueOf", String.class);
 				//
 				if (!type.isInstance(method.getReturnType())) {
-					v = () -> {
+					//
+					return v.set(type, () -> {
 						try {
 							return method.invoke(type, val);
 						} catch (Exception e) {
 							return null;
 							//warn();
 						}
-					};
+					});
 				}
 			} catch (Exception e) {/*impossible*/}
-			//
-			return new Pair(type, v);
 		}
+		//
+		return v;
 	}
 	
 	public void set(Pair<Class<?>, Prov<?>> pair) {
@@ -58,9 +62,8 @@ public class Debuggable {
 		this.value = val;
 		this.type = type;
 		//
-		var fields = type.getFields();
-		//
-		if (!type.isPrimitive()) for (var f : fields) {
+		if (!type.isPrimitive()) for (var f : type.getFields()) {
+			//
 			if (Modifier.isFinal(f.getModifiers()) || !f.getDeclaringClass().isPrimitive()) continue;
 			//
 			fields.put(f, () -> {
@@ -82,15 +85,15 @@ public class Debuggable {
 			}).center().pad(4f);
 			//
 		} else {
-			Debugger.display(Color.darkGray, k, new Table(ft -> {
-				for (var k : fields.keys()) {
+			for (var k : fields.keys()) {
+				Debugger.display(Color.darkGray, k, new Table(ft -> {
 					ft.field(fields.get(k).get().toString(), Styles.defaultField, (String txt) -> {
 						//
 						fields.put(k, parse(k.getDeclaringClass(), txt).v2);
 						//
 					}).center().pad(4f).row();
-				}
-			}));
+				}));
+			}
 			//
 			t.button("Set", () -> {
 				for (var k : fields.keys()) {
@@ -110,8 +113,14 @@ public class Debuggable {
 		public V2 v2;
 		//
 		public Pair(V1 val1, V2 val2) {
+			set(val1, val2);
+		}
+		
+		public Pair set(V1 val1, V2 val2) {
 			v1 = val1;
 			v2 = val2;
+			//
+			return this;
 		}
 	}
 }
