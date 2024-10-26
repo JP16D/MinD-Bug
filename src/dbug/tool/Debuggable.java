@@ -30,7 +30,7 @@ public class Debuggable {
 		var v = new Pair<Class<?>, Prov<?>>(type, null);
 		//
 		if (type == String.class) {
-			return v.set(type, val);
+			return v.set(type, () -> val);
 			//
 		} else if (type.isPrimitive()) {
 			//
