@@ -1,11 +1,12 @@
 package dbug.tool;
 
 import arc.func.*;
+import arc.graphics.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
-import arc.styles.*;
 import arc.util.*;
+import mindustry.ui.*;
 import java.lang.reflect.*;
 
 import java.lang.*;
@@ -29,7 +30,7 @@ public class Debuggable {
 		var v = new Pair<Class<?>, Prov<?>>(type, null);
 		//
 		if (type == String.class) {
-			return new v.set(type, val);
+			return v.set(type, val);
 			//
 		} else if (type.isPrimitive()) {
 			//
