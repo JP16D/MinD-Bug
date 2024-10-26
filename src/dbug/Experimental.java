@@ -9,5 +9,7 @@ public class Experimental {
 	
 	public void loadTest() {
 		test = (Vec2) dw(Vec2.class, "localTest", () -> test).get();
+		test.x = (float) dw(float.class, "local-x", () -> test.x);
+		test.y = (float) dw(float.class, "local-y", () -> test.y);
 	}
 }
