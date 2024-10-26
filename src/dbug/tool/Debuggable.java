@@ -84,7 +84,7 @@ public class Debuggable {
 					//
 					set(parse(type, txt));
 					//
-				}).center().pad(4f)
+				}).center().pad(4f);
 			}));
 			//
 		} else {
