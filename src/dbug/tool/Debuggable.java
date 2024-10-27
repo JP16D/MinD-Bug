@@ -66,7 +66,7 @@ public class Debuggable {
 					t.add(Debugger.display(Color.darkGray, k.getName(), new Table(ft -> {
 						ft.field(fields.get(k).get().toString(), Styles.defaultField, (String txt) -> {
 							//
-							fields.put(k, Debugger.dv(k + "-parser", (Prov) parse(k.getType(), fields.get(k), txt).v2));
+							fields.put(k, Debugger.dv(k + "-parser", parse(k.getType(), fields.get(k), txt).v2));
 							//
 						}).center().pad(4f);
 					}))).pad(4f).row();
