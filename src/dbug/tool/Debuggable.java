@@ -33,13 +33,13 @@ public class Debuggable {
 		this.value = value;
 		this.type = type;
 		//
-		if ((boolean) Debugger.dv("wrapper", () -> isWrapper(type)).get()) return;
+		if (isWrapper(type)) return;
 		//
 		for (var f : type.getFields()) {
 			//
 			if (Modifier.isFinal(f.getModifiers())) continue;
 			//
-			fields.put((Field) Debugger.dv("k-" + f.getName(), () -> f).get(), () -> {
+			fields.put(f, () -> {
 				try {
 					return f.get(value.get());
 				} catch (Exception e) {
@@ -66,7 +66,7 @@ public class Debuggable {
 					t.add(Debugger.display(Color.darkGray, k.getName(), new Table(ft -> {
 						ft.field(fields.get(k).get().toString(), Styles.defaultField, (String txt) -> {
 							//
-							fields.put(k, Debugger.dv(k + "-parse", parse(k.getType(), fields.get(k), txt).v2));
+							fields.put(k, parse(wrap(k.getType()), fields.get(k), txt).v2);
 							//
 						}).center().pad(4f);
 					}))).pad(4f).row();
@@ -96,6 +96,22 @@ public class Debuggable {
 		return false;
 	}
 	
+	public static Class<?> wrap(Class<?> type) {
+		switch (type) {
+			case boolean.class : return Boolean.class;
+			case byte.class : return Byte.class;
+			case char.class : return Character.class;
+			case short.class : return Short.class;
+			case int.class : return Integer.class;
+			case long.class : return Long.class;
+			case float.class : return Float.class;
+			case double.class : return Double.class;
+			case void.class : return Void.class;
+			//
+			default : return type;
+		}
+	}
+	
 	//some sort of parsing shenanigans
 	public static Pair<Class<?>, Prov<?>> parse(Class<?> type, Prov<?> def, String val) {
 		var v = new Pair<Class<?>, Prov<?>>(type, def);
@@ -103,23 +119,19 @@ public class Debuggable {
 		if (type == String.class) {
 			v.set(type, () -> val);
 			//
-		} else if (isWrapper(type)) {
+		} else {
 			//
 			try {
 				//
 				var method = type.getMethod("valueOf", String.class);
-				//
-				if (!type.isInstance(method.getReturnType())) {
-					//
-					v.set(type, () -> {
-						try {
-							return method.invoke(type, val);
-						} catch (Exception e) {
-							return def.get();
-							//warn();
-						}
-					});
-				}
+				v.set(type, () -> {
+					try {
+						return method.invoke(type, val);
+					} catch (Exception e) {
+						return def.get();
+						//warn();
+					}
+				});
 			} catch (Exception e) {/*impossible*/}
 		}
 		//
