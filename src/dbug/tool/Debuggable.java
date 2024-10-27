@@ -89,7 +89,7 @@ public class Debuggable {
 	public static boolean isWrapper(Class<?> type) {
 		try {
 			 var t = type.getField("TYPE");
-			 return t.get(type).isPrimitive();
+			 return ((Class) t.get(type)).isPrimitive();
 			//
 		} catch (Exception e) {/*do nothing*/}
 		//
@@ -98,7 +98,7 @@ public class Debuggable {
 	
 	public static Class<?> wrap(Class<?> type) {
 		switch (type) {
-			case boolean.class : return Boolean.class;
+			case boolean.class : return Class<Boolean>;
 			case byte.class : return Byte.class;
 			case char.class : return Character.class;
 			case short.class : return Short.class;
@@ -106,7 +106,7 @@ public class Debuggable {
 			case long.class : return Long.class;
 			case float.class : return Float.class;
 			case double.class : return Double.class;
-			case void.class : return Void.class;
+			case void.class : return Class<Void>;
 			//
 			default : return type;
 		}
