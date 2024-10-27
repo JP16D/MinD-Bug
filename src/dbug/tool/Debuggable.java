@@ -110,7 +110,7 @@ public class Debuggable {
 		);
 			
 		for (var k : map.keys()) {
-			if (type == k) return map.get(k);
+			if (type == k) return (Class) map.get(k);
 		}
 		//
 		return type;
