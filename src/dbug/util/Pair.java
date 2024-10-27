@@ -1,4 +1,4 @@
-package dbug.tool;
+package dbug.util;
 
 public class Pair<V1, V2>  {
 	public V1 v1;
