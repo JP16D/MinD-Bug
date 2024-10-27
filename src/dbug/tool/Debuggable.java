@@ -96,19 +96,24 @@ public class Debuggable {
 		return false;
 	}
 	
-	public static Class wrap(Class<?> type) {
-		switch (type) {
-			case boolean.class : return Boolean.class;
-			case byte.class : return Byte.class;
-			case char.class : return Character.class;
-			case short.class : return Short.class;
-			case int.class : return Integer.class;
-			case long.class : return Long.class;
-			case float.class : return Float.class;
-			case double.class : return Double.class;
-			case void.class : return Void.class;
+	public static Class<?> wrap(Class<?> type) {
+			var map = OrderedMap.of(
+				boolean.class, Boolean.class,
+				byte.class, Byte.class,
+				char.class, Character.class,
+				short.class, Short.class,
+				int.class, Integer.class,
+				long.class, Long.class,
+				float.class, Float.class,
+				double.class, Double.class,
+				void.class, Void.class
+			);
+				
+			for (var k : map.keys()) {
+				if (type == k) return map.get(k);
+			}
 			//
-			default : return type;
+			return type;
 		}
 	}
 	
