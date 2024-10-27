@@ -103,7 +103,7 @@ public class Debuggable {
 		if (type == String.class) {
 			v.set(type, () -> val);
 			//
-		} else (isWrapper(type)) {
+		} else if (isWrapper(type)) {
 			//
 			try {
 				//
