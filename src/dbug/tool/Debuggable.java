@@ -89,7 +89,7 @@ public class Debuggable {
 	public static boolean isWrapper(Class<?> type) {
 		try {
 			 var t = type.getField("TYPE");
-			 return ((Class) t.get(type)).isPrimitive();
+			 return t.get(type)).isPrimitive();
 			//
 		} catch (Exception e) {/*do nothing*/}
 		//
