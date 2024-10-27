@@ -63,7 +63,11 @@ public class Debuggable {
 		this.value = value;
 		this.type = type;
 		//
-		if (type.isPrimitive()) return; 
+		try {
+			if (type.getField("TYPE").get(type).isPrimitive()) return;
+			if (type.TYPE.isPrimitive()) return;
+			//
+		} catch (Exception e) {/*do nothing*/}
 		//
 		for (var f : type.getFields()) {
 			//
@@ -95,7 +99,7 @@ public class Debuggable {
 					t.add(Debugger.display(Color.darkGray, k.getName(), new Table(ft -> {
 						ft.field(fields.get(k).get().toString(), Styles.defaultField, (String txt) -> {
 							//
-							fields.put(k, parse(k.getDeclaringClass(), fields.get(k), txt).v2);
+							fields.put(k, parse(k.getType(), fields.get(k), txt).v2);
 							//
 						}).center().pad(4f);
 					}))).row();
