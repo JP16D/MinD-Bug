@@ -25,36 +25,7 @@ public class Debuggable {
 		set(type, val);
 	}
 	
-	//some sort of parsing shenanigans
-	public Pair<Class<?>, Prov<?>> parse(Class<?> type, Prov<?> def, String val) {
-		var v = new Pair<Class<?>, Prov<?>>(type, def);
-		//
-		if (type == String.class) {
-			v.set(type, () -> val);
-			//
-		} else {
-			//
-			try {
-				//
-				var method = type.getMethod("valueOf", String.class);
-				//
-				if (!type.isInstance(method.getReturnType())) {
-					//
-					v.set(type, () -> {
-						try {
-							return method.invoke(type, val);
-						} catch (Exception e) {
-							return def.get();
-							//warn();
-						}
-					});
-				}
-			} catch (Exception e) {/*impossible*/}
-		}
-		//
-		return v;
-	}
-	
+	//set up important values
 	public void set(Pair<Class<?>, Prov<?>> pair) {
 		set(pair.v1, pair.v2);
 	}
@@ -63,10 +34,7 @@ public class Debuggable {
 		this.value = value;
 		this.type = type;
 		//
-		try {
-			if (((Class) type.getField("TYPE").get(type)).isPrimitive()) return;
-			//
-		} catch (Exception e) {/*do nothing*/}
+		if (isWrapper(type)) return;
 		//
 		for (var f : type.getFields()) {
 			//
@@ -82,8 +50,9 @@ public class Debuggable {
 		}
 	}
 	
+	//table display
 	public Table table(String name) {
-		if (type.isPrimitive()) {
+		if (isWrapper(type)) {
 			return Debugger.display(Color.maroon, name, new Table(t -> {
 				t.field(value.get().toString(), Styles.defaultField, (String txt) -> {
 					//
@@ -115,6 +84,46 @@ public class Debuggable {
 				}).right().pad(2f);
 			}));
 		}
+	}
+	
+	//confirm if class is a primitive wrapper
+	public static boolean isWrapper(Class<?> type) {
+		try {
+			 var t = type.getField("TYPE");
+			 return ((Class) t.get(type)).isPrimitive();
+			//
+		} catch (Exception e) {/*do nothing*/} finally { return false;
+		}
+	}
+	
+	//some sort of parsing shenanigans
+	public static Pair<Class<?>, Prov<?>> parse(Class<?> type, Prov<?> def, String val) {
+		var v = new Pair<Class<?>, Prov<?>>(type, def);
+		//
+		if (type == String.class) {
+			v.set(type, () -> val);
+			//
+		} else (isWrapper(type)) {
+			//
+			try {
+				//
+				var method = type.getMethod("valueOf", String.class);
+				//
+				if (!type.isInstance(method.getReturnType())) {
+					//
+					v.set(type, () -> {
+						try {
+							return method.invoke(type, val);
+						} catch (Exception e) {
+							return def.get();
+							//warn();
+						}
+					});
+				}
+			} catch (Exception e) {/*impossible*/}
+		}
+		//
+		return v;
 	}
 	
 	//Object pairing class, stores a single pair of value without needing an object map
