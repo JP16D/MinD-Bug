@@ -5,11 +5,10 @@ import arc.graphics.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
-import arc.util.*;
 import mindustry.ui.*;
-import java.lang.reflect.*;
 
 import java.lang.*;
+import java.lang.reflect.*;
 
 public class Debuggable {
 	public OrderedMap<Field, Prov<?>> fields = new OrderedMap<>();
@@ -34,7 +33,7 @@ public class Debuggable {
 		this.value = value;
 		this.type = type;
 		//
-		if (isWrapper(type)) return;
+		if (Debugger.dv("wrapper", () -> isWrapper(type))) return;
 		//
 		for (var f : type.getFields()) {
 			//
