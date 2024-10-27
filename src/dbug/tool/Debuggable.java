@@ -71,7 +71,7 @@ public class Debuggable {
 			//
 			fields.put(f, () -> {
 				try {
-					return f.get(val.get());
+					return f.get(value.get());
 				} catch (Exception e) {
 					return null;
 				}
