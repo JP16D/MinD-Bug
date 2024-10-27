@@ -97,16 +97,17 @@ public class Debuggable {
 	}
 	
 	public static Class<?> wrap(Class<?> type) {
+		Class<?> t;
 		switch (type) {
-			case boolean.class : return Class<Boolean>;
-			case byte.class : return Byte.class;
-			case char.class : return Character.class;
-			case short.class : return Short.class;
-			case int.class : return Integer.class;
-			case long.class : return Long.class;
-			case float.class : return Float.class;
-			case double.class : return Double.class;
-			case void.class : return Class<Void>;
+			case boolean.class : return t = Boolean.class;
+			case byte.class : return t = Byte.class;
+			case char.class : return t = Character.class;
+			case short.class : return t = Short.class;
+			case int.class : return t = Integer.class;
+			case long.class : return t = Long.class;
+			case float.class : return t = Float.class;
+			case double.class : return t = Double.class;
+			case void.class : return t = Void.class;
 			//
 			default : return type;
 		}
