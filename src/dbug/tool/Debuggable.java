@@ -69,7 +69,7 @@ public class Debuggable {
 							fields.put(k, parse(k.getType(), fields.get(k), txt).v2);
 							//
 						}).center().pad(4f);
-					}))).row();
+					}))).pad(4f).row();
 				}
 				//
 				t.button("Set", () -> {
