@@ -7,7 +7,6 @@ import arc.scene.ui.layout.*;
 import arc.struct.*;
 import dbug.util.*;
 import mindustry.ui.*;
-
 import java.lang.*;
 import java.lang.reflect.*;
 

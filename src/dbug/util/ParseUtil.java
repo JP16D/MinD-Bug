@@ -1,6 +1,9 @@
 package dbug.util;
 
-import
+import arc.func.*;
+import arc.struct.*;
+import java.lang.*;
+import java.lang.reflect.*;
 
 public class ParseUtil {
 	//confirm if class is a primitive wrapper
