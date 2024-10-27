@@ -64,8 +64,7 @@ public class Debuggable {
 		this.type = type;
 		//
 		try {
-			if (type.getField("TYPE").get(type).isPrimitive()) return;
-			if (type.TYPE.isPrimitive()) return;
+			if (((Class) type.getField("TYPE").get(type)).isPrimitive()) return;
 			//
 		} catch (Exception e) {/*do nothing*/}
 		//
