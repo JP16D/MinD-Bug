@@ -97,24 +97,23 @@ public class Debuggable {
 	}
 	
 	public static Class<?> wrap(Class<?> type) {
-			var map = OrderedMap.of(
-				boolean.class, Boolean.class,
-				byte.class, Byte.class,
-				char.class, Character.class,
-				short.class, Short.class,
-				int.class, Integer.class,
-				long.class, Long.class,
-				float.class, Float.class,
-				double.class, Double.class,
-				void.class, Void.class
-			);
-				
-			for (var k : map.keys()) {
-				if (type == k) return map.get(k);
-			}
-			//
-			return type;
+		var map = OrderedMap.of(
+			boolean.class, Boolean.class,
+			byte.class, Byte.class,
+			char.class, Character.class,
+			short.class, Short.class,
+			int.class, Integer.class,
+			long.class, Long.class,
+			float.class, Float.class,
+			double.class, Double.class,
+			void.class, Void.class
+		);
+			
+		for (var k : map.keys()) {
+			if (type == k) return map.get(k);
 		}
+		//
+		return type;
 	}
 	
 	//some sort of parsing shenanigans
