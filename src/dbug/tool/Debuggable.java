@@ -26,13 +26,13 @@ public class Debuggable {
 	}
 	
 	//some sort of parsing shenanigans
-	public Pair<Class<?>, Prov<?>> parse(Class<?> type, String val) {
-		var v = new Pair<Class<?>, Prov<?>>(type, () -> null);
+	public Pair<Class<?>, Prov<?>> parse(Class<?> type, Prov<?> def, String val) {
+		var v = new Pair<Class<?>, Prov<?>>(type, def);
 		//
 		if (type == String.class) {
 			v.set(type, () -> val);
 			//
-		} else if (type.isPrimitive()) {
+		} else {
 			//
 			try {
 				//
@@ -44,7 +44,7 @@ public class Debuggable {
 						try {
 							return method.invoke(type, val);
 						} catch (Exception e) {
-							return null;
+							return def.get();
 							//warn();
 						}
 					});
@@ -84,7 +84,7 @@ public class Debuggable {
 			return Debugger.display(Color.maroon, name, new Table(t -> {
 				t.field(value.get().toString(), Styles.defaultField, (String txt) -> {
 					//
-					set(parse(type, txt));
+					set(parse(type, value, txt));
 					//
 				}).center().pad(4f);
 			}));
@@ -95,7 +95,7 @@ public class Debuggable {
 					t.add(Debugger.display(Color.darkGray, k.getName(), new Table(ft -> {
 						ft.field(fields.get(k).get().toString(), Styles.defaultField, (String txt) -> {
 							//
-							fields.put(k, parse(k.getDeclaringClass(), txt).v2);
+							fields.put(k, parse(k.getDeclaringClass(), fields.get(k), txt).v2);
 							//
 						}).center().pad(4f);
 					}))).row();
