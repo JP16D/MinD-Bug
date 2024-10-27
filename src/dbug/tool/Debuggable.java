@@ -33,7 +33,7 @@ public class Debuggable {
 		this.value = value;
 		this.type = type;
 		//
-		if (Debugger.dv("wrapper", () -> isWrapper(type))) return;
+		if (Debugger.dv("wrapper", () -> isWrapper(type)).get()) return;
 		//
 		for (var f : type.getFields()) {
 			//
