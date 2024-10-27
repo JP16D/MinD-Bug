@@ -91,8 +91,9 @@ public class Debuggable {
 			 var t = type.getField("TYPE");
 			 return ((Class) t.get(type)).isPrimitive();
 			//
-		} catch (Exception e) {/*do nothing*/} finally { return false;
-		}
+		} catch (Exception e) {/*do nothing*/}
+		//
+		return false;
 	}
 	
 	//some sort of parsing shenanigans
