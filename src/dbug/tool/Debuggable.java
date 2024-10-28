@@ -12,6 +12,7 @@ import java.lang.*;
 import java.lang.reflect.*;
 
 import static dbug.util.ParseUtil.*;
+import static dbug.tool.Debugger.*;
 
 public class Debuggable {
 	public OrderedMap<Field, Prov<?>> fields = new OrderedMap<>();
