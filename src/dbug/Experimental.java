@@ -9,7 +9,9 @@ public class Experimental {
 	
 	public void loadTest() {
 		test = (Vec2) dw(Vec2.class, "localTest", () -> test).get();
-		test.x = (float) dw(Float.class, "local-x", dv("test-vx", () -> test.x)).get();
-		test.y = (float) dw(Float.class, "local-y", dv("test-vy", () -> test.y)).get();
+		test.x = (float) dw(Float.class, "local-x", () -> test.x).get();
+		test.y = (float) dw(Float.class, "local-y", () -> test.y).get();
+		dv("test-vx", () -> test.x);
+		dv("test-vy", () -> test.y);
 	}
 }
