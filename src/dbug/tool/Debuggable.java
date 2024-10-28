@@ -11,8 +11,9 @@ import mindustry.ui.*;
 import java.lang.*;
 import java.lang.reflect.*;
 
-import static dbug.util.ParseUtil.*;
+import static dbug.MDBug.*;
 import static dbug.tool.Debugger.*;
+import static dbug.util.ParseUtil.*;
 
 public class Debuggable {
 	public OrderedMap<Field, Prov<?>> fields = new OrderedMap<>();
@@ -61,12 +62,14 @@ public class Debuggable {
 					//
 					set(parse(type, value, txt));
 					//
-					txt = "";
-				}).center().pad(4f);
+					updateCaller();
+				}).center().pad(4f).get();
+				//
 			}));
 			//
 		} else {
 			return Debugger.table(Color.maroon, name, new Table(t -> {
+				//
 				for (var k : fields.keys()) {
 					t.add(Debugger.display(Color.darkGray, k.getName(), new Table(ft -> {
 						ft.field((String) dv(k.getName() + "txt-init", () -> fields.get(k).get().toString()).get(), Styles.defaultField, (String txt) -> {
@@ -86,6 +89,8 @@ public class Debuggable {
 						} catch (Exception e) {
 							//warn();
 						}
+						//
+						updateCaller();
 					}
 				}).right().pad(2f);
 				//

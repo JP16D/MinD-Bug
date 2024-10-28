@@ -14,9 +14,9 @@ import mindustry.mod.*;
 public class MDBug extends Mod {
 	public static Debugger debugger = new Debugger();
 	//
-	private Table caller;
-	private boolean expand;
-	private float scale;
+	private static Table caller;
+	private static boolean expand;
+	private static float scale;
 	
 	public MDBug() {
 		Events.run(EventType.Trigger.update, () -> {
@@ -34,7 +34,7 @@ public class MDBug extends Mod {
 		});
 	}
 	
-	public void call(Table table) {
+	private static void call(Table table) {
 		//
 		var display = new ScrollPane(new Table(t -> {
 			for (var v : MDBugVars.debugger.values()) {
@@ -58,6 +58,11 @@ public class MDBug extends Mod {
 		});
 		//
 		caller = table;
+	}
+	
+	public static void updateCaller() {
+		caller.clearChildren();
+		call(caller);
 	}
 	
 	@Override
