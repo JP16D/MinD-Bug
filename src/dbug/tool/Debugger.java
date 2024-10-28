@@ -35,6 +35,12 @@ public class Debugger {
 	public static Prov<?> dw(Class<?> type, String name, Prov<?> val) {
 		var v = writable.containsKey(name) ? writable.get(name) : new Debuggable(type, val);
 		//
+		if (v.priority) {
+			v.priority = false;
+		} else {
+			v.set(type, val);
+		}
+		//
 		writable.put(name, v);
 		//
 		debugger.put(name, v.table(name));

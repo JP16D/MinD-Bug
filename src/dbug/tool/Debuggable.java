@@ -15,11 +15,12 @@ import static dbug.tool.Debugger.*;
 import static dbug.util.ParseUtil.*;
 
 public class Debuggable {
-	private Seq<Cell<TextField>> inputs = new Seq<>();
 	public OrderedMap<Field, Prov<?>> fields = new OrderedMap<>();
 	//
 	public Prov<?> value;
 	public Class<?> type;
+	//
+	protected boolean priority;
 	
 	public Debuggable(Pair<Class<?>, Prov<?>> pair) {
 		set(pair);
@@ -38,7 +39,7 @@ public class Debuggable {
 		this.value = value;
 		this.type = type;
 		//
-		if (isWrapper(type)) return;
+		if (isWrapper(type) || priority) return;
 		//
 		for (var f : type.getFields()) {
 			//
@@ -58,28 +59,25 @@ public class Debuggable {
 	public Table table(String name) {
 		if (isWrapper(type)) {
 			return Debugger.display(Color.maroon, name, new Table(t -> {
-				var field = t.field(value.get().toString(), Styles.defaultField, (String txt) -> {
+				t.field(value.get().toString(), Styles.defaultField, (String txt) -> {
 					//
 					set(parse(type, value, txt));
 					//
+					priority = true;
 				}).center().pad(4f);
-				//
-				field.get().clearText();
 			}));
 			//
 		} else {
 			return Debugger.table(Color.maroon, name, new Table(t -> {
 				//
 				for (var k : fields.keys()) {
-					t.add(Debugger.display(Color.darkGray, k.getName(), new Table(in -> {
-						inputs.add(in.field((String) dv(k.getName() + "txt-init", () -> fields.get(k).get().toString()).get(), Styles.defaultField, (String txt) -> {
+					t.add(Debugger.display(Color.darkGray, k.getName(), new Table(input -> {
+						input.field(fields.get(k).get().toString(), Styles.defaultField, (String txt) -> {
 							//
 							fields.put(k, parse(wrap(k.getType()), fields.get(k), txt).v2);
 							//
-							dv(k.getName() + "txt", () -> txt);
+							priority = true;
 						}).center().pad(4f));
-						//
-						dv(k.getName() + "txt-post", () -> fields.get(k).get().toString());
 						//
 					}))).pad(4f).row();
 				}
@@ -92,11 +90,6 @@ public class Debuggable {
 							//warn();
 						}
 					}
-					//
-					for (var v : inputs) {
-						v.get().clearText();
-					}
-					//
 				}).right().pad(2f);
 				//
 				t.button(Icon.cancel, () -> {
