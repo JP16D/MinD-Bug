@@ -69,13 +69,13 @@ public class Debuggable {
 			return Debugger.table(Color.maroon, name, new Table(t -> {
 				for (var k : fields.keys()) {
 					t.add(Debugger.display(Color.darkGray, k.getName(), new Table(ft -> {
-						ft.field((String) dv(k + "txt-init", () -> fields.get(k).get().toString()).get(), Styles.defaultField, (String txt) -> {
+						ft.field((String) dv(k.getName() + "txt-init", () -> fields.get(k).get().toString()).get(), Styles.defaultField, (String txt) -> {
 							//
 							fields.put(k, parse(wrap(k.getType()), fields.get(k), txt).v2);
 							//
-							dv(k + "txt", () -> txt);
+							dv(k.getName() + "txt", () -> txt);
 						}).center().pad(4f);
-						dv(k + "txt-post", () -> fields.get(k).get().toString());
+						dv(k.getName() + "txt-post", () -> fields.get(k).get().toString());
 					}))).pad(4f).row();
 				}
 				//
