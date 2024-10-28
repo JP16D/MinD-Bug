@@ -60,6 +60,7 @@ public class Debuggable {
 					//
 					set(parse(type, value, txt));
 					//
+					txt = "";
 				}).center().pad(4f);
 			}));
 			//
@@ -71,6 +72,7 @@ public class Debuggable {
 							//
 							fields.put(k, parse(wrap(k.getType()), fields.get(k), txt).v2);
 							//
+							txt = "";
 						}).center().pad(4f);
 					}))).pad(4f).row();
 				}
@@ -86,7 +88,7 @@ public class Debuggable {
 				}).right().pad(2f);
 				//
 				t.button(Icon.cancel, () -> {
-					set(this.type, this.val);
+					set(this.type, this.value);
 				}).right().pad(2f);
 				//
 			}));
