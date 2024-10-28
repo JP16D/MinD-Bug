@@ -13,6 +13,7 @@ import mindustry.gen.*;
 import mindustry.ui.*;
 
 import static dbug.MDBugVars.*;
+import static dbug.tool.Debugger.*;
 
 public class Debugger {
 	static final OrderedMap<String, Debuggable> writable = new OrderedMap<>();
