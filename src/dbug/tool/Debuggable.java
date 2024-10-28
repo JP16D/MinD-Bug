@@ -77,7 +77,7 @@ public class Debuggable {
 							fields.put(k, parse(wrap(k.getType()), fields.get(k), txt).v2);
 							//
 							priority = true;
-						}).center().pad(4f));
+						}).center().pad(4f);
 						//
 					}))).pad(4f).row();
 				}
