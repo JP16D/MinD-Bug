@@ -34,7 +34,7 @@ public class MDBug extends Mod {
 		});
 	}
 	
-	private static void call(Table table) {
+	private void call(Table table) {
 		//
 		var display = new ScrollPane(new Table(t -> {
 			for (var v : MDBugVars.debugger.values()) {
@@ -58,11 +58,6 @@ public class MDBug extends Mod {
 		});
 		//
 		caller = table;
-	}
-	
-	public static void updateCaller() {
-		caller.clearChildren();
-		call(caller);
 	}
 	
 	@Override
