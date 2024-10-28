@@ -70,15 +70,12 @@ public class Debuggable {
 		} else {
 			return Debugger.table(Color.maroon, name, new Table(t -> {
 				//
-				boolean archived = false;
-				//
 				for (var k : fields.keys()) {
 					t.add(Debugger.display(Color.darkGray, k.getName(), new Table(ft -> {
 						ft.field((String) dv(k.getName() + "txt-init", () -> fields.get(k).get().toString()).get(), Styles.defaultField, (String txt) -> {
 							//
 							fields.put(k, parse(wrap(k.getType()), fields.get(k), txt).v2);
 							//
-							archived = true;
 							dv(k.getName() + "txt", () -> txt);
 						}).center().pad(4f);
 						dv(k.getName() + "txt-post", () -> fields.get(k).get().toString());
@@ -97,9 +94,10 @@ public class Debuggable {
 					}
 				}).right().pad(2f);
 				//
-				if (archived) t.button(Icon.cancel, () -> {
+				t.button(Icon.cancel, () -> {
 					set(this.type, this.value);
-					archived = false;
+					//
+					updateCaller();
 				}).right().pad(2f);
 				//
 			}));
