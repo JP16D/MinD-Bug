@@ -6,6 +6,7 @@ import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
 import dbug.util.*;
+import mindustry.gen.*;
 import mindustry.ui.*;
 import java.lang.*;
 import java.lang.reflect.*;
@@ -75,14 +76,19 @@ public class Debuggable {
 				}
 				//
 				t.button("Set", () -> {
-				for (var k : fields.keys()) {
-					try {
-						k.set(value.get(), fields.get(k).get());
-					} catch (Exception e) {
-						//warn();
+					for (var k : fields.keys()) {
+						try {
+							k.set(value.get(), fields.get(k).get());
+						} catch (Exception e) {
+							//warn();
+						}
 					}
-				}
 				}).right().pad(2f);
+				//
+				t.button(Icon.cancel, () -> {
+					set(this.type, this.val);
+				}).right().pad(2f);
+				//
 			}));
 		}
 	}
