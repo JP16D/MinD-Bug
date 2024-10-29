@@ -43,26 +43,25 @@ public class Debuggable {
 		//
 		if (isWrapper(type)) return;
 		//
-		for (var f : type.getFields()) {
+		for (var field : type.getFields()) {
+			var f = new WritableField(f);
 			//
-			if (!Modifier.isFinal(f.getModifiers())) fields.add(new WritableField(f));
+			if (!Modifier.isFinal(f.getModifiers())) {
+				if (fields.size > 0) {
+					fields.replace(i -> (i.name == f.name) && i.queued ? i : f);
+					//
+				} else fields.add(f);
+			}
 		}
 		//
 		return;
 	}
 	
-	public void prioritize(Debuggable d) {
+	public void prioritize(Class<?> type, Object value) {
 		if (priority) {
-			d.set(type, value);
-			//
 			priority = false;
-		}
-		//
-		if (fields.size > 0) {
-			for (var f : fields) {
-				d.fields.replace(i -> (f.name == i.name) && f.queued ? f : i);
-			}
-		}
+			//
+		} else set(type, value);
 	}
 	
 	//table display
@@ -81,7 +80,7 @@ public class Debuggable {
 			return Debugger.table(Color.maroon, name, new Table(t -> {
 				//
 				for (var f : fields) {
-					t.add(Debugger.display(Color.darkGray, f.field.getName(), new Table(input -> {
+					t.add(Debugger.display(Color.darkGray, f.name, new Table(input -> {
 						var v = f.value;
 						//
 						input.field(v.toString(), Styles.defaultField, (String txt) -> {

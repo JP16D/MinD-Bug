@@ -33,9 +33,10 @@ public class Debugger {
 	
 	//add debuggable object (writable)
 	public static Object dw(Class<?> type, String name, Object val) {
-		var v =  new Debuggable(type, val);
+		var v = writable.containsKey(name) ? writable.get(name) : new Debuggable(type, val);
 		//
-		if (writable.containsKey(name)) writable.get(name).prioritize(v);
+		v.prioritize(type, val);
+		//
 		writable.put(name, v);
 		//
 		debugger.put(name, v.table(name));
