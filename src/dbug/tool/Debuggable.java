@@ -47,8 +47,8 @@ public class Debuggable {
 			var f = new WritableField(field);
 			//
 			if (!Modifier.isFinal(field.getModifiers())) {
-				if (fields.size > 0) {
-					fields.replace(i -> (i.name == f.name) ? (i.queued ? i : f) : i);
+				if (fields.size > 0 && fields.contains(i -> i.name.equals(f.name))) {
+					fields.replace(i.queued ? i : f);
 					//
 				} else fields.add(f);
 			}
@@ -73,6 +73,7 @@ public class Debuggable {
 					set(parse(type, value, txt));
 					//
 					priority = true;
+					Debugger("prio-1", priority);
 				}).center().pad(4f);
 			}));
 			//
