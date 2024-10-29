@@ -50,7 +50,7 @@ public class Debuggable {
 				if (fields.size > 0 && (boolean) dv(entry.name + "-lp1", fields.contains(f -> (boolean) dv(f.name + "-lp2", f.name.equals(entry.name))))) {
 					fields.replace(f -> f.queued ? f : entry);
 					//
-				} else fields.add(f);
+				} else fields.add(entry);
 			}
 		}
 		//
