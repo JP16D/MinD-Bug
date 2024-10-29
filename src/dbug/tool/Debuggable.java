@@ -36,7 +36,7 @@ public class Debuggable {
 		return set(pair.v1, pair.v2);
 	}
 	
-	public Debuggable set(Class<?> type, Object value) {.
+	public Debuggable set(Class<?> type, Object value) {
 		//
 		this.value = value;
 		this.type = type;
