@@ -38,25 +38,25 @@ public class ParseUtil {
 	}
 	
 	//some sort of parsing shenanigans
-	public static Pair<Class<?>, Prov<?>> parse(Class<?> type, Prov<?> def, String val) {
-		var v = new Pair<Class<?>, Prov<?>>(type, def);
+	public static Pair<Class<?>, Object> parse(Class<?> type, Object def, String val) {
+		var v = new Pair<Class<?>, Object>(type, def);
 		//
 		if (type == String.class) {
-			v.set(type, () -> val);
+			v.set(type, val);
 			//
 		} else {
 			//
 			try {
 				//
 				var method = type.getMethod("valueOf", String.class);
-				v.set(type, () -> {
+				v.set(type, (Prov) (() -> {
 					try {
 						return method.invoke(type, val);
 					} catch (Exception e) {
 						return def.get();
 						//warn();
 					}
-				});
+				}).get());
 			} catch (Exception e) {/*impossible*/}
 		}
 		//

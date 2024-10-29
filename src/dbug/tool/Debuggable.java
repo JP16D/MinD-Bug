@@ -15,43 +15,53 @@ import static dbug.tool.Debugger.*;
 import static dbug.util.ParseUtil.*;
 
 public class Debuggable {
-	public OrderedMap<Field, Prov<?>> fields = new OrderedMap<>();
+	public Seq<WritableField> fields = new Seq<>();
 	//
-	public Prov<?> value;
+	public Object value;
 	public Class<?> type;
 	//
+	protected Seq<Boolean> queue = new Seq<>();
 	protected boolean priority;
 	
-	public Debuggable(Pair<Class<?>, Prov<?>> pair) {
+	public Debuggable(Pair<Class<?>, Object> pair) {
 		set(pair);
 	}
 	
-	public Debuggable(Class<?> type, Prov<?> val) {
+	public Debuggable(Class<?> type, Object val) {
 		set(type, val);
 	}
 	
 	//set up important values
-	public void set(Pair<Class<?>, Prov<?>> pair) {
-		set(pair.v1, pair.v2);
+	public Debuggable set(Pair<Class<?>, Object> pair) {
+		return set(pair.v1, pair.v2);
 	}
 	
-	public void set(Class<?> type, Prov<?> value) {
+	public Debuggable set(Class<?> type, Object value) {.
+		//
 		this.value = value;
 		this.type = type;
 		//
-		if (isWrapper(type) || priority) return;
+		if (isWrapper(type)) return;
 		//
 		for (var f : type.getFields()) {
 			//
-			if (Modifier.isFinal(f.getModifiers())) continue;
+			if (!Modifier.isFinal(f.getModifiers())) fields.add(new WritableField(f));
+		}
+		//
+		return this;
+	}
+	
+	public Debuggable prioritize(Debuggable d) {
+		if (priority) {
+			d.set(type, value);
 			//
-			fields.put(f, () -> {
-				try {
-					return f.get(value.get());
-				} catch (Exception e) {
-					return null;
-				}
-			});
+			priority = false;
+		}
+		//
+		if (fields.size > 0) {
+			for (var f : fields) {
+				d.fields.replace(i -> (f.name == i.name) && f.queued ? f : i);
+			}
 		}
 	}
 	
@@ -59,7 +69,7 @@ public class Debuggable {
 	public Table table(String name) {
 		if (isWrapper(type)) {
 			return Debugger.display(Color.maroon, name, new Table(t -> {
-				t.field(value.get().toString(), Styles.defaultField, (String txt) -> {
+				t.field(value.toString(), Styles.defaultField, (String txt) -> {
 					//
 					set(parse(type, value, txt));
 					//
@@ -70,33 +80,72 @@ public class Debuggable {
 		} else {
 			return Debugger.table(Color.maroon, name, new Table(t -> {
 				//
-				for (var k : fields.keys()) {
-					t.add(Debugger.display(Color.darkGray, k.getName(), new Table(input -> {
-						input.field(fields.get(k).get().toString(), Styles.defaultField, (String txt) -> {
+				for (var f : fields) {
+					t.add(Debugger.display(Color.darkGray, f.field.getName(), new Table(input -> {
+						var v = f.value;
+						//
+						input.field(v.toString(), Styles.defaultField, (String txt) -> {
 							//
-							fields.put(k, parse(wrap(k.getType()), fields.get(k), txt).v2);
+							f.queue(parse(wrap(f.getType()), v, txt).v2);
 							//
-							priority = true;
 						}).center().pad(4f);
 						//
 					}))).pad(4f).row();
 				}
 				//
 				t.button("Set", () -> {
-					for (var k : fields.keys()) {
-						try {
-							k.set(value.get(), fields.get(k).get());
-						} catch (Exception e) {
-							//warn();
-						}
-					}
+					for (var f : fields) f.set();
+					//
+					priority = true;
 				}).right().pad(2f);
 				//
 				t.button(Icon.cancel, () -> {
-					set(this.type, this.value);
+					for (var f : fields) f.revert();
 				}).right().pad(2f);
 				//
 			}));
+		}
+	}
+	
+	protected class WritableField {
+		Field field;
+		String name;
+		Object value;
+		//
+		boolean queued;
+		
+		WritableField(Field field) {
+			this.field = field;
+			this.name = field.getName();
+			//
+			revert();
+			//
+			return this;
+		}
+		
+		void queue(Object val) {
+			value = val;
+			queued = true;
+		}
+		
+		void set() {
+			try {
+				field.set(Debuggable.this.value, value);
+			} catch (Exception e) {
+				//warn();
+			}
+			//
+			queued = false;
+		}
+		
+		void revert() {
+			try {
+				value = field.get(Debuggable.this.value);
+			} catch (Exception e) {
+				value = null;
+			}
+			//
+			queued = false;
 		}
 	}
 }

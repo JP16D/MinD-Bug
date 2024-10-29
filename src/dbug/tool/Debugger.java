@@ -25,25 +25,22 @@ public class Debugger {
 	}
 	
 	//add debuggable object (read-only)
-	public static Prov<?> dv(String name, Prov<?> val) {
-		debugger.put(name, display(Color.slate, name, new Table(Tex.pane, t -> t.add("" + val.get()))));
+	public static Object dv(String name, Object val) {
+		debugger.put(name, display(Color.slate, name, new Table(Tex.pane, t -> t.add("" + val))));
 		//
 		return val;
 	}
 	
 	//add debuggable object (writable)
-	public static Prov<?> dw(Class<?> type, String name, Prov<?> val) {
-		var v = writable.containsKey(name) ? writable.get(name) : new Debuggable(type, val);
+	public static Object dw(Class<?> type, String name, Object val) {
+		var v =  new Debuggable(type, val);
+		//
+		if (writable.containsKey(name)) writable.get(name).prioritize(v);
+		writable.put(name, v);
 		//
 		debugger.put(name, v.table(name));
 		//
-		if (v.priority) {
-			v.priority = false;
-		} else {
-			v.set(type, val);
-		}
-		//
-		writable.put(name, v);
+		v.set(type, value);
 		//
 		return v.value;
 	}
