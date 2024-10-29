@@ -48,7 +48,7 @@ public class Debuggable {
 			//
 			if (!Modifier.isFinal(f.getModifiers())) {
 				if (fields.size > 0) {
-					fields.replace(i -> (i.name == f.name) && i.queued ? i : f);
+					fields.replace(i -> (i.name == f.name) ? (i.queued ? i : f)  : i);
 					//
 				} else fields.add(f);
 			}
