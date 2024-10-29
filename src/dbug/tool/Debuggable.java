@@ -44,10 +44,10 @@ public class Debuggable {
 		if (isWrapper(type)) return;
 		//
 		for (var field : type.getFields()) {
-			var f = new WritableField(field);
+			var entry = new WritableField(field);
 			//
 			if (!Modifier.isFinal(field.getModifiers())) {
-				if (fields.size > 0 && fields.contains(i -> i.name == f.name)) {
+				if (fields.size > (boolean) dv(f.name + "-lp1", fields.contains(i -> (boolean) dv(i.name + "-lp2", i.name.equals(f.name))))) {
 					fields.replace(i -> i.queued ? i : f);
 					//
 				} else fields.add(f);
@@ -73,7 +73,7 @@ public class Debuggable {
 					set(parse(type, value, txt));
 					//
 					priority = true;
-					Debugger.dv(name + "-prio", priority);
+					dv(name + "-prio", priority);
 				}).center().pad(4f);
 			}));
 			//
