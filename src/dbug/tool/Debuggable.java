@@ -32,8 +32,8 @@ public class Debuggable {
 	}
 	
 	//set up important values
-	public Debuggable set(Pair<Class<?>, Object> pair) {
-		return set(pair.v1, pair.v2);
+	public void set(Pair<Class<?>, Object> pair) {
+		set(pair.v1, pair.v2);
 	}
 	
 	public void set(Class<?> type, Object value) {
@@ -86,7 +86,7 @@ public class Debuggable {
 						//
 						input.field(v.toString(), Styles.defaultField, (String txt) -> {
 							//
-							f.queue(parse(wrap(f.getType()), v, txt).v2);
+							f.queue(parse(wrap(f.field.getType()), v, txt).v2);
 							//
 						}).center().pad(4f);
 						//
