@@ -47,8 +47,8 @@ public class Debuggable {
 			var entry = new WritableField(field);
 			//
 			if (!Modifier.isFinal(field.getModifiers())) {
-				if (fields.size > (boolean) dv(f.name + "-lp1", fields.contains(i -> (boolean) dv(i.name + "-lp2", i.name.equals(f.name))))) {
-					fields.replace(i -> i.queued ? i : f);
+				if (fields.size > 0 && (boolean) dv(entry.name + "-lp1", fields.contains(f -> (boolean) dv(f.name + "-lp2", f.name.equals(entry.name))))) {
+					fields.replace(f -> f.queued ? f : entry);
 					//
 				} else fields.add(f);
 			}
