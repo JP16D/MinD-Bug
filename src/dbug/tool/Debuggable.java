@@ -44,9 +44,9 @@ public class Debuggable {
 		if (isWrapper(type)) return;
 		//
 		for (var field : type.getFields()) {
-			var f = new WritableField(f);
+			var f = new WritableField(field);
 			//
-			if (!Modifier.isFinal(f.getModifiers())) {
+			if (!Modifier.isFinal(field.getModifiers())) {
 				if (fields.size > 0) {
 					fields.replace(i -> (i.name == f.name) ? (i.queued ? i : f)  : i);
 					//
