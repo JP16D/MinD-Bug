@@ -47,7 +47,7 @@ public class Debuggable {
 			var f = new WritableField(field);
 			//
 			if (!Modifier.isFinal(field.getModifiers())) {
-				if (fields.size > 0 && fields.contains(i -> i.name.equals(f.name))) {
+				if (fields.size > 0 && fields.contains(i -> i.name == f.name)) {
 					fields.replace(i -> i.queued ? i : f);
 					//
 				} else fields.add(f);
