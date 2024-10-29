@@ -73,7 +73,7 @@ public class Debuggable {
 					set(parse(type, value, txt));
 					//
 					priority = true;
-					Debugger.dv("prio", priority);
+					Debugger.dv(name + "-prio", priority);
 				}).center().pad(4f);
 			}));
 			//
