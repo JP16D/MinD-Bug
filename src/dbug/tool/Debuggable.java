@@ -48,7 +48,7 @@ public class Debuggable {
 			//
 			if (!Modifier.isFinal(field.getModifiers())) {
 				if (fields.size > 0 && fields.contains(i -> i.name.equals(f.name))) {
-					fields.replace(i.queued ? i : f);
+					fields.replace(i -> i.queued ? i : f);
 					//
 				} else fields.add(f);
 			}
@@ -73,7 +73,7 @@ public class Debuggable {
 					set(parse(type, value, txt));
 					//
 					priority = true;
-					Debugger("prio", priority);
+					Debugger.dv("prio", priority);
 				}).center().pad(4f);
 			}));
 			//
