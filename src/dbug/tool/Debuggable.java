@@ -51,7 +51,7 @@ public class Debuggable {
 		return;
 	}
 	
-	public Debuggable prioritize(Debuggable d) {
+	public void prioritize(Debuggable d) {
 		if (priority) {
 			d.set(type, value);
 			//
