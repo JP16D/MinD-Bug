@@ -49,11 +49,11 @@ public class ParseUtil {
 			try {
 				//
 				var method = type.getMethod("valueOf", String.class);
-				v.set(type, (Prov) (() -> {
+				v.set(type, ((Prov) () -> {
 					try {
 						return method.invoke(type, val);
 					} catch (Exception e) {
-						return def.get();
+						return def;
 						//warn();
 					}
 				}).get());

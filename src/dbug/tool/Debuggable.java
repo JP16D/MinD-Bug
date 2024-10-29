@@ -36,7 +36,7 @@ public class Debuggable {
 		return set(pair.v1, pair.v2);
 	}
 	
-	public Debuggable set(Class<?> type, Object value) {
+	public void set(Class<?> type, Object value) {
 		//
 		this.value = value;
 		this.type = type;
@@ -48,7 +48,7 @@ public class Debuggable {
 			if (!Modifier.isFinal(f.getModifiers())) fields.add(new WritableField(f));
 		}
 		//
-		return this;
+		return;
 	}
 	
 	public Debuggable prioritize(Debuggable d) {
@@ -119,8 +119,6 @@ public class Debuggable {
 			this.name = field.getName();
 			//
 			revert();
-			//
-			return this;
 		}
 		
 		void queue(Object val) {

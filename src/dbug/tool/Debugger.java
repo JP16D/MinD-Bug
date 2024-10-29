@@ -40,7 +40,7 @@ public class Debugger {
 		//
 		debugger.put(name, v.table(name));
 		//
-		v.set(type, value);
+		v.set(type, val);
 		//
 		return v.value;
 	}
