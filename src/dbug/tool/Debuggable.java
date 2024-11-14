@@ -41,13 +41,13 @@ public class Debuggable {
 		this.value = value;
 		this.type = type;
 		//
-		if (isWrapper(type)) return;
+		if (isWrapper(type) || priority) return;
 		//
 		for (var field : type.getFields()) {
 			var entry = new WritableField(field);
 			//
 			if (!Modifier.isFinal(field.getModifiers())) {
-				if (fields.size > 0 && (boolean) dv(entry.name + "-lp1", fields.contains(f -> (boolean) dv(f.name + "-lp2", f.name.equals(entry.name))))) {
+				if (fields.size > 0 && fields.contains(f -> (boolean) dv(f.name + "-lp2", f.name.equals(entry.name)))) {
 					fields.replace(f -> f.queued ? f : entry);
 					//
 				} else fields.add(entry);
@@ -57,11 +57,12 @@ public class Debuggable {
 		return;
 	}
 	
-	public void prioritize(Class<?> type, Object value) {
+	public void prioritize(Object val) {
+		dv("prioritize", priority);
 		if (priority) {
 			priority = false;
 			//
-		} else set(type, value);
+		} else set(type, val);
 	}
 	
 	//table display
