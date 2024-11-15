@@ -68,7 +68,7 @@ public class Debuggable {
 					boolean stored = f.stored != null;
 					var v = stored ? f.stored : f.value();
 					//
-					t.add(Debugger.display(stored ? Color.Green : Color.darkGray, f.name, new Table(input -> {
+					t.add(Debugger.display(stored ? Color.green : Color.darkGray, f.name, new Table(input -> {
 						//
 						input.field(v.toString(), Styles.defaultField, (String txt) -> {
 							//
