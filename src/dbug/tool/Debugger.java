@@ -35,10 +35,10 @@ public class Debugger {
 	public static Object dw(Class<?> type, String name, Object val) {
 		var v = writable.containsKey(name) ? writable.get(name) : new Debuggable(type, val);
 		//
-		v.prioritize(val);
+		v.set(type, val);
 		//
-		writable.put(name, v);
 		debugger.put(name, v.table(name));
+		writable.put(name, v);
 		//
 		return v.value;
 	}
