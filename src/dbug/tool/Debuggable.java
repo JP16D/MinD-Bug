@@ -41,7 +41,7 @@ public class Debuggable {
 				//
 				fields.add(entry);
 				//
-			} else if (!Modifier.isFinal(field.getModifiers()) {
+			} else if (!Modifier.isFinal(field.getModifiers())) {
 				//
 				for (var f : fields) f.field = f.name.equals(entry.name) ? entry.field : f.field;
 			}
