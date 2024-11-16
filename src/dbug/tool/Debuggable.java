@@ -50,17 +50,17 @@ public class Debuggable {
 		}
 	}
 	
-	private void field(Table t) {
+	private Table field(Table t) {
 		t.field(value.toString(), Styles.defaultField, (String txt) -> {
 			//
-			dv("parsed", set(parse(type, value, txt)));
+			set(dv("parsed", parse(type, value, txt)));
 			//;
 		}).center().pad(4f);
 		//
 		return t;
 	}
 	
-	private void panel(Table t) {
+	private Table panel(Table t) {
 		//
 		for (var f : fields) {
 			boolean stored = f.stored != null;
