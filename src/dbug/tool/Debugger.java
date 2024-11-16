@@ -39,10 +39,9 @@ public class Debugger {
 		//
 		v.set(val);
 		//
-		dv("pre-table", v.value);
 		debugger.put(name, v.table(name));
 		//
-		return dv("post-table", v.value);
+		return v.value;
 	}
 	
 	//display interface
