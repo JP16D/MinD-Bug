@@ -84,7 +84,7 @@ public class Debuggable {
 				//
 			}).right().pad(2f);
 			//
-		})
+		});
 	}
 	
 	protected class WritableField {
