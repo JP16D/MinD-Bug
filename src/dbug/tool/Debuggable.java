@@ -54,6 +54,7 @@ public class Debuggable {
 		t.field(value.toString(), Styles.defaultField, (String txt) -> {
 			//
 			set(dv("parsed", parse(type, value, txt)));
+			dv("post-parsed", value);
 			//;
 		}).center().pad(4f);
 		//
