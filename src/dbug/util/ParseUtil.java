@@ -39,24 +39,18 @@ public class ParseUtil {
 	
 	//some sort of parsing shenanigans
 	public static Object parse(Class<?> type, Object def, String val) {
-		var v = def;
 		//
 		if (type == String.class) {
-			v = val;
+			return val;
 			//
 		} else try {
-			//
 			var method = type.getMethod("valueOf", String.class);
-			v = ((Prov) () -> {
-				try {
-					return method.invoke(type, val);
-				} catch (Exception e) {
-					return def;
-					//warn();
-				}
-			}).get();
-		} catch (Exception e) {/*impossible*/}
-		//
-		return v;
+			//
+			return method.invoke(type, val);
+			//
+		} catch (Exception e) {
+			//warn();
+			return def;
+		}
 	}
 }

@@ -22,76 +22,69 @@ public class Debuggable {
 	//
 	protected Seq<Boolean> queue = new Seq<>();
 	
-	public Debuggable(Class<?> type, Object val) {
-		set(type, val);
-	}
-	
-	public void set(Class<?> type, Object value) {
-		//
+	public Debuggable(Class<?> type, Object value) {
+		this.type = wrap(type);
 		this.value = value;
-		this.type = type;
 		//
-		if (isWrapper(type)) return;
+		if (isWrapper(this.type)) return;
 		//
-		
-		for (var field : type.getFields()) {
+		if (fields.size <= 0) for (var field : this.type.getFields()) {
 			var entry = new WritableField(field);
 			//
-			if (fields.size < type.getFields().length) {
-				//
-				fields.add(entry);
-				//
-			} else if (!Modifier.isFinal(field.getModifiers())) {
-				//
-				for (var f : fields) f.field = f.name.equals(entry.name) ? entry.field : f.field;
-			}
+			if (!Modifier.isFinal(field.getModifiers())) fields.add(entry);
 		}
-		//
-		return;
+	}
+	
+	public void set(Object value) {
+		this.value = value;
 	}
 	
 	//table display
 	public Table table(String name) {
-		if (isWrapper(type)) {
-			return Debugger.display(Color.maroon, name, new Table(t -> {
-				t.field(value.toString(), Styles.defaultField, (String txt) -> {
-					//
-					set(type, parse(type, value, txt));
-					//;
-				}).center().pad(4f);
-			}));
+		return Debugger.display(Color.maroon, name, isWrapper(type) ? field() : panel());
+	}
+	
+	private Table field() {
+		return new Table(t -> {
+			t.field(value.toString(), Styles.defaultField, (String txt) -> {
+				//
+				set(parse(type, value, txt));
+				//;
+			}).center().pad(4f);
+		});
+	}
+	
+	private Table panel() {
+		new Table(t -> {
 			//
-		} else {
-			return Debugger.table(Color.maroon, name, new Table(t -> {
+			for (var f : fields) {
+				boolean stored = f.stored != null;
+				var v = stored ? f.stored : f.value();
 				//
-				for (var f : fields) {
-					boolean stored = f.stored != null;
-					var v = stored ? f.stored : f.value();
+				t.add(Debugger.display(stored ? Color.green : Color.darkGray, f.name, new Table(input -> {
 					//
-					t.add(Debugger.display(stored ? Color.green : Color.darkGray, f.name, new Table(input -> {
+					input.field(v.toString(), Styles.defaultField, (String txt) -> {
 						//
-						input.field(v.toString(), Styles.defaultField, (String txt) -> {
-							//
-							f.stored = parse(wrap(f.field.getType()), v, txt);
-							//
-						}).center().pad(4f);
+						f.stored = parse(wrap(f.field.getType()), v, txt);
 						//
-					}))).pad(4f).row();
-				}
-				//
-				t.button("Set", () -> {
-					for (var f : fields) f.set();
+					}).center().pad(4f);
 					//
-					set(type, value);
-				}).right().pad(2f);
+				}))).pad(4f).row();
+			}
+			//
+			//apply changes 
+			t.button("Set", () -> {
+				for (var f : fields) f.set();
 				//
-				t.button(Icon.cancel, () -> {
-					for (var f : fields) f.revert();
-					//
-				}).right().pad(2f);
+			}).right().pad(2f);
+			//
+			//revert changes
+			t.button(Icon.cancel, () -> {
+				for (var f : fields) f.revert();
 				//
-			}));
-		}
+			}).right().pad(2f);
+			//
+		})
 	}
 	
 	protected class WritableField {
