@@ -39,7 +39,7 @@ public class Debugger {
 		//
 		debugger.put(name, v.table(name));
 		//
-		return v.value;
+		return dv("return", v.value);
 	}
 	
 	//display interface
