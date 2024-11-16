@@ -47,7 +47,7 @@ public class Debuggable {
 			return Debugger.display(Color.maroon, name, field(tab));
 		} else {
 			return Debugger.table(Color.maroon, name, panel(tab));
-		};
+		}
 	}
 	
 	private Table field(Table t) {
