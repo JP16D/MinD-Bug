@@ -44,58 +44,56 @@ public class Debuggable {
 		var tab = new Table();
 		//
 		if (isWrapper(type)) {
-			field(tab);
+			return Debugger.display(Color.maroon, name, field(tab));
 		} else {
-			panel(tab);
+			return Debugger.table(Color.maroon, name, panel(tab));
+		}
+	}
+	
+	private void field(Table t) {
+		t.field(value.toString(), Styles.defaultField, (String txt) -> {
+			//
+			dv("parsed", set(parse(type, value, txt)));
+			//;
+		}).center().pad(4f);
+		//
+		return t;
+	}
+	
+	private void panel(Table t) {
+		//
+		for (var f : fields) {
+			boolean stored = f.stored != null;
+			var v = stored ? f.stored : f.value();
+			//
+			t.add(Debugger.display(stored ? Color.green : Color.darkGray, f.name, new Table(input -> {
+				//
+				input.field(v.toString(), Styles.defaultField, (String txt) -> {
+					//
+					f.stored = parse(wrap(f.field.getType()), v, txt);
+					//
+				}).center().pad(4f);
+				//
+			}))).pad(4f).row();
 		}
 		//
-		return tab;
-	}
-	
-	private void field(Table tab) {
-		tab.add(Debugger.display(Color.maroon, name, t -> {
-			t.field(value.toString(), Styles.defaultField, (String txt) -> {
-				//
-				dv("parsed" + , set(parse(type, value, txt)));
-				//;
-			}).center().pad(4f);
-		}));
-	}
-	
-	private void panel(Table tab) {
-		tab.add(Debugger.table(Color.maroon, name, t -> {
+		//apply changes 
+		t.button("Set", () -> {
+			for (var f : fields) f.set();
 			//
-			for (var f : fields) {
-				boolean stored = f.stored != null;
-				var v = stored ? f.stored : f.value();
-				//
-				t.add(Debugger.display(stored ? Color.green : Color.darkGray, f.name, new Table(input -> {
-					//
-					input.field(v.toString(), Styles.defaultField, (String txt) -> {
-						//
-						f.stored = parse(wrap(f.field.getType()), v, txt);
-						//
-					}).center().pad(4f);
-					//
-				}))).pad(4f).row();
-			}
+			t.clearChildren();
+			panel(t);
+		}).right().pad(2f);
+		//
+		//revert changes
+		t.button(Icon.cancel, () -> {
+			for (var f : fields) f.revert();
 			//
-			//apply changes 
-			t.button("Set", () -> {
-				for (var f : fields) f.set();
-				//
-				t.clearChildren();
-				panel(t);
-			}).right().pad(2f);
-			//
-			//revert changes
-			t.button(Icon.cancel, () -> {
-				for (var f : fields) f.revert();
-				//
-				t.clearChildren();
-				panel(t);
-			}).right().pad(2f);
-		}));
+			t.clearChildren();
+			panel(t);
+		}).right().pad(2f);
+		//
+		return t;
 	}
 	
 	protected class WritableField {
