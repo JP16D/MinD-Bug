@@ -48,15 +48,16 @@ public class Debuggable {
 		} else {
 			return Debugger.table(Color.maroon, name, panel(tab));
 		}
+		dv("table-value", value);
 	}
 	
 	private Table field(Table t) {
 		t.field(value.toString(), Styles.defaultField, (String txt) -> {
 			//
 			set(dv("parsed", parse(type, value, txt)));
-			dv("post-parsed", value);
 			//;
 		}).center().pad(4f);
+		dv("post-parsed", value);
 		//
 		return t;
 	}
