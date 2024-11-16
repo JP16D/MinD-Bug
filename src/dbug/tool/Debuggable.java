@@ -41,8 +41,15 @@ public class Debuggable {
 	
 	//table display
 	public Table table(String name) {
-		var t = new Table();
-		return Debugger.display(Color.maroon, name, isWrapper(type) ? field(t) : panel(t));
+		var tab = new Table();
+		//
+		if (isWrapper(type)) {
+			field(tab);
+		} else {
+			panel(tab);
+		}
+		//
+		return Debugger.display(Color.maroon, name, tab);
 	}
 	
 	private void field(Table t) {
