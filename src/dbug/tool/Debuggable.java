@@ -44,47 +44,46 @@ public class Debuggable {
 		return Debugger.display(Color.maroon, name, isWrapper(type) ? field() : panel());
 	}
 	
-	private Table field() {
-		return new Table(t -> {
-			t.field(value.toString(), Styles.defaultField, (String txt) -> {
-				//
-				set(parse(type, value, txt));
-				//;
-			}).center().pad(4f);
-		});
+	private void field(Table t) {
+		t.field(value.toString(), Styles.defaultField, (String txt) -> {
+			//
+			set(parse(type, value, txt));
+			//;
+		}).center().pad(4f);
 	}
 	
-	private Table panel() {
-		new Table(t -> {
+	private void panel(Table t) {
+		//
+		for (var f : fields) {
+			boolean stored = f.stored != null;
+			var v = stored ? f.stored : f.value();
 			//
-			for (var f : fields) {
-				boolean stored = f.stored != null;
-				var v = stored ? f.stored : f.value();
+			t.add(Debugger.display(stored ? Color.green : Color.darkGray, f.name, new Table(input -> {
 				//
-				t.add(Debugger.display(stored ? Color.green : Color.darkGray, f.name, new Table(input -> {
+				input.field(v.toString(), Styles.defaultField, (String txt) -> {
 					//
-					input.field(v.toString(), Styles.defaultField, (String txt) -> {
-						//
-						f.stored = parse(wrap(f.field.getType()), v, txt);
-						//
-					}).center().pad(4f);
+					f.stored = parse(wrap(f.field.getType()), v, txt);
 					//
-				}))).pad(4f).row();
-			}
-			//
-			//apply changes 
-			t.button("Set", () -> {
-				for (var f : fields) f.set();
+				}).center().pad(4f);
 				//
-			}).right().pad(2f);
+			}))).pad(4f).row();
+		}
+		//
+		//apply changes 
+		t.button("Set", () -> {
+			for (var f : fields) f.set();
 			//
-			//revert changes
-			t.button(Icon.cancel, () -> {
-				for (var f : fields) f.revert();
-				//
-			}).right().pad(2f);
+			t.clearChildren();
+			panel(t);
+		}).right().pad(2f);
+		//
+		//revert changes
+		t.button(Icon.cancel, () -> {
+			for (var f : fields) f.revert();
 			//
-		});
+			t.clearChildren();
+			panel(t);
+		}).right().pad(2f);
 	}
 	
 	protected class WritableField {
