@@ -37,8 +37,6 @@ public class Debugger {
 		//
 		var v = writable.get(name);
 		//
-		v.set(val);
-		//
 		debugger.put(name, v.table(name));
 		//
 		return v.value;
