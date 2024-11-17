@@ -20,7 +20,7 @@ public class Debuggable {
 	public Object value;
 	public Class<?> type;
 	//
-	protected Seq<Boolean> queue = new Seq<>();
+	public boolean priority;
 	
 	public Debuggable(Class<?> type, Object value) {
 		this.type = wrap(type);
@@ -50,6 +50,7 @@ public class Debuggable {
 		}
 	}
 	
+	//single field
 	private Table field(Table t) {
 		t.field(value.toString(), Styles.defaultField, (String txt) -> {
 			//
@@ -62,6 +63,7 @@ public class Debuggable {
 		return t;
 	}
 	
+	//multi-field
 	private Table panel(Table t) {
 		//
 		for (var f : fields) {
