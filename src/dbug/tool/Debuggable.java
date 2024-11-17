@@ -43,25 +43,25 @@ public class Debuggable {
 		}
 	}
 	
-	private Table single(Table t, Object value) {
+	private Table single(Table t, Object v) {
 		boolean priority = false;
 		//
-		t.field(value.toString(), Styles.defaultField, (String txt) -> {
+		t.field(v.toString(), Styles.defaultField, (String txt) -> {
 			//
-			this.value = parse(type, value, txt);
+			this.value = parse(type, v, txt);
 			priority = true;
 			//
 		}).center().pad(4f);
 		//
-		if (!priority) this.value = value;
+		if (!priority) this.value = v;
 		return t;
 	}
 	
-	private Table multi(Table t, Object value) {
+	private Table multi(Table t, Object src) {
 		//
 		for (var f : fields) {
 			boolean stored = f.stored != null;
-			var v = stored ? f.stored : f.value(value);
+			var v = stored ? f.stored : f.value(src);
 			//
 			t.add(Debugger.display(stored ? Color.green : Color.darkGray, f.name, new Table(input -> {
 				//
@@ -76,10 +76,10 @@ public class Debuggable {
 		//
 		//apply changes 
 		t.button("Set", () -> {
-			for (var f : fields) f.set(value);
+			for (var f : fields) f.set(src);
 			//
 			t.clearChildren();
-			panel(t);
+			panel(t, src);
 		}).right().pad(2f);
 		//
 		//revert changes
@@ -87,10 +87,10 @@ public class Debuggable {
 			for (var f : fields) f.revert();
 			//
 			t.clearChildren();
-			panel(t);
+			panel(t, src);
 		}).right().pad(2f);
 		//
-		this.value = value;
+		this.value = src;
 		return t;
 	}
 	
@@ -98,7 +98,7 @@ public class Debuggable {
 		Field field;
 		String name;
 		//
-		Object value;
+		Object stored;
 		
 		WritableField(Field field) {
 			this.field = field;
