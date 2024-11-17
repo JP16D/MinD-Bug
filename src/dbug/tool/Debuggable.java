@@ -35,7 +35,7 @@ public class Debuggable {
 	
 	public void set(Object val) {
 		if (temp != null) {
-			value = temp
+			value = temp;
 			temp = null;
 		} else {
 			value = val;
@@ -117,7 +117,7 @@ public class Debuggable {
 			stored = value;
 		}
 		
-		set(Object v) {
+		public void set(Object v) {
 			stored = v;
 		}
 	}
