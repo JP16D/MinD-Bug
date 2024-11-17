@@ -75,7 +75,7 @@ public class Debuggable {
 				//
 			}).center().pad(4f);
 			//
-			t.add(Debugger.display(stored ? Color.green : Color.darkGray, f.name, input)).pad(4f).row();
+			t.add(Debugger.display(stored ? Color.green : Color.darkGray, f.getName(), input)).pad(4f).row();
 		} catch (Exception e) {}
 		//
 		//apply changes 
@@ -86,7 +86,7 @@ public class Debuggable {
 		} catch (Exception e) {}
 		//
 		//revert changes
-		var revert = t.button(Icon.cancel, () -> {}).right().pad(2f);
+		var revert = t.button(Icon.cancel, () -> {}).right().pad(2f).get();
 		//
 		//update display
 		if (set.isChecked() || revert.isChecked()) {
