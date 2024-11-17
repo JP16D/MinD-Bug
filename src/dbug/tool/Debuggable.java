@@ -79,7 +79,7 @@ public class Debuggable {
 			for (var f : fields) f.set(src);
 			//
 			t.clearChildren();
-			panel(t, src);
+			multi(t, src);
 		}).right().pad(2f);
 		//
 		//revert changes
@@ -87,7 +87,7 @@ public class Debuggable {
 			for (var f : fields) f.revert();
 			//
 			t.clearChildren();
-			panel(t, src);
+			multi(t, src);
 		}).right().pad(2f);
 		//
 		this.value = src;
