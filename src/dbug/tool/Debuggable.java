@@ -19,8 +19,6 @@ public class Debuggable {
 	//
 	public Object value;
 	public Class<?> type;
-	//
-	public boolean priority;
 	
 	public Debuggable(Class<?> type, Object value) {
 		this.type = wrap(type);
@@ -35,40 +33,35 @@ public class Debuggable {
 		}
 	}
 	
-	public void set(Object value) {
-		this.value = value;
-	}
-	
 	//table display
-	public Table table(String name) {
-		var tab = new Table();
+	public Table table(String name, Object value) {
 		//
 		if (isWrapper(type)) {
-			return Debugger.display(Color.maroon, name, field(tab));
+			return Debugger.display(Color.maroon, name, single(new Table(), value));
 		} else {
-			return Debugger.table(Color.maroon, name, panel(tab));
+			return Debugger.table(Color.maroon, name, multi(new Table(), value));
 		}
 	}
 	
-	//single field
-	private Table field(Table t) {
+	private Table single(Table t, Object value) {
+		boolean priority = false;
+		//
 		t.field(value.toString(), Styles.defaultField, (String txt) -> {
 			//
-			set(dv("parsed", parse(type, value, txt)));
+			this.value = parse(type, value, txt);
+			priority = true;
 			//
-			dv("post-parsed", value);
 		}).center().pad(4f);
-		dv("table-value", value);
 		//
+		if (!priority) this.value = value;
 		return t;
 	}
 	
-	//multi-field
-	private Table panel(Table t) {
+	private Table multi(Table t, Object value) {
 		//
 		for (var f : fields) {
 			boolean stored = f.stored != null;
-			var v = stored ? f.stored : f.value();
+			var v = stored ? f.stored : f.value(value);
 			//
 			t.add(Debugger.display(stored ? Color.green : Color.darkGray, f.name, new Table(input -> {
 				//
@@ -83,7 +76,7 @@ public class Debuggable {
 		//
 		//apply changes 
 		t.button("Set", () -> {
-			for (var f : fields) f.set();
+			for (var f : fields) f.set(value);
 			//
 			t.clearChildren();
 			panel(t);
@@ -97,6 +90,7 @@ public class Debuggable {
 			panel(t);
 		}).right().pad(2f);
 		//
+		this.value = value;
 		return t;
 	}
 	
@@ -104,16 +98,16 @@ public class Debuggable {
 		Field field;
 		String name;
 		//
-		Object stored;
+		Object value;
 		
 		WritableField(Field field) {
 			this.field = field;
 			this.name = field.getName();
 		}
 		
-		void set() {
+		void set(Object src) {
 			try {
-				field.set(value, stored);
+				field.set(src, stored);
 			} catch (Exception e) {
 				//warn();
 			}
@@ -125,9 +119,9 @@ public class Debuggable {
 			stored = null;
 		}
 		
-		Object value() {
+		Object value(Object src) {
 			try {
-				return field.get(value);
+				return field.get(src);
 			} catch (Exception e) {
 				return null;
 			}
