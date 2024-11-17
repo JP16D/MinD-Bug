@@ -82,8 +82,8 @@ public class Debuggable {
 		var set = t.button("Set", () -> {}).right().pad(2f).get();
 		//
 		if (set.isChecked()) for (var k : map.keys()) try {
-			type.getField(k).set(value, var v = map.get(k).stored);
-		} catch (Exception e).{}
+			type.getField(k).set(value, map.get(k).stored);
+		} catch (Exception e) {}
 		//
 		//revert changes
 		var revert = t.button(Icon.cancel, () -> {}).right().pad(2f);
