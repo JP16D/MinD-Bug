@@ -24,7 +24,7 @@ public class Debuggable {
 		this.type = wrap(type);
 		this.value = value;
 		//
-		if (!isWrapper(this.type)) return;
+		if (isWrapper(this.type)) return;
 		//
 		for (var field : type.getFields()) {
 			map.put(field.getName(), new Writable(null));
@@ -54,7 +54,7 @@ public class Debuggable {
 			//
 		}).center().pad(4f);
 		//
-		this.value = v.stored;
+		this.value = dv("value", v.stored);
 		return t;
 	}
 	
