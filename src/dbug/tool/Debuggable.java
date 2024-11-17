@@ -44,16 +44,14 @@ public class Debuggable {
 	}
 	
 	private Table single(Table t, Object v) {
-		boolean priority = false;
+		this.value = v;
 		//
 		t.field(v.toString(), Styles.defaultField, (String txt) -> {
 			//
 			this.value = parse(type, v, txt);
-			priority = true;
 			//
 		}).center().pad(4f);
 		//
-		if (!priority) this.value = v;
 		return t;
 	}
 	
