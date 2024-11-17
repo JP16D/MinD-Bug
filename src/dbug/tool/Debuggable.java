@@ -15,7 +15,8 @@ import static dbug.tool.Debugger.*;
 import static dbug.util.ParseUtil.*;
 
 public class Debuggable {
-	private Seq<WritableField> fields = new Seq<>();
+	Seq<WritableField> fields = new Seq<>();
+	boolean priority = false;
 	//
 	public Object value;
 	public Class<?> type;
@@ -34,32 +35,34 @@ public class Debuggable {
 	}
 	
 	//table display
-	public Table table(String name, Object value) {
+	public Table table(String name) {
 		//
 		if (isWrapper(type)) {
-			return Debugger.display(Color.maroon, name, single(new Table(), value));
+			return Debugger.display(Color.maroon, name, single(new Table()));
 		} else {
-			return Debugger.table(Color.maroon, name, multi(new Table(), value));
+			return Debugger.table(Color.maroon, name, multi(new Table()));
 		}
 	}
 	
-	private Table single(Table t, Object v) {
-		this.value = v;
+	private Table single(Table t) {
+		Prov<Object> out = () -> value;
 		//
-		t.field(v.toString(), Styles.defaultField, (String txt) -> {
+		t.field(value.toString(), Styles.defaultField, (String txt) -> {
 			//
-			this.value = parse(type, v, txt);
+			out = () -> parse(type, value, txt);
 			//
 		}).center().pad(4f);
 		//
+		this.value = out.get();
 		return t;
 	}
 	
-	private Table multi(Table t, Object src) {
+	private Table multi(Table t) {
 		//
 		for (var f : fields) {
 			boolean stored = f.stored != null;
-			var v = stored ? f.stored : f.value(src);
+			var v = stored ? f.stored : f.value(value);
+			Prov<Object> out = () -> {};
 			//
 			t.add(Debugger.display(stored ? Color.green : Color.darkGray, f.name, new Table(input -> {
 				//
@@ -74,10 +77,10 @@ public class Debuggable {
 		//
 		//apply changes 
 		t.button("Set", () -> {
-			for (var f : fields) f.set(src);
+			for (var f : fields) f.set();
 			//
 			t.clearChildren();
-			multi(t, src);
+			multi(t);
 		}).right().pad(2f);
 		//
 		//revert changes
@@ -85,10 +88,9 @@ public class Debuggable {
 			for (var f : fields) f.revert();
 			//
 			t.clearChildren();
-			multi(t, src);
+			multi(t);
 		}).right().pad(2f);
 		//
-		this.value = src;
 		return t;
 	}
 	
@@ -103,9 +105,9 @@ public class Debuggable {
 			this.name = field.getName();
 		}
 		
-		void set(Object src) {
+		void set() {
 			try {
-				field.set(src, stored);
+				field.set(value, stored);
 			} catch (Exception e) {
 				//warn();
 			}
@@ -117,9 +119,9 @@ public class Debuggable {
 			stored = null;
 		}
 		
-		Object value(Object src) {
+		Object value() {
 			try {
-				return field.get(src);
+				return field.get();
 			} catch (Exception e) {
 				return null;
 			}
