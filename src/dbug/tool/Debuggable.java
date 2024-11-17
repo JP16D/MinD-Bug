@@ -15,8 +15,7 @@ import static dbug.tool.Debugger.*;
 import static dbug.util.ParseUtil.*;
 
 public class Debuggable {
-	Seq<WritableField> fields = new Seq<>();
-	boolean priority = false;
+	protected OrderedMap<String, Writable> map = new OrderedMap<>();
 	//
 	public Object value;
 	public Class<?> type;
@@ -25,13 +24,15 @@ public class Debuggable {
 		this.type = wrap(type);
 		this.value = value;
 		//
-		if (isWrapper(this.type)) return;
+		if (!isWrapper(this.type)) return;
 		//
-		if (fields.size <= 0) for (var field : this.type.getFields()) {
-			var entry = new WritableField(field);
-			//
-			if (!Modifier.isFinal(field.getModifiers())) fields.add(entry);
+		for (var field : type.getFields()) {
+			map.put(field.getName(), new Writable(null));
 		}
+	}
+	
+	public void set(Object v) {
+		this.value = value;
 	}
 	
 	//table display
@@ -45,86 +46,64 @@ public class Debuggable {
 	}
 	
 	private Table single(Table t) {
-		Prov<Object> out = () -> value;
+		var v = new Writable(value);
 		//
 		t.field(value.toString(), Styles.defaultField, (String txt) -> {
 			//
-			out = () -> parse(type, value, txt);
+			v.stored = parse(type, value, txt);
 			//
 		}).center().pad(4f);
 		//
-		this.value = out.get();
+		this.value = v.stored;
 		return t;
 	}
 	
 	private Table multi(Table t) {
 		//
-		for (var f : fields) {
-			boolean stored = f.stored != null;
-			var v = stored ? f.stored : f.value(value);
-			Prov<Object> out = () -> {};
+		for (var k : map.keys()) try {
+			
+			var input = new Table();
+			var f = type.getField(k);
+			var w = map.get(k);
 			//
-			t.add(Debugger.display(stored ? Color.green : Color.darkGray, f.name, new Table(input -> {
+			boolean stored = w.stored != null;
+			var v = stored ? w.stored : f.get(value);
+			//
+			input.field(v.toString(), Styles.defaultField, (String txt) -> {
 				//
-				input.field(v.toString(), Styles.defaultField, (String txt) -> {
-					//
-					f.stored = parse(wrap(f.field.getType()), v, txt);
-					//
-				}).center().pad(4f);
+				w.stored = parse(wrap(f.getType()), v, txt);
 				//
-			}))).pad(4f).row();
-		}
+			}).center().pad(4f);
+			//
+			t.add(Debugger.display(stored ? Color.green : Color.darkGray, f.name, input)).pad(4f).row();
+		} catch (Exception e) {}
 		//
 		//apply changes 
-		t.button("Set", () -> {
-			for (var f : fields) f.set();
-			//
-			t.clearChildren();
-			multi(t);
-		}).right().pad(2f);
+		var set = t.button("Set", () -> {}).right().pad(2f).get();
+		//
+		if (set.isChecked()) for (var k : map.keys()) try {
+			type.getField(k).set(value, var v = map.get(k).stored);
+		} catch (Exception e).{}
 		//
 		//revert changes
-		t.button(Icon.cancel, () -> {
-			for (var f : fields) f.revert();
+		var revert = t.button(Icon.cancel, () -> {}).right().pad(2f);
+		//
+		//update display
+		if (set.isChecked() || revert.isChecked()) {
+			for (var v : map.values()) v.stored = null;
 			//
 			t.clearChildren();
 			multi(t);
-		}).right().pad(2f);
+		}
 		//
 		return t;
 	}
 	
-	protected class WritableField {
-		Field field;
-		String name;
-		//
-		Object stored;
+	protected class Writable {
+		Object stored; 
 		
-		WritableField(Field field) {
-			this.field = field;
-			this.name = field.getName();
-		}
-		
-		void set() {
-			try {
-				field.set(value, stored);
-			} catch (Exception e) {
-				//warn();
-			}
-			//
-			revert();
-		}
-		
-		void revert() {
-			stored = null;
-		}
-		
-		Object value() {
-			try {
-				return field.get();
-			} catch (Exception e) {
-				return null;
-			}
+		Writable(Object value) {
+			stored = value;
 		}
 	}
 }
