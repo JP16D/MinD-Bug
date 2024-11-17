@@ -17,6 +17,8 @@ import static dbug.util.ParseUtil.*;
 public class Debuggable {
 	protected OrderedMap<String, Writable> map = new OrderedMap<>();
 	//
+	protected Object temp;
+	//
 	public Object value;
 	public Class<?> type;
 	
@@ -31,8 +33,13 @@ public class Debuggable {
 		}
 	}
 	
-	public void set(Object v) {
-		this.value = value;
+	public void set(Object val) {
+		if (temp != null) {
+			value = temp
+			temp = null;
+		} else {
+			value = val;
+		}
 	}
 	
 	//table display
@@ -46,15 +53,13 @@ public class Debuggable {
 	}
 	
 	private Table single(Table t) {
-		var v = new Writable(value);
 		//
 		t.field(value.toString(), Styles.defaultField, (String txt) -> {
 			//
-			v.stored = parse(type, value, txt);
+			temp = parse(type, value, txt);
 			//
 		}).center().pad(4f);
 		//
-		this.value = dv("value", v.stored);
 		return t;
 	}
 	
@@ -71,7 +76,7 @@ public class Debuggable {
 			//
 			input.field(v.toString(), Styles.defaultField, (String txt) -> {
 				//
-				w.stored = parse(wrap(f.getType()), v, txt);
+				w.set(parse(wrap(f.getType()), v, txt));
 				//
 			}).center().pad(4f);
 			//
@@ -79,22 +84,28 @@ public class Debuggable {
 		} catch (Exception e) {}
 		//
 		//apply changes 
-		var set = t.button("Set", () -> {}).right().pad(2f).get();
-		//
-		if (set.isChecked()) for (var k : map.keys()) try {
-			type.getField(k).set(value, map.get(k).stored);
-		} catch (Exception e) {}
-		//
-		//revert changes
-		var revert = t.button(Icon.cancel, () -> {}).right().pad(2f).get();
-		//
-		//update display
-		if (set.isChecked() || revert.isChecked()) {
-			for (var v : map.values()) v.stored = null;
+		t.button("Set", () -> {
+			temp = value;
+			//
+			for (var k : map.keys()) try {
+				var v = map.get(k);
+				//
+				type.getField(k).set(temp, v.stored);
+				//
+				v.set(null);
+			} catch (Exception e) {}
 			//
 			t.clearChildren();
 			multi(t);
-		}
+		}).right().pad(2f);
+		//
+		//revert changes
+		t.button(Icon.cancel, () -> {
+			for (var v : map.values()) v.set(null);
+			//
+			t.clearChildren();
+			multi(t);
+		}).right().pad(2f).get();
 		//
 		return t;
 	}
@@ -104,6 +115,10 @@ public class Debuggable {
 		
 		Writable(Object value) {
 			stored = value;
+		}
+		
+		set(Object v) {
+			stored = v;
 		}
 	}
 }
