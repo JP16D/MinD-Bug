@@ -37,10 +37,13 @@ public class Debugger {
 		//
 		var v = writable.get(name);
 		//
-		v.set(val);
 		debugger.put(name, v.table(name));
 		//
-		return dv("return", v.value);
+		if (v.priority) {
+			return v.value;
+		} else {
+			return val;
+		}
 	}
 	
 	//display interface
