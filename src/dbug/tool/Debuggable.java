@@ -17,15 +17,14 @@ import static dbug.util.ParseUtil.*;
 public class Debuggable {
 	protected OrderedMap<String, Writable> map = new OrderedMap<>();
 	//
-	public Object temp;
 	public Object value;
 	public Class<?> type;
 	
 	public Debuggable(Class<?> type, Object value) {
-		this.type = wrap(type);
+		this.type = type;
 		this.value = value;
 		//
-		if (isWrapper(this.type)) return;
+		if (isWrapper(type) || type.isPrimitive) return;
 		//
 		for (var field : type.getFields()) {
 			if (isWrapper(wrap(field.getType()))) map.put(field.getName(), new Writable(null));
@@ -33,21 +32,16 @@ public class Debuggable {
 	}
 	
 	public void set(Object val) {
-		if (temp == null) {
-			value = val;
-		} else {
-			value = temp;
-			temp = null;
-		}
+		value = val;
 	}
 	
 	//table display
 	public Table table(String name) {
 		//
-		if (isWrapper(type)) {
-			return Debugger.display(Color.maroon, name, single(new Table()));
-		} else {
+		if (map.size > 0) {
 			return Debugger.table(Color.maroon, name, multi(new Table()));
+		} else {
+			
 		}
 	}
 	
@@ -55,7 +49,7 @@ public class Debuggable {
 		//
 		t.field(value.toString(), Styles.defaultField, (String txt) -> {
 			//
-			temp = parse(type, value, txt);
+			set(parse(type, value, txt));
 			//
 		}).center().pad(4f);
 		//
@@ -82,29 +76,23 @@ public class Debuggable {
 		//
 		//apply changes 
 		t.button("Set", () -> {
-			temp = value;
 			//
 			for (var k : map.keys()) try {
-				type.getField(k).set(temp, map.get(k).stored);
+				var v = map.get(k);
+				//
+				type.getField(k).set(value, v.stored);
+				v.set(null);
 				//
 			} catch (Exception e) {}
 			//
-			reset(t);
 		}).right().pad(2f);
 		//
 		//revert changes
 		t.button(Icon.cancel, () -> {
-			reset(t);
+			for (var v : map.values()) v.set(null);
 		}).right().pad(2f).get();
 		//
 		return t;
-	}
-	
-	private void reset(Table t) {
-		for (var v : map.values()) if (!v.empty()) v.set(null);
-		//
-		t.clearChildren();
-		multi(t);
 	}
 	
 	protected class Writable {
