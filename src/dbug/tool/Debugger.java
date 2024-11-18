@@ -40,6 +40,8 @@ public class Debugger {
 		debugger.put(name, v.table(name, val));
 		//
 		if (v.priority) {
+			v.priority = false;
+			//
 			return v.value;
 		} else {
 			return val;
