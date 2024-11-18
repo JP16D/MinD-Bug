@@ -45,12 +45,10 @@ public class ParseUtil {
 			//
 		} else try {
 			var wrapped = wrap(type);
-			var conv = wrapped.getMethod("valueOf", String.class);
-			var cast = wrapped.getMethod(type.getName() + "Value");
+			var method = wrapped.getMethod("valueOf", String.class);
 			//
-			var out = conv.invoke(wrapped, val);
+			return method.invoke(wrapped, val);
 			//
-			return type.isPrimitive() ? cast.invoke(out) : out;
 		} catch (Exception e) {
 			//warn();
 			return def;
