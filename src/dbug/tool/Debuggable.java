@@ -40,14 +40,6 @@ public class Debuggable {
 		var table = new Table();
 		//
 		if (map.size > 0) {
-			table.field(value.toString(), Styles.defaultField, (String txt) -> {
-				//
-				set(parse(type, value, txt));
-				//
-			}).center().pad(4f);
-			//
-			return Debugger.table(Color.maroon, name, table);
-		} else {
 			//
 			for (var k : map.keys()) try {
 				//
@@ -84,6 +76,14 @@ public class Debuggable {
 			}).right().pad(2f).get();
 			//
 			return Debugger.display(Color.maroon, name, table);
+		} else {
+			table.field(value.toString(), Styles.defaultField, (String txt) -> {
+				//
+				set(parse(type, value, txt));
+				//
+			}).center().pad(4f);
+			//
+			return Debugger.table(Color.maroon, name, table);
 		}
 	}
 	
