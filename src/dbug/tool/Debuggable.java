@@ -34,71 +34,63 @@ public class Debuggable {
 	}
 	
 	//table display
-	public Table table(String name) {
+	public Table table(String name, Object src) {
+		var table = new Table();
 		//
 		if (isWrapper(type)) {
-			return Debugger.display(Color.maroon, name, single(new Table()));
-		} else {
-			return Debugger.table(Color.maroon, name, multi(new Table()));
-		}
-	}
-	
-	private Table single(Table t) {
-		//
-		t.field(value.toString(), Styles.defaultField, (String txt) -> {
-			//
-			value = parse(type, value, txt);
-			//
-			priority = true;
-		}).center().pad(4f);
-		//
-		return t;
-	}
-	
-	private Table multi(Table t) {
-		//
-		for (var k : map.keys()) try {
-			
-			var input = new Table();
-			var f = type.getField(k);
-			var w = map.get(k);
-			var v = w.empty() ? f.get(value) : w.stored;
-			//
-			input.field(v.toString(), Styles.defaultField, (String txt) -> {
+			table.field(src.toString(), Styles.defaultField, (String txt) -> {
 				//
-				w.set(parse(wrap(f.getType()), v, txt));
+				value = parse(type, value, txt);
 				//
+				priority = true;
 			}).center().pad(4f);
 			//
-			t.add(Debugger.display(w.empty() ? Color.darkGray : Color.green, f.getName(), input)).pad(4f).row();
-		} catch (Exception e) {}
-		//
-		//apply changes 
-		t.button("Set", () -> {
+			return Debugger.display(Color.maroon, name, table);
+			//
+		} else {
+			//
 			for (var k : map.keys()) try {
-				type.getField(k).set(value, map.get(k).stored);
 				//
+				var input = new Table();
+				var f = type.getField(k);
+				var w = map.get(k);
+				var v = w.empty() ? f.get(src) : w.stored;
+				//
+				input.field(v.toString(), Styles.defaultField, (String txt) -> {
+					//
+					w.set(parse(wrap(f.getType()), v, txt));
+					//
+				}).center().pad(4f);
+				//
+				t.add(Debugger.display(w.empty() ? Color.darkGray : Color.green, f.getName(), input)).pad(4f).row();
 			} catch (Exception e) {}
 			//
-			priority = true;
+			//apply changes 
+			t.button("Set", () -> {
+				for (var k : map.keys()) try {
+					var v = map.get(k);
+					//
+					type.getField(k).set(value, v.stored);
+					v.set(null);
+				} catch (Exception e) {}
+				//
+				priority = true;
+				//
+				t.clearChildren();
+				table(t);
+			}).right().pad(2f);
 			//
-			reset(t);
-		}).right().pad(2f);
-		//
-		//revert changes
-		t.button(Icon.cancel, () -> {
-			reset(t);
-		}).right().pad(2f).get();
-		//
-		return t;
-	}
-	
-	private void reset(Table t) {
-		for (var v : map.values()) v.set(null);
-		//
-		t.clearChildren();
-		//
-		multi(t);
+			//revert changes
+			t.button(Icon.cancel, () -> {
+				for (var v : map.values()) v.set(null);
+				//
+				t.clearChildren();
+				table(t);
+			}).right().pad(2f).get();
+			//
+			//
+			return Debugger.table(Color.maroon, name, multi(new Table()));
+		}
 	}
 	
 	protected class Writable {
