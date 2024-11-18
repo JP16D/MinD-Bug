@@ -33,7 +33,7 @@ public class Debuggable {
 		}
 	}
 	
-	v.set(Debuggable d) {
+	public void set(Debuggable d) {
 		value = d.value;
 		map = d.map;
 	}
