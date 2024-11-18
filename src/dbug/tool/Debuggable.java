@@ -17,7 +17,7 @@ import static dbug.util.ParseUtil.*;
 public class Debuggable {
 	protected OrderedMap<String, Writable> map = new OrderedMap<>();
 	//
-	protected boolean priority;
+	protected boolean priority = false;
 	//
 	public Object value;
 	public Class<?> type;
@@ -34,60 +34,71 @@ public class Debuggable {
 	}
 	
 	//table display
-	public Table table(String name, Object src) {
-		var table = new Table();
+	public Table table(String name) {
 		//
 		if (isWrapper(type)) {
-			table.field(src.toString(), Styles.defaultField, (String txt) -> {
+			return Debugger.display(Color.maroon, name, single(new Table()));
+		} else {
+			return Debugger.table(Color.maroon, name, multi(new Table()));
+		}
+	}
+	
+	private Table single(Table t) {
+		//
+		t.field(value.toString(), Styles.defaultField, (String txt) -> {
+			//
+			value = parse(type, value, txt);
+			//
+			priority = true;
+		}).center().pad(4f);
+		//
+		return t;
+	}
+	
+	private Table multi(Table t) {
+		//
+		for (var k : map.keys()) try {
+			
+			var input = new Table();
+			var f = type.getField(k);
+			var w = map.get(k);
+			var v = w.empty() ? f.get(value) : w.stored;
+			//
+			input.field(v.toString(), Styles.defaultField, (String txt) -> {
 				//
-				value = parse(type, value, txt);
+				w.set(parse(wrap(f.getType()), v, txt));
 				//
-				priority = true;
 			}).center().pad(4f);
 			//
-			return Debugger.display(Color.maroon, name, table);
-			//
-		} else {
-			//
+			t.add(Debugger.display(w.empty() ? Color.darkGray : Color.green, f.getName(), input)).pad(4f).row();
+		} catch (Exception e) {}
+		//
+		//apply changes 
+		t.button("Set", () -> {
 			for (var k : map.keys()) try {
+				type.getField(k).set(value, map.get(k).stored);
 				//
-				var input = new Table();
-				var f = type.getField(k);
-				var w = map.get(k);
-				var v = w.empty() ? f.get(src) : w.stored;
-				//
-				input.field(v.toString(), Styles.defaultField, (String txt) -> {
-					//
-					w.set(parse(wrap(f.getType()), v, txt));
-					//
-				}).center().pad(4f);
-				//
-				table.add(Debugger.display(w.empty() ? Color.darkGray : Color.green, f.getName(), input)).pad(4f).row();
 			} catch (Exception e) {}
 			//
-			//apply changes 
-			table.button("Set", () -> {
-				for (var k : map.keys()) try {
-					var v = map.get(k);
-					//
-					type.getField(k).set(value, v.stored);
-					v.set(null);
-				} catch (Exception e) {}
-				//
-				priority = true;
-				//
-				table.clearChildren();
-			}).right().pad(2f);
+			priority = true;
 			//
-			//revert changes
-			table.button(Icon.cancel, () -> {
-				for (var v : map.values()) v.set(null);
-				//
-				table.clearChildren();
-			}).right().pad(2f).get();
-			//
-			return Debugger.table(Color.maroon, name, table);
-		}
+			reset(t);
+		}).right().pad(2f);
+		//
+		//revert changes
+		t.button(Icon.cancel, () -> {
+			reset(t);
+		}).right().pad(2f).get();
+		//
+		return t;
+	}
+	
+	private void reset(Table t) {
+		for (var v : map.values()) v.set(null);
+		//
+		t.clearChildren();
+		//
+		multi(t);
 	}
 	
 	protected class Writable {
