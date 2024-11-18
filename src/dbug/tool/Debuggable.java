@@ -37,62 +37,54 @@ public class Debuggable {
 	
 	//table display
 	public Table table(String name) {
+		var table = new Table();
 		//
 		if (map.size > 0) {
-			return Debugger.table(Color.maroon, name, multi(new Table()));
-		} else {
-			
-		}
-	}
-	
-	private Table single(Table t) {
-		//
-		t.field(value.toString(), Styles.defaultField, (String txt) -> {
-			//
-			set(parse(type, value, txt));
-			//
-		}).center().pad(4f);
-		//
-		return t;
-	}
-	
-	private Table multi(Table t) {
-		//
-		for (var k : map.keys()) try {
-			
-			var input = new Table();
-			var f = type.getField(k);
-			var w = map.get(k);
-			var v = w.empty() ? f.get(value) : w.stored;
-			//
-			input.field(v.toString(), Styles.defaultField, (String txt) -> {
+			table.field(value.toString(), Styles.defaultField, (String txt) -> {
 				//
-				w.set(parse(wrap(f.getType()), v, txt));
+				set(parse(type, value, txt));
 				//
 			}).center().pad(4f);
 			//
-			t.add(Debugger.display(w.empty() ? Color.darkGray : Color.green, f.getName(), input)).pad(4f).row();
-		} catch (Exception e) {}
-		//
-		//apply changes 
-		t.button("Set", () -> {
+			return Debugger.table(Color.maroon, name, table);
+		} else {
 			//
 			for (var k : map.keys()) try {
-				var v = map.get(k);
 				//
-				type.getField(k).set(value, v.stored);
-				v.set(null);
+				var input = new Table();
+				var f = type.getField(k);
+				var w = map.get(k);
+				var v = w.empty() ? f.get(value) : w.stored;
 				//
+				input.field(v.toString(), Styles.defaultField, (String txt) -> {
+					//
+					w.set(parse(wrap(f.getType()), v, txt));
+					//
+				}).center().pad(4f);
+				//
+				table.add(Debugger.display(w.empty() ? Color.darkGray : Color.green, f.getName(), input)).pad(4f).row();
 			} catch (Exception e) {}
 			//
-		}).right().pad(2f);
-		//
-		//revert changes
-		t.button(Icon.cancel, () -> {
-			for (var v : map.values()) v.set(null);
-		}).right().pad(2f).get();
-		//
-		return t;
+			//apply changes 
+			table.button("Set", () -> {
+				for (var k : map.keys()) try {
+					var v = map.get(k);
+					//
+					type.getField(k).set(value, v.stored);
+					v.set(null);
+					//
+				} catch (Exception e) {}
+				//
+			}).right().pad(2f);
+			//
+			//revert changes
+			table.button(Icon.cancel, () -> {
+				for (var v : map.values()) v.set(null);
+				//
+			}).right().pad(2f).get();
+			//
+			return Debugger.display(Color.maroon, name, table);
+		}
 	}
 	
 	protected class Writable {
