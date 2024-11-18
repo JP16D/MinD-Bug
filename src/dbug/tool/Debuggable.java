@@ -88,8 +88,6 @@ public class Debuggable {
 				//
 			} catch (Exception e) {}
 			//
-			priority = true;
-			//
 			reset(t);
 		}).right().pad(2f);
 		//
