@@ -39,7 +39,7 @@ public class Debuggable {
 	}
 	
 	//table display
-	public Table table(String name) {
+	public Table call(String name) {
 		if (map.size > 0) {
 			/*return Debugger.table(Color.maroon, name, new Table(t -> {
 				//
