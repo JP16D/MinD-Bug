@@ -33,15 +33,6 @@ public class Debuggable {
 		}
 	}
 	
-	public void set(Debuggable d) {
-		if (priority) {
-			value = d.value;
-			//
-			map.clear();
-			map.putAll(d.map);
-		}
-	}
-	
 	//table display
 	public Table table(String name) {
 		var table = new Table();
@@ -75,14 +66,12 @@ public class Debuggable {
 					//
 				} catch (Exception e) {}
 				//
-				priority = false;
 			}).right().pad(2f);
 			//
 			//revert changes
 			table.button(Icon.cancel, () -> {
 				for (var v : map.values()) v.set(null);
 				//
-				priority = false;
 			}).right().pad(2f).get();
 			//
 			return Debugger.table(Color.maroon, name, table);
@@ -91,6 +80,7 @@ public class Debuggable {
 				//
 				value = parse(type, value, txt);
 				//
+				priority = true;
 			}).center().pad(4f);
 			//
 			return Debugger.display(Color.maroon, name, table);
