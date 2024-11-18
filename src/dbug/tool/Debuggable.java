@@ -17,6 +17,7 @@ import static dbug.util.ParseUtil.*;
 public class Debuggable {
 	protected OrderedMap<String, Writable> map = new OrderedMap<>();
 	//
+	protected Object value;
 	protected boolean priority;
 	//
 	public Class<?> type;
@@ -62,6 +63,7 @@ public class Debuggable {
 						//
 					} catch (Exception e) {}
 					//
+					this.value = value;
 				}).right().pad(2f);
 				//
 				//revert changes
@@ -75,14 +77,14 @@ public class Debuggable {
 			table.add(Debugger.display(Color.maroon, name, new Table(t -> {
 				t.field(value.toString(), Styles.defaultField, (String txt) -> {
 					//
-					value = parse(type, value, txt);
+					this.value = parse(type, value, txt);
 					//
 				}).center().pad(4f);
 				//
 			})));
 		}
 		//
-		return value;
+		return this.value;
 	}
 	
 	protected class Writable {
