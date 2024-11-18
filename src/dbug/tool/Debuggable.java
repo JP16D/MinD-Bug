@@ -62,9 +62,7 @@ public class Debuggable {
 			var input = new Table();
 			var f = type.getField(k);
 			var w = map.get(k);
-			//
-			boolean stored = w.stored != null;
-			var v = stored ? w.stored : f.get(value);
+			var v = w.empty() ? f.get(value) : w.stored;
 			//
 			input.field(v.toString(), Styles.defaultField, (String txt) -> {
 				//
@@ -72,49 +70,51 @@ public class Debuggable {
 				//
 			}).center().pad(4f);
 			//
-			t.add(Debugger.display(stored ? Color.green : Color.darkGray, f.getName(), input)).pad(4f).row();
+			t.add(Debugger.display(w.empty() ? Color.darkGray : Color.green, f.getName(), input)).pad(4f).row();
 		} catch (Exception e) {}
 		//
 		//apply changes 
 		t.button("Set", () -> {
 			for (var k : map.keys()) try {
-				var v = map.get(k);
+				type.getField(k).set(value, map.get(k).stored);
 				//
-				type.getField(k).set(value, v.stored);
-				//
-				v.set(null);
 			} catch (Exception e) {}
 			//
 			priority = true;
 			//
-			t.clearChildren();
-			//
-			multi(t);
+			reset(t);
 			return t;
 		}).right().pad(2f);
 		//
 		//revert changes
 		t.button(Icon.cancel, () -> {
-			for (var v : map.values()) v.set(null);
-			//
-			t.clearChildren();
-			//
-			multi(t);
-			return t;
+			reset(t);
 		}).right().pad(2f).get();
 		//
 		return t;
 	}
 	
+	private void reset(Table t) {
+		for (var v : map.values()) v.set(null);
+		//
+		t.clearChildren();
+		//
+		multi(t);
+	}
+	
 	protected class Writable {
-		Object stored; 
+		Object stored;
 		
 		Writable(Object value) {
 			stored = value;
 		}
 		
-		public void set(Object v) {
+		void set(Object v) {
 			stored = v;
+		}
+		
+		boolean empty() {
+			return stored == null;
 		}
 	}
 }
