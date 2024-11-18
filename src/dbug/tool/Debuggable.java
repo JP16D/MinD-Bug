@@ -17,8 +17,6 @@ import static dbug.util.ParseUtil.*;
 public class Debuggable {
 	protected OrderedMap<String, Writable> map = new OrderedMap<>();
 	//
-	protected boolean priority =;
-	//
 	public Object temp;
 	public Object value;
 	public Class<?> type;
