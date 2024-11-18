@@ -24,7 +24,7 @@ public class Debuggable {
 		this.type = type;
 		this.value = value;
 		//
-		if (isWrapper(type) || type.isPrimitive) return;
+		if (isWrapper(type) || type.isPrimitive()) return;
 		//
 		for (var field : type.getFields()) {
 			if (isWrapper(wrap(field.getType()))) map.put(field.getName(), new Writable(null));
