@@ -83,7 +83,6 @@ public class Debuggable {
 			priority = true;
 			//
 			reset(t);
-			return t;
 		}).right().pad(2f);
 		//
 		//revert changes

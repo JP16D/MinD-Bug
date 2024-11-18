@@ -49,7 +49,6 @@ public class MDBug extends Mod {
 			expand = !expand;
 			table.clearChildren();
 			call(table);
-			return;
 		}).padRight(8f).row();
 		//
 		table.table(Tex.pane, t -> {
