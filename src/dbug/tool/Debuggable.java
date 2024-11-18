@@ -75,7 +75,7 @@ public class Debuggable {
 				//
 			}).right().pad(2f).get();
 			//
-			return Debugger.display(Color.maroon, name, table);
+			return Debugger.table(Color.maroon, name, table);
 		} else {
 			table.field(value.toString(), Styles.defaultField, (String txt) -> {
 				//
@@ -83,7 +83,7 @@ public class Debuggable {
 				//
 			}).center().pad(4f);
 			//
-			return Debugger.table(Color.maroon, name, table);
+			return Debugger.display(Color.maroon, name, table);
 		}
 	}
 	
