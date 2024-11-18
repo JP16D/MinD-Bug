@@ -41,8 +41,8 @@ public class Debuggable {
 	//table display
 	public Table call(String name) {
 		if (map.size > 0) {
-			/*return Debugger.table(Color.maroon, name, new Table(t -> {
-				//
+			return Debugger.table(Color.maroon, name, new Table(t -> {
+				/*
 				for (var k : map.keys()) try {
 					//
 					var input = new Table();
@@ -76,8 +76,8 @@ public class Debuggable {
 					for (var v : map.values()) v.set(null);
 					//
 				}).right().pad(2f).get();
-				//
-			}));*/
+				*/
+			}));
 		} else {
 			//
 			return Debugger.display(Color.maroon, name, new Table(t -> {
@@ -89,8 +89,6 @@ public class Debuggable {
 				}).center().pad(4f);
 			}));
 		}
-		//
-		return this;
 	}
 	
 	protected class Writable {
