@@ -34,18 +34,18 @@ public class Debuggable {
 	}
 	
 	//table display
-	public Table table(String name) {
+	public Table table(String name, Object value) {
 		//
 		if (isWrapper(type)) {
-			return Debugger.display(Color.maroon, name, single(new Table()));
+			return Debugger.display(Color.maroon, name, single(new Table(), value));
 		} else {
-			return Debugger.table(Color.maroon, name, multi(new Table()));
+			return Debugger.table(Color.maroon, name, multi(new Table(), value));
 		}
 	}
 	
-	private Table single(Table t) {
+	private Table single(Table t, Object v) {
 		//
-		t.field(value.toString(), Styles.defaultField, (String txt) -> {
+		t.field(v.toString(), Styles.defaultField, (String txt) -> {
 			//
 			value = parse(type, value, txt);
 			//
@@ -55,14 +55,14 @@ public class Debuggable {
 		return t;
 	}
 	
-	private Table multi(Table t) {
+	private Table multi(Table t, Object src) {
 		//
 		for (var k : map.keys()) try {
 			
 			var input = new Table();
 			var f = type.getField(k);
 			var w = map.get(k);
-			var v = w.empty() ? f.get(value) : w.stored;
+			var v = w.empty() ? f.get(src) : w.stored;
 			//
 			input.field(v.toString(), Styles.defaultField, (String txt) -> {
 				//
