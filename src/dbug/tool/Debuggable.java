@@ -85,9 +85,10 @@ public class Debuggable {
 				v.set(null);
 			} catch (Exception e) {}
 			//
-			priority= true;
+			priority = true;
 			//
 			t.clearChildren();
+			//
 			multi(t);
 			return t;
 		}).right().pad(2f);
@@ -97,6 +98,7 @@ public class Debuggable {
 			for (var v : map.values()) v.set(null);
 			//
 			t.clearChildren();
+			//
 			multi(t);
 			return t;
 		}).right().pad(2f).get();
