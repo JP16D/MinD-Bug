@@ -62,11 +62,11 @@ public class Debuggable {
 					//
 				}).center().pad(4f);
 				//
-				t.add(Debugger.display(w.empty() ? Color.darkGray : Color.green, f.getName(), input)).pad(4f).row();
+				table.add(Debugger.display(w.empty() ? Color.darkGray : Color.green, f.getName(), input)).pad(4f).row();
 			} catch (Exception e) {}
 			//
 			//apply changes 
-			t.button("Set", () -> {
+			table.button("Set", () -> {
 				for (var k : map.keys()) try {
 					var v = map.get(k);
 					//
@@ -76,16 +76,16 @@ public class Debuggable {
 				//
 				priority = true;
 				//
-				t.clearChildren();
-				table(t);
+				table.clearChildren();
+				table(table);
 			}).right().pad(2f);
 			//
 			//revert changes
-			t.button(Icon.cancel, () -> {
+			table.button(Icon.cancel, () -> {
 				for (var v : map.values()) v.set(null);
 				//
-				t.clearChildren();
-				table(t);
+				table.clearChildren();
+				table(table);
 			}).right().pad(2f).get();
 			//
 			//
