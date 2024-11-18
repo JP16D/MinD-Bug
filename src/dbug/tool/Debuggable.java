@@ -77,7 +77,6 @@ public class Debuggable {
 				priority = true;
 				//
 				table.clearChildren();
-				table(table);
 			}).right().pad(2f);
 			//
 			//revert changes
@@ -85,11 +84,9 @@ public class Debuggable {
 				for (var v : map.values()) v.set(null);
 				//
 				table.clearChildren();
-				table(table);
 			}).right().pad(2f).get();
 			//
-			//
-			return Debugger.table(Color.maroon, name, multi(new Table()));
+			return Debugger.table(Color.maroon, name, table);
 		}
 	}
 	
