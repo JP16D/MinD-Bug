@@ -17,6 +17,8 @@ import static dbug.util.ParseUtil.*;
 public class Debuggable {
 	protected OrderedMap<String, Writable> map = new OrderedMap<>();
 	//
+	protected boolean priority;
+	//
 	public Object value;
 	public Class<?> type;
 	
@@ -29,6 +31,11 @@ public class Debuggable {
 		for (var field : type.getFields()) {
 			if (isWrapper(wrap(field.getType()))) map.put(field.getName(), new Writable(null));
 		}
+	}
+	
+	v.set(Debuggable d) {
+		value = d.value;
+		map = d.map;
 	}
 	
 	//table display
