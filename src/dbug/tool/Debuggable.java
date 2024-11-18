@@ -89,7 +89,7 @@ public class Debuggable {
 		} else {
 			table.field(value.toString(), Styles.defaultField, (String txt) -> {
 				//
-				set(parse(type, value, txt));
+				value = parse(type, value, txt);
 				//
 			}).center().pad(4f);
 			//
