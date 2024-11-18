@@ -41,7 +41,7 @@ public class Debuggable {
 					var input = new Table();
 					var f = type.getField(k);
 					var w = map.get(k);
-					var v = priority ? w.stored : f.get(value);
+					var v = v.empty ? f.get(value) : w.stored;
 					//
 					input.field(v.toString(), Styles.defaultField, (String txt) -> {
 						//
@@ -49,7 +49,7 @@ public class Debuggable {
 						//
 					}).center().pad(4f);
 					//
-					t.add(Debugger.display(priority? Color.green : Color.darkGray, f.getName(), input)).pad(4f).row();
+					t.add(Debugger.display(v.empty ? Color.darkGray : Color.green, f.getName(), input)).pad(4f).row();
 				} catch (Exception e) {}
 				//
 				//apply changes 
@@ -94,6 +94,10 @@ public class Debuggable {
 		
 		void set(Object v) {
 			stored = v;
+		}
+		
+		boolean empty() {
+			return stored == null;
 		}
 	}
 }
