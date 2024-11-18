@@ -33,15 +33,16 @@ public class Debuggable {
 	}
 	
 	public void set(Object val) {
-		value = val;
+		if (temp == null) {
+			value = val;
+		} else {
+			value = temp;
+			temp = null;
+		}
 	}
 	
 	//table display
 	public Table table(String name) {
-		if (temp != null) {
-			value = temp;
-			temp = null;
-		}
 		//
 		if (isWrapper(type)) {
 			return Debugger.display(Color.maroon, name, single(new Table()));
