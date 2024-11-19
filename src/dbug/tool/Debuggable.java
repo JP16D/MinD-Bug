@@ -26,6 +26,7 @@ public class Debuggable {
 	public Debuggable(Class<?> type, Object value) {
 		this.type = type;
 		this.value = value;
+		this.temp = value;
 		//
 		if (isWrapper(type) || type.isPrimitive()) return;
 		//
