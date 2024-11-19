@@ -35,13 +35,13 @@ public class Debugger {
 	//add debuggable object (writable)
 	public static Object dw(Class<?> type, String name, Object val) {
 		var v = new Debuggable(type, val);
+		var d = writable.get(name);
 		//
-		if (writable.containsKey(name)) {
-			var d = writable.get(name);
+		if (d != null) {
 			d.update(val);
 			//
 			if (d.priority) {
-				writable.remove(name);
+				d.priority = false;
 				//
 				return d.value;
 			}
