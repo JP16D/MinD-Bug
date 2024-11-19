@@ -25,7 +25,6 @@ public class Debuggable {
 	public Debuggable(Class<?> type, Object value) {
 		this.type = type;
 		this.value = value;
-		this.temp = value;
 		//
 		if (isWrapper(type) || type.isPrimitive()) return;
 		//
@@ -83,7 +82,7 @@ public class Debuggable {
 			return Debugger.display(Color.maroon, name, new Table(t -> {
 				t.field(value.toString(), Styles.defaultField, (String txt) -> {
 					//
-					writable.put(name, prioritize(parse(type, temp, txt)));
+					writable.put(name, prioritize(parse(type, value, txt)));
 					//
 				}).center().pad(4f);
 			}));
