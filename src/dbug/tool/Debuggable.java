@@ -33,15 +33,8 @@ public class Debuggable {
 		}
 	}
 	
-	public Debuggable prioritize(Object val) {
-		value = val;
-		//
-		priority = true;
-		return this;
-	}
-	
 	//table display
-	public Table call(String name) {
+	public Table call(String name, Object value) {
 		if (map.size > 0) {
 			return Debugger.table(Color.maroon, name, new Table(t -> {
 				/*for (var k : map.keys()) try {
@@ -82,8 +75,9 @@ public class Debuggable {
 			return Debugger.display(Color.maroon, name, new Table(t -> {
 				t.field(value.toString(), Styles.defaultField, (String txt) -> {
 					//
-					writable.put(name, prioritize(parse(type, value, txt)));
+					this.value = parse(type, value, txt);
 					//
+					priority = true;
 				}).center().pad(4f);
 			}));
 		}
