@@ -83,7 +83,7 @@ public class Debuggable {
 			return Debugger.display(Color.maroon, name, new Table(t -> {
 				t.field(value.toString(), Styles.defaultField, (String txt) -> {
 					//
-					writable.put(name, new Debuggable(type, parse(type, value, txt)));
+					value = parse(type, value, txt);
 					//
 					priority = true;
 				}).center().pad(4f);
