@@ -17,6 +17,7 @@ import static dbug.util.ParseUtil.*;
 public class Debuggable {
 	protected OrderedMap<String, Writable> map = new OrderedMap<>();
 	//
+	protected Object temp;
 	protected boolean priority;
 	//
 	public Object value;
@@ -33,11 +34,19 @@ public class Debuggable {
 		}
 	}
 	
-	/*//table display
+	public void set(Object val) {
+		value = val;
+	}
+	
+	public void update(Object val) {
+		temp = val;
+	}
+	
+	//table display
 	public Table call(String name) {
 		if (map.size > 0) {
 			return Debugger.table(Color.maroon, name, new Table(t -> {
-				for (var k : map.keys()) try {
+				/*for (var k : map.keys()) try {
 					//
 					var input = new Table();
 					var f = type.getField(k);
@@ -69,11 +78,19 @@ public class Debuggable {
 				table.button(Icon.cancel, () -> {
 					for (var v : map.values()) v.set(null);
 					//
-				}).right().pad(2f).get();
-				
+				}).right().pad(2f).get();*/
+			}));
+		} else {
+			return Debugger.display(Color.maroon, name, new Table(t -> {
+				t.field(temp.toString(), Styles.defaultField, (String txt) -> {
+					//
+					value = parse(type, temp, txt);
+					//
+					priority = true;
+				}).center().pad(4f);
 			}));
 		}
-	}*/
+	}
 	
 	protected class Writable {
 		Object stored;
