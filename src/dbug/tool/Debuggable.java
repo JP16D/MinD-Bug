@@ -33,16 +33,10 @@ public class Debuggable {
 		}
 	}
 	
-	public void set(Debuggable d) {
-		value = d.value;
-		map = d.map;
-	}
-	
-	//table display
+	/*//table display
 	public Table call(String name) {
 		if (map.size > 0) {
 			return Debugger.table(Color.maroon, name, new Table(t -> {
-				/*
 				for (var k : map.keys()) try {
 					//
 					var input = new Table();
@@ -76,20 +70,10 @@ public class Debuggable {
 					for (var v : map.values()) v.set(null);
 					//
 				}).right().pad(2f).get();
-				*/
-			}));
-		} else {
-			//
-			return Debugger.display(Color.maroon, name, new Table(t -> {
-				t.field(value.toString(), Styles.defaultField, (String txt) -> {
-					//
-					value = parse(type, value, txt);
-					//
-					priority = true;
-				}).center().pad(4f);
+				
 			}));
 		}
-	}
+	}*/
 	
 	protected class Writable {
 		Object stored;

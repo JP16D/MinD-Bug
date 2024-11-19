@@ -38,11 +38,21 @@ public class Debugger {
 		if (writable.containsKey(name)) {
 			var d = writable.get(name);
 			//
-			if (d.priority) v.set(d);
+			if (d.priority) {
+				v.value = d.value;
+				v.map = d.map;
+			}
 		}
 		//
 		writable.put(name, v);
-		debugger.put(name, v.call(name));
+		debugger.put(name, display(Color.maroon, name, new Table(t -> {
+			t.field(v.value.toString(), Styles.defaultField, (String txt) -> {
+				//
+				v.value = parse(type, value, txt);
+				//
+				v.priority = true;
+			}).center().pad(4f);
+		})));
 		//
 		return v.value;
 	}
