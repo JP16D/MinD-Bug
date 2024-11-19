@@ -35,7 +35,7 @@ public class Debuggable {
 	}
 	
 	public Debuggable prioritize(Object val) {
-		value = val
+		value = val;
 		//
 		priority = true;
 		return this;
