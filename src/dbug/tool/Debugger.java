@@ -37,20 +37,9 @@ public class Debugger {
 		var v = new Debuggable(type, val);
 		var d = writable.get(name);
 		//
-		if (d != null) {
-			d.update(val);
-			//
-			debugger.put(name, d.call(name));
-			//
-			if (d.priority) {
-				d.priority = false;
-				//
-				return d.value;
-			}
-		} else {
-			writable.put(name, v);
-			debugger.put(name, v.call(name));
-		}
+		if (d == null || !priority) writable.put(name, v);
+		//
+		debugger.put(name, v.call(name));
 		//
 		return v.value;
 	}
