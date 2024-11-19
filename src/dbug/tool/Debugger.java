@@ -41,9 +41,9 @@ public class Debugger {
 			d.update(val);
 			//
 			if (d.priority) {
-				v.set(d.value);
+				writable.remove(name);
 				//
-				d.priority = false;
+				return d.value;
 			}
 		} else {
 			writable.put(name, v);

@@ -35,10 +35,6 @@ public class Debuggable {
 		}
 	}
 	
-	public void set(Object val) {
-		value = val;
-	}
-	
 	public void update(Object val) {
 		temp = val;
 	}
