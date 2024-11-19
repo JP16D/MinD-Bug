@@ -84,7 +84,7 @@ public class Debuggable {
 					value = parse(type, temp, txt);
 					//
 					priority = true;
-				}).center().pad(4f).get().setText(temp.toString());
+				}).center().pad(4f).get().setText(temp.toString();
 			}));
 		}
 	}

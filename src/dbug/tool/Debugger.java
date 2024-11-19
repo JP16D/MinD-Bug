@@ -40,6 +40,8 @@ public class Debugger {
 		if (d != null) {
 			d.update(val);
 			//
+			debugger.put(name, d.call(name));
+			//
 			if (d.priority) {
 				d.priority = false;
 				//
