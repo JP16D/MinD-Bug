@@ -13,6 +13,7 @@ import mindustry.gen.*;
 import mindustry.ui.*;
 
 import static dbug.MDBugVars.*;
+import static dbug.util.ParseUtil.*;
 
 public class Debugger {
 	static final OrderedMap<String, Debuggable> writable = new OrderedMap<>();
@@ -48,7 +49,7 @@ public class Debugger {
 		debugger.put(name, display(Color.maroon, name, new Table(t -> {
 			t.field(v.value.toString(), Styles.defaultField, (String txt) -> {
 				//
-				v.value = parse(type, value, txt);
+				v.value = parse(type, val, txt);
 				//
 				v.priority = true;
 			}).center().pad(4f);
