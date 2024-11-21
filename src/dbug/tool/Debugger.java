@@ -41,6 +41,8 @@ public class Debugger {
 		debugger.put(name, v.call(name, val));
 		//
 		if (v.priority) {
+			v.priority = false;
+			//
 			return v.value; 
 			//
 		} else {
