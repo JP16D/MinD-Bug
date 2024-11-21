@@ -14,6 +14,8 @@ import mindustry.mod.*;
 public class MDBug extends Mod {
 	public static Debugger debugger = new Debugger();
 	//
+	private static Experimental ex = new Experimental();
+	//
 	private static Table caller;
 	private static boolean expand;
 	private static float scale;
@@ -30,7 +32,7 @@ public class MDBug extends Mod {
 				 }
 			}
 			//
-			(new Experimental()).loadTest();
+			ex.loadTest();
 		});
 	}
 	
