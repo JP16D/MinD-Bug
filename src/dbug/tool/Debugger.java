@@ -40,7 +40,11 @@ public class Debugger {
 		//
 		debugger.put(name, v.call(name, val));
 		//
-		return v.value; 
+		if (v.priority) {
+			return v.value; 
+			//
+			v.priority = false;
+		} else return val;
 	}
 	
 	//display interface

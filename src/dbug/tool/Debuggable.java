@@ -17,6 +17,8 @@ import static dbug.util.ParseUtil.*;
 public class Debuggable {
 	protected OrderedMap<String, Writable> map = new OrderedMap<>();
 	//
+	protected boolean priority;
+	//
 	public Object value;
 	public Class<?> type;
 	
@@ -33,7 +35,6 @@ public class Debuggable {
 	
 	//table display
 	public Table call(String name, Object value) {
-		this.value = value;
 		//
 		if (map.size > 0) {
 			return Debugger.table(Color.maroon, name, new Table(t -> {
@@ -43,8 +44,10 @@ public class Debuggable {
 					var f = type.getField(k);
 					var w = map.get(k);
 					//
-					boolean empty = w.stored == null;
-					var v = empty ? f.get(value) : w.stored;
+					if (w.stored == null) w.stored = f.get(value);
+					//
+					boolean empty = w.stored == f.get(value);
+					var v = w.stored;
 					//
 					input.field(v.toString(), Styles.defaultField, (String txt) -> {
 						//
@@ -52,19 +55,18 @@ public class Debuggable {
 						//
 					}).center().pad(4f);
 					//
-					if (!empty) input.add(v.toString()).pad(4f);
+					if (!empty) input.add(f.get(value).toString()).center().pad(4f);
 					
-					t.add(Debugger.display(empty ? Color.darkGray : Color.green, type, f.getName(), input)).pad(4f).row();
+					t.add(Debugger.display(empty ? Color.darkGray : Color.green, type, f.getName(), input)).grow().row();
 				} catch (Exception e) {}
 				//
 				//apply changes 
 				t.button("Set", () -> {
 					for (var k : map.keys()) try {
-						var v = map.get(k);
 						//
-						type.getField(k).set(this.value, v.stored);
-						v.set(null);
+						type.getField(k).set(this.value, map.get(k).stored);
 						//
+						priority = true;
 					} catch (Exception e) {}
 					//
 				}).right().pad(2f);
@@ -81,6 +83,7 @@ public class Debuggable {
 					//
 					this.value = parse(type, value, txt);
 					//
+					priority = true;
 				}).center().pad(4f);
 			}));
 		}
