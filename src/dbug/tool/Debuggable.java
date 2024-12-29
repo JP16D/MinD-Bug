@@ -44,10 +44,8 @@ public class Debuggable {
 					var f = type.getField(k);
 					var w = map.get(k);
 					//
-					if (w.stored == null) w.stored = f.get(value);
-					//
-					boolean empty = w.stored == f.get(value);
-					var v = w.stored;
+					boolean empty = w.stored == null;
+					var v = empty ? f.get(value) : w.stored;
 					//
 					input.field(v.toString(), Styles.defaultField, (String txt) -> {
 						//
@@ -57,14 +55,16 @@ public class Debuggable {
 					//
 					if (!empty) input.add(f.get(value).toString()).center().pad(4f);
 					
-					t.add(Debugger.display(empty ? Color.darkGray : Color.green, type, f.getName(), input)).grow().row();
+					t.add(Debugger.display(empty ? Color.darkGray : Color.green, f.getClass().getName(), f.getName(), input)).grow().row();
 				} catch (Exception e) {}
 				//
 				//apply changes 
 				t.button("Set", () -> {
 					for (var k : map.keys()) try {
+						var v = map.get(k);
 						//
-						type.getField(k).set(this.value, map.get(k).stored);
+						type.getField(k).set(this.value, v.stored);
+						v.set(null);
 						//
 						priority = true;
 					} catch (Exception e) {}
