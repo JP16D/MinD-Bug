@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v2
     - name: Set up PATH
       run: |
         echo "${ANDROID_HOME}/build-tools/35.0.0" >> $GITHUB_PATH
@@ -15,6 +15,7 @@ jobs:
       uses: actions/setup-java@v4
       with:
         java-version: 17
+        distribution: 'oracle'
     - name: Build mod jar
       run: |
         chmod +x ./gradlew
