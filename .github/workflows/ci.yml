@@ -8,7 +8,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Invasion
+    - name: Bug Invasion
       run: |
         echo "${ANDROID_HOME}/build-tools/35.0.0" >> $GITHUB_PATH
     - name: Set up JDK 17
@@ -16,12 +16,12 @@ jobs:
       with:
         java-version: 17
         distribution: 'oracle'
-    - name: Infestation
+    - name: Bug Infestation
       run: |
         chmod +x ./gradlew
         ./gradlew deploy
-    - name: Extermination
+    - name: Bug Extermination
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ github.event.repository.name }}
+        name: The Bug
         path: build/libs/${{ github.event.repository.name }}.jar
