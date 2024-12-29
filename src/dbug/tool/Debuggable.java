@@ -54,11 +54,11 @@ public class Debuggable {
 					//
 					if (!empty) input.add(v.toString()).pad(4f);
 					
-					table.add(Debugger.display(empty ? Color.darkGray : Color.green, f.getName(), input)).pad(4f).row();
+					t.add(Debugger.display(empty ? Color.darkGray : Color.green, type, f.getName(), input)).pad(4f).row();
 				} catch (Exception e) {}
 				//
 				//apply changes 
-				table.button("Set", () -> {
+				t.button("Set", () -> {
 					for (var k : map.keys()) try {
 						var v = map.get(k);
 						//
@@ -70,13 +70,13 @@ public class Debuggable {
 				}).right().pad(2f);
 				//
 				//revert changes
-				table.button(Icon.cancel, () -> {
+				t.button(Icon.cancel, () -> {
 					for (var v : map.values()) v.set(null);
 					//
 				}).right().pad(2f).get();
 			}));
 		} else {
-			return Debugger.display(Color.maroon, name, new Table(t -> {
+			return Debugger.display(Color.maroon, type, name, new Table(t -> {
 				t.field(value.toString(), Styles.defaultField, (String txt) -> {
 					//
 					this.value = parse(type, value, txt);
