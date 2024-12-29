@@ -1,4 +1,4 @@
-name: Java CI
+name: Bugfest
 
 on: [push, pull_request]
 
@@ -8,7 +8,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up PATH
+    - name: Invasion
       run: |
         echo "${ANDROID_HOME}/build-tools/35.0.0" >> $GITHUB_PATH
     - name: Set up JDK 17
@@ -16,11 +16,11 @@ jobs:
       with:
         java-version: 17
         distribution: 'oracle'
-    - name: Build mod jar
+    - name: Infestation
       run: |
         chmod +x ./gradlew
         ./gradlew deploy
-    - name: Upload built jar file
+    - name: Extermination
       uses: actions/upload-artifact@v4
       with:
         name: ${{ github.event.repository.name }}
