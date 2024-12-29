@@ -55,7 +55,7 @@ public class Debuggable {
 					//
 					if (!empty) input.add(f.get(value).toString()).center().pad(4f);
 					
-					t.add(Debugger.display(empty ? Color.darkGray : Color.green, f.getClass(), f.getName(), input)).grow().row();
+					t.add(Debugger.display(empty ? Color.darkGray : Color.green, f.getType(), f.getName(), input)).grow().row();
 				} catch (Exception e) {}
 				//
 				//apply changes 
