@@ -7,16 +7,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Commencing Bugfest
+      uses: actions/checkout@v4
     - name: Bug Invasion
       run: |
         echo "${ANDROID_HOME}/build-tools/35.0.0" >> $GITHUB_PATH
-    - name: Set up JDK 17
+    - name: Bug Infestation
       uses: actions/setup-java@v4
       with:
         java-version: 17
         distribution: 'oracle'
-    - name: Bug Infestation
+    - name: Bugfest!
       run: |
         chmod +x ./gradlew
         ./gradlew deploy
