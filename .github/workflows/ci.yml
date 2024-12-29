@@ -1,4 +1,4 @@
-name: Build Mod
+name: Java CI
 
 on: [push, pull_request]
 
