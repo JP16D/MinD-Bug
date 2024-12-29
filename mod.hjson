@@ -3,7 +3,7 @@ name: "mdbug"
 author: "JP16D"
 main: "dbug.MDBug"
 description: "The solution to your mod debugging needs"
-version: 1.0
+version: 1.1
 minGameVersion: 146
 java: true
 
