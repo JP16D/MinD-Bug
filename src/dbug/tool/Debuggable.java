@@ -35,14 +35,18 @@ public class Debuggable {
 	
 	//table display
 	public Table call(String name, Object value) {
+		this.value = value;
+		//
 		if (map.size > 0) {
 			return Debugger.table(Color.maroon, name, new Table(t -> {
-				/*for (var k : map.keys()) try {
+				for (var k : map.keys()) try {
 					//
 					var input = new Table();
 					var f = type.getField(k);
 					var w = map.get(k);
-					var v = priority ? w.stored : f.get(value);
+					//
+					boolean empty = w.stored == null;
+					var v = empty ? f.get(value) : w.stored;
 					//
 					input.field(v.toString(), Styles.defaultField, (String txt) -> {
 						//
@@ -50,7 +54,9 @@ public class Debuggable {
 						//
 					}).center().pad(4f);
 					//
-					table.add(Debugger.display(priority? Color.green :Color.darkGray, f.getName(), input)).pad(4f).row();
+					if (!empty) input.add(value.toString()).pad(4f);
+					
+					table.add(Debugger.display(empty ? Color.darkGray : Color.green, f.getName(), input)).pad(4f).row();
 				} catch (Exception e) {}
 				//
 				//apply changes 
@@ -58,7 +64,7 @@ public class Debuggable {
 					for (var k : map.keys()) try {
 						var v = map.get(k);
 						//
-						type.getField(k).set(value, v.stored);
+						type.getField(k).set(this.value, v.stored);
 						v.set(null);
 						//
 					} catch (Exception e) {}
@@ -69,7 +75,7 @@ public class Debuggable {
 				table.button(Icon.cancel, () -> {
 					for (var v : map.values()) v.set(null);
 					//
-				}).right().pad(2f).get();*/
+				}).right().pad(2f).get();
 			}));
 		} else {
 			return Debugger.display(Color.maroon, name, new Table(t -> {
@@ -77,7 +83,6 @@ public class Debuggable {
 					//
 					this.value = parse(type, value, txt);
 					//
-					priority = true;
 				}).center().pad(4f);
 			}));
 		}

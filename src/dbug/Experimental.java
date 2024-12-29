@@ -12,7 +12,7 @@ public class Experimental {
 		dv("test-ay", test.y);
 		test.x = (float) dw(float.class, "local-x", test.x);
 		test.y = (float) dw(float.class, "local-y", test.y);
-		//test = (Vec2) dw(Vec2.class, "localTest", test);
+		test = (Vec2) dw(Vec2.class, "localTest", test);
 		dv("test-bx", test.x);
 		dv("test-by", test.y);
 	}

@@ -27,39 +27,31 @@ public class Debugger {
 	
 	//add debuggable object (read-only)
 	public static Object dv(String name, Object val) {
-		debugger.put(name, display(Color.slate, name, new Table(Tex.pane, t -> t.add("" + val))));
+		debugger.put(name, display(Color.slate, val.getClass(), name, new Table(Tex.pane, t -> t.add("" + val))));
 		//
 		return val;
 	}
 	
 	//add debuggable object (writable)
-	public static Object dw(Class<?> type, String name, Object val) {
-		if (!writable.containsKey(name)) writable.put(name, new Debuggable(type, val));
+	public static Object dw(String name, Object val) {
+		if (!writable.containsKey(name)) writable.put(name, new Debuggable(val.getClass(), val));
 		//
 		var v = writable.get(name);
 		//
 		debugger.put(name, v.call(name, val));
 		//
-		if (v.priority) {
-			v.priority = false;
-			//
-			return v.value; 
-			//
-		} else {
-			//
-			return val;
-		}
+		return v.value; 
 	}
 	
 	//display interface
-	public static Table display(Color color, String name, Table val) {
+	public static Table display(Color color, Class<?> type, String name, Table val) {
 		return new Table(Tex.pane, panel -> {
 			//
 			panel.table(Tex.whiteui, view -> {
 				view.setColor(color);
-				if (writable.containsKey(name)) view.table(Tex.whiteui, tag -> {
+				view.table(Tex.whiteui, tag -> {
 					//
-					tag.add(writable.get(name).type.getSimpleName(), Styles.outlineLabel).pad(4f);
+					tag.add(type.getSimpleName(), Styles.outlineLabel).pad(4f);
 					tag.setColor(Color.royal);
 					//
 				}).pad(4f);
