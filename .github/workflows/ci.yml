@@ -23,5 +23,5 @@ jobs:
     - name: Bug Extermination
       uses: actions/upload-artifact@v4
       with:
-        name: The Bug
+        name: MinD-Bug
         path: build/libs/${{ github.event.repository.name }}.jar
