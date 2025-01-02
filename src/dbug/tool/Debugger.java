@@ -59,12 +59,12 @@ public class Debugger {
 					tag.add(type.getSimpleName(), Styles.outlineLabel).pad(4f);
 					tag.setColor(Color.royal);
 					//
-				}).pad(4f);
+				}).pad(4f).left();
 				//
 				view.add(name, Styles.outlineLabel).pad(4f).center();
 			}).grow();
 			//
-			panel.add(val).padLeft(8f).size(160f, 48f);
+			panel.add(val).padLeft(8f).height(48f);
 		});
 	}
 	
@@ -84,7 +84,7 @@ public class Debugger {
 				view.add(name, Styles.outlineLabel).pad(4f).center();
 			}).grow().row();
 			//
-			panel.add(val).pad(4f).width(148f);
+			panel.add(val).pad(4f);
 		});
 	}
 }
