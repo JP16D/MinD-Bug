@@ -64,7 +64,7 @@ public class Debugger {
 				view.add(name, Styles.outlineLabel).pad(4f).center();
 			}).grow();
 			//
-			panel.add(val).padLeft(8f).height(48f);
+			panel.add(val).padLeft(8f).size(160f, 48f);
 		});
 	}
 	
