@@ -1,5 +1,6 @@
 package dbug;
 
+import arc.*;
 import blui.*;
 import blui.ui.*;
 import dbug.tool.*;
