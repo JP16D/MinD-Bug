@@ -1,8 +1,8 @@
 package dbug;
 
-import arc.*;
 import blui.*;
 import blui.ui.*;
+import dbug.tool.*;
 import mindustry.game.*;
 import mindustry.mod.*;
 
@@ -16,11 +16,7 @@ public class MDBug extends Mod {
 	public MDBug() {
 		Events.run(EventType.Trigger.update, () -> {
 			//
-			if (scale != Core.scene.getHeight()) {
-				scale = Core.scene.getHeight();
-				//
-				 if (caller != null) update();
-			}
+			scale();
 			//
 			exp.loadTest();
 		});

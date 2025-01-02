@@ -1,5 +1,6 @@
 package dbug.ui;
 
+import arc.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import mindustry.gen.*;
@@ -36,7 +37,17 @@ public class MainPanel {
 		});
 	}
 	
+	public static void scale() {
+		if (scale != Core.scene.getHeight()) {
+			scale = Core.scene.getHeight();
+			//
+			update();
+		}
+	}
+	
 	public static void update() {
+		if (caller == null) return;
+		//
 		float x = panel.getScrollX();
 		float y = panel.getScrollY();
 		//
