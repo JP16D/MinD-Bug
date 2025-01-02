@@ -45,7 +45,7 @@ public class Debuggable {
 					var f = type.getField(k);
 					var w = map.get(k);
 					//
-					boolean empty = w.stored == null;
+					boolean empty = w.stored == null || w.stored == f.get(value);
 					var v = empty ? f.get(value) : w.stored;
 					//
 					input.field(v.toString(), Styles.defaultField, (String txt) -> {

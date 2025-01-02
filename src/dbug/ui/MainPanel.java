@@ -20,9 +20,6 @@ public class MainPanel {
 			for (var v : debugger.values()) t.add(v).growX().pad(2f).row();
 		}));
 		//
-		panel.setScrollX(x);
-		panel.setScrollY(y);
-		//
 		panel.setOverscroll(false, true);
 		panel.setClamp(true);
 		//
@@ -35,6 +32,9 @@ public class MainPanel {
 			//
 			t.add(panel).size(320f, expand ? scale * 0.25f : 72f).top();
 		});
+		//
+		panel.setScrollX(x);
+		panel.setScrollY(y);
 	}
 	
 	public static void scale() {
