@@ -12,6 +12,7 @@ import java.lang.*;
 import java.lang.reflect.*;
 
 import static dbug.tool.Debugger.*;
+import static dbug.ui.MainPanel.*;
 import static dbug.util.ParseUtil.*;
 
 public class Debuggable {
@@ -69,12 +70,14 @@ public class Debuggable {
 						priority = true;
 					} catch (Exception e) {}
 					//
+					update();
 				}).right().pad(2f);
 				//
 				//revert changes
 				t.button(Icon.cancel, () -> {
 					for (var v : map.values()) v.set(null);
 					//
+					update();
 				}).right().pad(2f).get();
 			}));
 		} else {
@@ -84,6 +87,7 @@ public class Debuggable {
 					this.value = parse(type, value, txt);
 					//
 					priority = true;
+					update();
 				}).center().pad(4f);
 			}));
 		}

@@ -8,12 +8,11 @@ public class Experimental {
 	public Vec2 test = new Vec2();
 	
 	public void loadTest() {
-		dv("test-ax", test.x);
-		dv("test-ay", test.y);
-		test.x = (float) dw("local-x", test.x);
-		test.y = (float) dw("local-y", test.y);
-		test = (Vec2) dw("localTest", test);
-		dv("test-bx", test.x);
-		dv("test-by", test.y);
+		dv("test-x", test.x);
+		dv("test-y", test.y);
+		dv("test", test);
+		test.x = (float) dw("test-vx", test.x);
+		test.y = (float) dw("test-vy", test.y);
+		test = (Vec2) dw("test-v", test);
 	}
 }
