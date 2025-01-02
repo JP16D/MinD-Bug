@@ -33,8 +33,8 @@ public class MainPanel {
 			t.add(panel).size(320f, expand ? scale * 0.25f : 72f).top();
 		});
 		//
-		panel.setScrollX(x);
-		panel.setScrollY(y);
+		panel.setScrollXForce(x);
+		panel.setScrollYForce(y);
 	}
 	
 	public static void scale() {

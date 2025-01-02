@@ -19,6 +19,7 @@ public class Debugger {
 	static final OrderedMap<String, Debuggable> writable = new OrderedMap<>();
 	
 	//returns a default value if main value is null to avoid null error crashes
+	//temporary, I'm planning on adding one that automatically generates a dummy value 
 	public static <T extends Object> T check(T val, T def) {
 		//
 		return val != null ? val : def;
@@ -69,14 +70,14 @@ public class Debugger {
 	}
 	
 	//table display interface
-	public static Table table(Color color, String name, Table val) {
+	public static Table table(Color color, Class<?> type, String name, Table val) {
 		return new Table(Tex.pane, panel -> {
 			//
 			panel.table(Tex.whiteui, view -> {
 				view.setColor(color);
 				if (writable.containsKey(name)) view.table(Tex.whiteui, tag -> {
 					//
-					tag.add(writable.get(name).type.getSimpleName(), Styles.outlineLabel).pad(4f);
+					tag.add(type.getSimpleName(), Styles.outlineLabel).pad(4f);
 					tag.setColor(Color.royal);
 					//
 				}).pad(4f).height(32f);

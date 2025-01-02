@@ -38,7 +38,7 @@ public class Debuggable {
 	public Table call(String name, Object value) {
 		//
 		if (map.size > 0) {
-			return Debugger.table(Color.maroon, name, new Table(t -> {
+			return Debugger.table(Color.maroon, type, name, new Table(t -> {
 				for (var k : map.keys()) try {
 					//
 					var input = new Table();
