@@ -1,29 +1,23 @@
 package dbug.tool;
 
 import arc.*;
-import arc.func.*;
 import arc.graphics.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
-import arc.util.*;
-import mindustry.*;
-import mindustry.game.*;
 import mindustry.gen.*;
-import mindustry.ui.*;
 
 import static dbug.MDBugVars.*;
-import static dbug.util.ParseUtil.*;
+import static dbug.ui.Display.*;
 
 public class Debugger {
-	static final OrderedMap<String, Debuggable> writable = new OrderedMap<>();
+	public static final OrderedMap<String, Debuggable> writable = new OrderedMap<>();
 	
 	//returns a default value if main value is null to avoid null error crashes
 	//temporary, I'm planning on adding one that automatically generates a dummy value 
 	public static <T extends Object> T check(T val, T def) {
-		//
-		return val != null ? val : def;
 		//if (val == null) warn();
+		return val != null ? val : def;
 	}
 	
 	//add debuggable object (read-only)
@@ -47,45 +41,5 @@ public class Debugger {
 			return v.value;
 			//
 		} else return val;
-	}
-	
-	//display interface
-	public static Table display(Color color, Class<?> type, String name, Table val) {
-		return new Table(Tex.pane, panel -> {
-			//
-			panel.table(Tex.whiteui, view -> {
-				view.setColor(color);
-				view.table(Tex.whiteui, tag -> {
-					//
-					tag.add(type.getSimpleName(), Styles.outlineLabel).pad(4f);
-					tag.setColor(Color.royal);
-					//
-				}).pad(4f).left();
-				//
-				view.add(name, Styles.outlineLabel).pad(4f).center();
-			}).grow();
-			//
-			panel.add(val).padLeft(8f).size(160f, 48f);
-		});
-	}
-	
-	//table display interface
-	public static Table table(Color color, Class<?> type, String name, Table val) {
-		return new Table(Tex.pane, panel -> {
-			//
-			panel.table(Tex.whiteui, view -> {
-				view.setColor(color);
-				if (writable.containsKey(name)) view.table(Tex.whiteui, tag -> {
-					//
-					tag.add(type.getSimpleName(), Styles.outlineLabel).pad(4f);
-					tag.setColor(Color.royal);
-					//
-				}).pad(4f).height(32f);
-				//
-				view.add(name, Styles.outlineLabel).pad(4f).center();
-			}).grow().row();
-			//
-			panel.add(val).pad(4f);
-		});
 	}
 }

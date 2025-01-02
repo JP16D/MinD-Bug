@@ -11,7 +11,7 @@ import mindustry.ui.*;
 import java.lang.*;
 import java.lang.reflect.*;
 
-import static dbug.tool.Debugger.*;
+import static dbug.ui.Display.*;
 import static dbug.ui.MainPanel.*;
 import static dbug.util.ParseUtil.*;
 
