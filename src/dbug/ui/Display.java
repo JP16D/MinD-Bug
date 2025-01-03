@@ -7,7 +7,6 @@ import mindustry.gen.*;
 import mindustry.ui.*;
 
 public class Display {
-	
 	//display interface
 	public static Table display(Color color, Class<?> type, String name, Table val) {
 		return new Table(Tex.pane, panel -> {

@@ -30,11 +30,11 @@ public class MainPanel {
 		//
 		table.table(Tex.pane, t -> {
 			//
-			t.add(panel).size(320f, expand ? scale * 0.25f : 72f).top();
+			t.add(panel).size(320f, expand ? scale * 0.25f : 74f).top();
 		});
 		//
-		panel.setScrollXForce(x);
-		panel.setScrollYForce(y);
+		panel.setScrollX(x);
+		panel.setScrollY(y);
 	}
 	
 	public static void scale() {
