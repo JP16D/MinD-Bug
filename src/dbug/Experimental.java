@@ -1,6 +1,7 @@
 package dbug;
 
 import arc.math.geom.*;
+import mindustry.gen.*;
 
 import static dbug.tool.Debugger.*;
 
@@ -14,5 +15,8 @@ public class Experimental {
 		test.x = (float) dw("test-vx", test.x);
 		test.y = (float) dw("test-vy", test.y);
 		test = (Vec2) dw("test-v", test);
+		
+		int i = 0;
+		for (var f : Icon.class.getFields()) dv("icon" + i++, f.getName());
 	}
 }

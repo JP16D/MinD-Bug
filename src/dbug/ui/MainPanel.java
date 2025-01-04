@@ -28,9 +28,9 @@ public class MainPanel {
 			update();
 		}).padRight(8f).row();
 		//
-		table.table(Tex.pane, t -> {
+		table.table(t -> {
 			//
-			t.add(panel).size(320f, expand ? scale * 0.25f : 74f).top();
+			t.add(panel).height(expand ? scale * 0.25f : 74f).top();
 		});
 		//
 		panel.setScrollX(x);

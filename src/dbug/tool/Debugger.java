@@ -42,4 +42,12 @@ public class Debugger {
 			//
 		} else return val;
 	}
+	
+	//add a builder function
+	public static build(String name) {
+		var build = new Builder();
+		//
+		debugger.put(name, build.table());
+		build.run();
+	}
 }
