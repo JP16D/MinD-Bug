@@ -2,6 +2,7 @@ package dbug.tool;
 
 import arc.*;
 import arc.graphics.*;
+import arc.scene.style.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
@@ -22,7 +23,11 @@ public class Debugger {
 	
 	//add debuggable object (read-only)
 	public static Object dv(String name, Object val) {
-		debugger.put(name, display(Color.slate, val.getClass(), name, new Table(Tex.pane, t -> t.add("" + val))));
+		debugger.put(name, display(Color.slate, val.getClass(), name, new Table(Tex.pane, t -> {
+			if (val instanceof Drawable) {
+				t.add(new Image(val));
+			} else t.add("" + val);
+		})));
 		//
 		return val;
 	}
@@ -44,7 +49,7 @@ public class Debugger {
 	}
 	
 	//add a builder function
-	public static build(String name) {
+	public static void build(String name) {
 		var build = new Builder();
 		//
 		debugger.put(name, build.table());

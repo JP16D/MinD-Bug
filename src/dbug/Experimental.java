@@ -16,7 +16,6 @@ public class Experimental {
 		test.y = (float) dw("test-vy", test.y);
 		test = (Vec2) dw("test-v", test);
 		
-		int i = 0;
-		for (var f : Icon.class.getFields()) dv("icon" + i++, f.getName());
+		for (var f : Icon.class.getFields()) dv(f.getName(), f);
 	}
 }
