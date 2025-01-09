@@ -16,6 +16,8 @@ public class Experimental {
 		test.y = (float) dw("test-vy", test.y);
 		test = (Vec2) dw("test-v", test);
 		
-		for (var f : Icon.class.getFields()) dv(f.getName(), f.get(new Icon()));
+		for (var f : Icon.class.getFields()) try {
+			dv(f.getName(), f.get(new Icon()));
+		} catch (Exception e) {}
 	}
 }
