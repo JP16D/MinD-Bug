@@ -1,4 +1,4 @@
-package mdbug.ui;
+package dbug.ui;
 
 import arc.graphics.*;
 import arc.scene.ui.*;

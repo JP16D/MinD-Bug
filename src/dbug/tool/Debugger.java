@@ -51,8 +51,5 @@ public class Debugger {
 	//add a builder function
 	public static void build(String name) {
 		var build = new Builder();
-		//
-		debugger.put(name, build.table());
-		build.run();
 	}
 }
