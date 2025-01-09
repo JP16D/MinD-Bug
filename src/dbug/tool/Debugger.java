@@ -25,7 +25,7 @@ public class Debugger {
 	public static Object dv(String name, Object val) {
 		debugger.put(name, display(Color.slate, val.getClass(), name, new Table(Tex.pane, t -> {
 			if (val instanceof Drawable) {
-				t.add(new Image(val));
+				t.add(new Image((Drawable) val));
 			} else t.add("" + val);
 		})));
 		//

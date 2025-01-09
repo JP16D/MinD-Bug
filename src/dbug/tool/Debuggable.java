@@ -38,7 +38,7 @@ public class Debuggable {
 	public Table call(String name, Object value) {
 		//
 		if (map.size > 0) {
-			return Debugger.table(Color.maroon, type, name, new Table(t -> {
+			return mdisplay(Color.maroon, type, name, new Table(t -> {
 				for (var k : map.keys()) try {
 					//
 					var input = new Table();
@@ -56,7 +56,7 @@ public class Debuggable {
 					//
 					if (!empty) input.add(f.get(value).toString()).center().pad(4f);
 					
-					t.add(Debugger.display(empty ? Color.darkGray : Color.green, f.getType(), f.getName(), input)).grow().row();
+					t.add(display(empty ? Color.darkGray : Color.green, f.getType(), f.getName(), input)).grow().row();
 				} catch (Exception e) {}
 				//
 				//apply changes 
@@ -81,7 +81,7 @@ public class Debuggable {
 				}).right().pad(2f).get();
 			}));
 		} else {
-			return Debugger.display(Color.maroon, type, name, new Table(t -> {
+			return display(Color.maroon, type, name, new Table(t -> {
 				t.field(value.toString(), Styles.defaultField, (String txt) -> {
 					//
 					this.value = parse(type, value, txt);

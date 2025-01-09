@@ -11,7 +11,7 @@ import java.lang.*;
 public class Builder {
 	static final Seq<Runnable> functions = new Seq<>();
 	
-	public Table table() {
+	public Table run() {
 		return new Table(t -> {
 			t.button("Add", Icon.add, () -> {
 				
