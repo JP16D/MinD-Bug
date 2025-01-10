@@ -50,7 +50,7 @@ public class DebugField extends Table {
 		if (content instanceof Modifiable m) {
 			if (m.isObject()) {
 				
-			} else {
+			} else {}
 				table(Tex.button, t -> {
 					//
 					t.image(Icon.editSmall).pad(4f);
@@ -58,7 +58,7 @@ public class DebugField extends Table {
 					t.field(m.value.toString(), Styles.defaultField, modifier).pad(4f);
 					//
 				}).row();
-			}
+			
 			//
 		} else table(Tex.button, t -> {
 			if (content instanceof Drawable img) {
