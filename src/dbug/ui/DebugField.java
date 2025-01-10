@@ -10,7 +10,6 @@ import mindustry.gen.*;
 import mindustry.ui.*;
 
 public class DebugField extends Table {
-	protected Table nametag = new Table;
 	protected Object content;
 	protected Cons<?> function;
 	//

@@ -90,7 +90,7 @@ public class Modifiable {
 	}
 	
 	public boolean isObject() {
-		return !(isWrapper(type) || type.isPrimitive())
+		return !(isWrapper(type) || type.isPrimitive());
 	}
 	
 	protected class Writable {
