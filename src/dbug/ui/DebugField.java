@@ -67,7 +67,7 @@ public class DebugField extends Table {
 				//
 				t.image(img).pad(4f);
 				//
-			} else add("" + content);
+			} else t.add("" + content);
 		}).row();
 	}
 	
