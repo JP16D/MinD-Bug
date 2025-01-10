@@ -12,12 +12,12 @@ import mindustry.ui.*;
 
 public class DebugField extends Table {
 	protected Object content;
-	protected Cons<?> function;
+	protected Cons<String> function;
 	//
 	public final String type;
 	public final String name;
 	
-	public DebugField(String name, Object content, Cons<?> function) {
+	public DebugField(String name, Object content, Cons<String> function) {
 		this.type = content.getClass().getSimpleName();
 		this.name = name;
 		this.content = content;
@@ -26,12 +26,18 @@ public class DebugField extends Table {
 		update();
 	}
 	
+	public DebugField(String name Object content) {
+		this.type = content.getClass().getSimpleName();
+		this.name = name;
+		this.content = content;
+	}
+	
 	public void update() {
 		clearChildren();
 		//
 		table(Tex.buttonDown, nt -> {
 			//
-			if (!type.isBlank()) nt.table(Tex.whiteui, t -> {
+			if (!type.isEmpty()) nt.table(Tex.whiteui, t -> {
 				t.add(type);
 				t.setColor(Color.royal);
 			}).pad(4f);
@@ -52,9 +58,9 @@ public class DebugField extends Table {
 			}
 			//
 		} else table(Tex.button, t -> {
-			if (content instanceof Drawable || content instanceof TextureRegion) {
+			if (content instanceof Drawable img || content instanceof TextureRegion img) {
 				//
-				t.image(content).pad(4f);
+				t.image(img).pad(4f);
 				//
 			} else add("" + content);
 		}).row();
