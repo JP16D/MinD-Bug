@@ -80,7 +80,7 @@ public class Modifiable {
 				}).right().pad(2f).get();
 			}));
 		} else {
-			return new DebugField(type, value, (String txt) -> {
+			return new DebugField(name, value, (String txt) -> {
 					//
 				this.value = parse(type, value, txt);
 					//
