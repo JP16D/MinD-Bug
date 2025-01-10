@@ -30,6 +30,8 @@ public class DebugField extends Table {
 		this.type = content.getClass().getSimpleName();
 		this.name = name;
 		this.content = content;
+		//
+		update();
 	}
 	
 	public void update() {
