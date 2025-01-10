@@ -23,7 +23,7 @@ public class DebugField extends Table {
 		this.content = content;
 		this.modifier = modifier;
 		//
-		update();
+		updateContent();
 	}
 	
 	public DebugField(String name, Object content) {
@@ -31,10 +31,10 @@ public class DebugField extends Table {
 		this.name = name;
 		this.content = content;
 		//
-		update();
+		updateContent();
 	}
 	
-	public void update() {
+	public void updateContent() {
 		clearChildren();
 		//
 		table(Tex.buttonDown, nt -> {
