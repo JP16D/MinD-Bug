@@ -27,9 +27,8 @@ public class DebugField extends Table {
 	}
 	
 	public DebugField(String name, Object content) {
-		var type = content.getClass();
 		//
-		this.type = (type == Modifiable.class ? content.type : type).getSimpleName();
+		this.type = (content instanceof Modifiable m ? m.type : content.getClass()).getSimpleName();
 		this.name = name;
 		this.content = content;
 		//
