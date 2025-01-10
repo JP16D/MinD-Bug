@@ -12,12 +12,12 @@ import mindustry.ui.*;
 
 public class DebugField extends Table {
 	protected Object content;
-	protected Cons<?> function;
+	protected Cons<String> function;
 	//
 	public final String type;
 	public final String name;
 	
-	public DebugField(String name, Object content, Cons<?> function) {
+	public DebugField(String name, Object content, Cons<String> function) {
 		this.type = content.getClass().getSimpleName();
 		this.name = name;
 		this.content = content;
@@ -53,7 +53,7 @@ public class DebugField extends Table {
 					//
 					t.image(Icon.editSmall).pad(4f);
 					//
-					if (function instanceof Cons<String> run) t.field(m.value.toString(), Styles.defaultField, run).pad(4f);
+					t.field(m.value.toString(), Styles.defaultField, function).pad(4f);
 					//
 				}).row();
 			}
