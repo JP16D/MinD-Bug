@@ -29,10 +29,7 @@ public class MainPanel {
 			update();
 		}).padRight(8f).row();
 		//
-		table.table(t -> {
-			//
-			t.add(panel).height(expand ? scale * 0.25f : 74f).growX().top();
-		}).growX();
+		table.add(panel).height(expand ? scale * 0.25f : 74f).growX().top().growX();
 		//
 		panel.setScrollX(x);
 		panel.setScrollY(y);
