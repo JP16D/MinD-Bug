@@ -26,7 +26,7 @@ public class DebugField extends Table {
 		update();
 	}
 	
-	public DebugField(String name Object content) {
+	public DebugField(String name, Object content) {
 		this.type = content.getClass().getSimpleName();
 		this.name = name;
 		this.content = content;
