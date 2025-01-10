@@ -30,7 +30,7 @@ public class MainPanel {
 		//
 		table.table(t -> {
 			//
-			t.add(panel).size(360f, expand ? scale * 0.25f : 74f).top();
+			t.add(panel).height(expand ? scale * 0.25f : 74f).growX().top();
 		});
 		//
 		panel.setScrollX(x);

@@ -9,10 +9,10 @@ import arc.struct.*;
 import mindustry.gen.*;
 
 import static dbug.MDBugVars.*;
-import static dbug.ui.Display.*;
+import static dbug.ui.DebugField.*;
 
 public class Debugger {
-	public static final OrderedMap<String, Debuggable> writable = new OrderedMap<>();
+	public static final OrderedMap<String, Modifiable> writable = new OrderedMap<>();
 	
 	//returns a default value if main value is null to avoid null error crashes
 	//temporary, I'm planning on adding one that automatically generates a dummy value 
@@ -21,20 +21,16 @@ public class Debugger {
 		return val != null ? val : def;
 	}
 	
-	//add debuggable object (read-only)
+	//add Modifiable object (read-only)
 	public static Object dv(String name, Object val) {
-		debugger.put(name, display(Color.slate, val.getClass(), name, new Table(Tex.pane, t -> {
-			if (val instanceof Drawable) {
-				t.add(new Image((Drawable) val));
-			} else t.add("" + val);
-		})));
+		debugger.put(name, new DebugField(name, val));
 		//
 		return val;
 	}
 	
-	//add debuggable object (writable)
+	//add Modifiable object (writable)
 	public static Object dw(String name, Object val) {
-		if (!writable.containsKey(name)) writable.put(name, new Debuggable(val.getClass(), val));
+		if (!writable.containsKey(name)) writable.put(name, new Modifiable(val.getClass(), val));
 		//
 		var v = writable.get(name);
 		//

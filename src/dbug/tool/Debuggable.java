@@ -11,11 +11,11 @@ import mindustry.ui.*;
 import java.lang.*;
 import java.lang.reflect.*;
 
-import static dbug.ui.Display.*;
+import static dbug.ui.DISPLAY.*;
 import static dbug.ui.MainPanel.*;
 import static dbug.util.ParseUtil.*;
 
-public class Debuggable {
+public class Modifiable {
 	protected OrderedMap<String, Writable> map = new OrderedMap<>();
 	//
 	protected boolean priority;
@@ -23,13 +23,11 @@ public class Debuggable {
 	public Object value;
 	public Class<?> type;
 	
-	public Debuggable(Class<?> type, Object value) {
+	public Modifiable(Class<?> type, Object value) {
 		this.type = type;
 		this.value = value;
 		//
-		if (isWrapper(type) || type.isPrimitive()) return;
-		//
-		for (var field : type.getFields()) {
+		if (isObject()) for (var field : type.getFields()) {
 			if (isWrapper(wrap(field.getType()))) map.put(field.getName(), new Writable(null));
 		}
 	}
@@ -81,16 +79,18 @@ public class Debuggable {
 				}).right().pad(2f).get();
 			}));
 		} else {
-			return display(Color.maroon, type, name, new Table(t -> {
-				t.field(value.toString(), Styles.defaultField, (String txt) -> {
+			return new DebugField(type, value, (String txt) -> {
 					//
-					this.value = parse(type, value, txt);
+				this.value = parse(type, value, txt);
 					//
-					priority = true;
-					update();
-				}).center().pad(4f);
-			}));
+				priority = true;
+				update();
+			});
 		}
+	}
+	
+	public boolean isObject() {
+		return !(isWrapper(type) || type.isPrimitive())
 	}
 	
 	protected class Writable {
