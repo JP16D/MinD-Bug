@@ -37,7 +37,7 @@ public class DebugField extends Table {
 	public void updateContent() {
 		clearChildren();
 		//
-		table(Tex.buttonDown, nt -> {
+		this.table(Tex.buttonDown, nt -> {
 			//
 			if (!type.isEmpty()) nt.table(Tex.whiteui, t -> {
 				t.add(type);
@@ -47,10 +47,11 @@ public class DebugField extends Table {
 			nt.add(name, Styles.outlineLabel).pad(4f);
 		}).row();
 		
-		if (content instanceof Modifiable m) {
+		 
+		 if (content instanceof Modifiable) {
 			if (m.isObject()) {
 				
-			} else {}
+			} else {
 				table(Tex.button, t -> {
 					//
 					t.image(Icon.editSmall).pad(4f);
@@ -58,16 +59,13 @@ public class DebugField extends Table {
 					t.field(m.value.toString(), Styles.defaultField, modifier).pad(4f);
 					//
 				}).row();
-			
-			//
-		} else table(Tex.button, t -> {
-			if (content instanceof Drawable img) {
-				//
-				t.image(img).pad(4f);
+			}
+		} else this.table(Tex.button, t -> {
+			if (content instanceof Drawable) {
+				t.image((Drawable) content).pad(4f);
 				//
 			} else if (content instanceof TextureRegion img) {
-				//
-				t.image(img).pad(4f);
+				t.image((TextureRegion) content).pad(4f);
 				//
 			} else t.add("" + content);
 		}).row();
