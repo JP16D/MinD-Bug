@@ -52,7 +52,8 @@ public class DebugField extends Table {
 				table(Tex.button, t -> {
 					//
 					t.image(Icon.editSmall).pad(4f);
-					t.field(m.value.toString(), Styles.defaultField, function).pad(4f);
+					//
+					if (function instanceof Cons<String> run) t.field(m.value.toString(), Styles.defaultField, run).pad(4f);
 					//
 				}).row();
 			}
