@@ -1,5 +1,6 @@
 package dbug.ui;
 
+import arc.func*;
 import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.scene.style.*;
@@ -23,14 +24,12 @@ public class DebugField extends Table {
 		this.function = function;
 		//
 		update();
-		//
-		add(nametag);
 	}
 	
 	public void update() {
 		clearChildren();
 		//
-		table.table(Tex.buttonDown, nt -> {
+		table(Tex.buttonDown, nt -> {
 			//
 			if (!type.isBlank()) nt.table(Tex.whiteui, t -> {
 				t.add(type);
@@ -44,7 +43,7 @@ public class DebugField extends Table {
 			if (m.isObject()) {
 				
 			} else {
-				nt.table(Tex.button, t -> {
+				table(Tex.button, t -> {
 					//
 					t.image(Icon.editSmall).pad(4f);
 					t.field(m.value.toString(), Styles.defaultField, function).pad(4f);
@@ -52,14 +51,13 @@ public class DebugField extends Table {
 				}).row();
 			}
 			//
-		} else if (content instanceof Drawable || content instanceof TextureRegion) {
-			nt.table(Tex.button, t -> {
+		} else table(Tex.button, t -> {
+			if (content instanceof Drawable || content instanceof TextureRegion) {
 				//
 				t.image(content).pad(4f);
 				//
-			}).row();
-			//
-		} else t.add("" + content).row();
+			} else add("" + content);
+		}).row();
 	}
 	
 	public static Table display(Color color, Class<?> type, String name, Table val) {
