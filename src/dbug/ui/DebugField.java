@@ -39,7 +39,7 @@ public class DebugField extends Table {
 		//
 		this.table(Tex.buttonDown, nt -> {
 			//
-			if (!type.isEmpty()) nt.table(Tex.whiteui, t -> {
+			nt.table(Tex.whiteui, t -> {
 				t.add(type);
 				t.setColor(Color.royal);
 			}).pad(4f);
@@ -48,7 +48,7 @@ public class DebugField extends Table {
 		}).row();
 		
 		 
-		 if (content instanceof Modifiable m) {
+		/*if (content instanceof Modifiable m) {
 			if (m.isObject()) {
 				
 			} else {
@@ -68,7 +68,7 @@ public class DebugField extends Table {
 				t.image((TextureRegion) content).pad(4f);
 				//
 			} else t.add("" + content);
-		}).row();
+		}).row();*/
 	}
 	
 	public static Table display(Color color, Class<?> type, String name, Table val) {
