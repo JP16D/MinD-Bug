@@ -40,36 +40,33 @@ public class DebugField extends Table {
 		table(Tex.buttonDown, nt -> {
 			//
 			nt.table(Tex.whiteui, t -> {
-				t.add(type);
+				t.add(content instanceof Modifiable m ? m.type : type);
 				t.setColor(Color.royal);
 			}).pad(4f);
 			//
 			nt.add(name, Styles.outlineLabel).pad(4f);
-		}).row();
-		
-		 
-		/*if (content instanceof Modifiable m) {
-			if (m.isObject()) {
-				
-			} else {
-				table(Tex.button, t -> {
+		}).row().left();
+		//
+		table(Tex.button, t -> {
+			if (content instanceof Modifiable m) {
+				if (m.map.size > 0) {
+					for (var k : m.map.keys()) add(new DebugField(k, m.map.get()));
+				} else {
 					//
 					t.image(Icon.editSmall).pad(4f);
 					//
 					t.field(m.value.toString(), Styles.defaultField, modifier).pad(4f);
-					//
-				}).row();
-			}
-		}*/
-		table(Tex.button, t -> {
-			if (content instanceof Drawable) {
-				t.image((Drawable) content).pad(4f);
+				}
+			} else t.image(Icon.eyeSmall).pad(4f);
+			//
+			if (content instanceof Drawable img) {
+				t.table(Tex.pane, p -> p.image(img).pad(4f)).size(52f);
 				//
 			} else if (content instanceof TextureRegion img) {
-				t.image((TextureRegion) content).pad(4f);
+				t.table(Tex.pane, p -> p.image(img)).pad(4f).size(52f);
 				//
 			} else t.add("" + content);
-		}).row();
+		}).row().left();
 	}
 	
 	public static Table display(Color color, Class<?> type, String name, Table val) {

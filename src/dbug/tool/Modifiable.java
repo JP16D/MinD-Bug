@@ -17,9 +17,9 @@ import static dbug.ui.MainPanel.*;
 import static dbug.util.ParseUtil.*;
 
 public class Modifiable {
-	protected OrderedMap<String, Writable> map = new OrderedMap<>();
-	//
 	protected boolean priority;
+	//
+	public OrderedMap<String, Writable> map = new OrderedMap<>();
 	//
 	public Object value;
 	public Class<?> type;
@@ -28,7 +28,9 @@ public class Modifiable {
 		this.type = type;
 		this.value = value;
 		//
-		if (isObject()) for (var field : type.getFields()) {
+		if (isWrapper(type) || type.isPrimitive()) return;
+		//
+		for (var field : type.getFields()) {
 			if (isWrapper(wrap(field.getType()))) map.put(field.getName(), new Writable(null));
 		}
 	}
@@ -88,10 +90,6 @@ public class Modifiable {
 				update();
 			});
 		}
-	}
-	
-	public boolean isObject() {
-		return !(isWrapper(type) || type.isPrimitive());
 	}
 	
 	protected class Writable {
