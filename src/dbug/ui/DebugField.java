@@ -27,7 +27,9 @@ public class DebugField extends Table {
 	}
 	
 	public DebugField(String name, Object content) {
-		this.type = content.getClass().getSimpleName();
+		var type = content.getClass();
+		//
+		this.type = (type == Modifiable.class ? content.type : type).getSimpleName();
 		this.name = name;
 		this.content = content;
 		//
@@ -40,7 +42,7 @@ public class DebugField extends Table {
 		table(Tex.buttonDown, nt -> {
 			//
 			nt.table(Tex.whiteui, t -> {
-				t.add(content instanceof Modifiable m ? m.type : type);
+				t.add(type);
 				t.setColor(Color.royal);
 			}).pad(4f);
 			//
