@@ -37,7 +37,7 @@ public class DebugField extends Table {
 	public void updateContent() {
 		clearChildren();
 		//
-		this.table(Tex.buttonDown, nt -> {
+		table(Tex.buttonDown, nt -> {
 			//
 			nt.table(Tex.whiteui, t -> {
 				t.add(type);
@@ -60,7 +60,8 @@ public class DebugField extends Table {
 					//
 				}).row();
 			}
-		} else this.table(Tex.button, t -> {
+		}*/
+		table(Tex.button, t -> {
 			if (content instanceof Drawable) {
 				t.image((Drawable) content).pad(4f);
 				//
@@ -68,7 +69,7 @@ public class DebugField extends Table {
 				t.image((TextureRegion) content).pad(4f);
 				//
 			} else t.add("" + content);
-		}).row();*/
+		}).row();
 	}
 	
 	public static Table display(Color color, Class<?> type, String name, Table val) {
