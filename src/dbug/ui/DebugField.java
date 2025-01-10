@@ -12,12 +12,12 @@ import mindustry.ui.*;
 
 public class DebugField extends Table {
 	protected Object content;
-	protected Cons<?> function;
+	protected Cons function;
 	//
 	public final String type;
 	public final String name;
 	
-	public DebugField(String name, Object content, Cons<?> function) {
+	public DebugField(String name, Object content, Cons function) {
 		this.type = content.getClass().getSimpleName();
 		this.name = name;
 		this.content = content;
