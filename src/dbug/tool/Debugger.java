@@ -6,6 +6,7 @@ import arc.scene.style.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
+import dbug.ui.*;
 import mindustry.gen.*;
 
 import static dbug.MDBugVars.*;
