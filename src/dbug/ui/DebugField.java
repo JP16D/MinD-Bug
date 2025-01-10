@@ -48,7 +48,7 @@ public class DebugField extends Table {
 		}).row();
 		
 		 
-		 if (content instanceof Modifiable) {
+		 if (content instanceof Modifiable m) {
 			if (m.isObject()) {
 				
 			} else {
