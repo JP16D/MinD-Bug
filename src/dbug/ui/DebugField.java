@@ -21,7 +21,7 @@ public class DebugField extends Table {
 		this.type = content.getClass().getSimpleName();
 		this.name = name;
 		this.content = content;
-		this.function = function;
+		this.modifier = modifier;
 		//
 		update();
 	}
