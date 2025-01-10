@@ -42,12 +42,12 @@ public class DebugField extends Table {
 		table(Tex.buttonDown, nt -> {
 			//
 			nt.table(Tex.whiteui, t -> {
-				t.add(type);
+				t.add(type).pad(4f);
 				t.setColor(Color.royal);
 			}).pad(4f).left();
 			//
 			nt.add(name, Styles.outlineLabel).pad(4f).center();
-		}).left().row();
+		}).pad(12f, 4f, 4f, 4f).left().row();
 		//
 		table(Tex.button, t -> {
 			if (content instanceof Modifiable m) {
@@ -70,7 +70,7 @@ public class DebugField extends Table {
 					//
 				} else t.add("" + content).pad(4f);
 			}
-		}).left().row();
+		}).pad(4f).left().row();
 	}
 	
 	public static Table display(Color color, Class<?> type, String name, Table val) {

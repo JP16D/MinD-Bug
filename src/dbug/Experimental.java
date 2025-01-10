@@ -17,7 +17,7 @@ public class Experimental {
 		test = (Vec2) dw("test-v", test);
 		
 		for (var f : Icon.class.getFields()) try {
-			if (f.getType() == Icon.class) dv(f.getName(), f.get(new Icon()));
+			dv(f.getName(), f.get(new Icon()));
 		} catch (Exception e) {}
 	}
 }

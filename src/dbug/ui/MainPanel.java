@@ -4,6 +4,7 @@ import arc.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import mindustry.gen.*;
+import mindustry.ui.*;
 
 import static dbug.MDBugVars.*;
 
@@ -18,7 +19,7 @@ public class MainPanel {
 		//
 		panel = new ScrollPane(new Table(t -> {
 			for (var v : debugger.values()) t.add(v).growX().pad(2f).row();
-		}));
+		}), Styles.noBarPane);
 		//
 		panel.setOverscroll(false, true);
 		panel.setClamp(true);
@@ -30,8 +31,8 @@ public class MainPanel {
 		//
 		table.table(t -> {
 			//
-			t.add(panel).size(360f, expand ? scale * 0.25f : 74f).growX().top();
-		});
+			t.add(panel).height(expand ? scale * 0.25f : 74f).growX().top();
+		}).growX();
 		//
 		panel.setScrollX(x);
 		panel.setScrollY(y);
