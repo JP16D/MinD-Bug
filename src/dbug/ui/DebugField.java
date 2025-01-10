@@ -47,12 +47,12 @@ public class DebugField extends Table {
 			}).pad(4f);
 			//
 			nt.add(name, Styles.outlineLabel).pad(4f);
-		}).row().left();
+		}).left().row();
 		//
 		table(Tex.button, t -> {
 			if (content instanceof Modifiable m) {
 				if (m.map.size > 0) {
-					for (var k : m.map.keys()) add(new DebugField(k, m.map.get()));
+					for (var k : m.map.keys()) add(new DebugField(k, m.map.get(k)));
 				} else {
 					//
 					t.image(Icon.editSmall).pad(4f);
@@ -68,7 +68,7 @@ public class DebugField extends Table {
 				t.table(Tex.pane, p -> p.image(img)).pad(4f).size(52f);
 				//
 			} else t.add("" + content);
-		}).row().left();
+		}).left().row();
 	}
 	
 	public static Table display(Color color, Class<?> type, String name, Table val) {
