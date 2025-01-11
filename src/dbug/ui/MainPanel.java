@@ -18,7 +18,7 @@ public class MainPanel {
 		caller = table;
 		//
 		panel = new ScrollPane(new Table(t -> {
-			for (var v : debugger.values()) t.add(v).pad(2f).row();
+			for (var v : debugger.values()) t.add(v).pad(2f).grow().row();
 		}), Styles.noBarPane);
 		//
 		panel.setOverscroll(false, true);
