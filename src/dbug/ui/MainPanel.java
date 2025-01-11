@@ -29,9 +29,7 @@ public class MainPanel {
 			update();
 		}).padRight(8f).row();
 		//
-		panel.setSize(360f, expand ? scale * 0.25f : 74f);
-		//
-		table.add(panel).size().top();
+		table.add(panel).size(360f, expand ? scale * 0.25f : 74f).top();
 		//
 		panel.setScrollX(x);
 		panel.setScrollY(y);
