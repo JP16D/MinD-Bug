@@ -70,13 +70,15 @@ public class DebugField extends Table {
 				//View only value
 				t.image(Icon.eyeSmall).pad(4f);
 				//
-				if (content instanceof Drawable img) {
-					t.table(Tex.pane, p -> p.image(img).pad(4f)).size(52f);
-					//
-				} else if (content instanceof TextureRegion img) {
-					t.table(Tex.pane, p -> p.image(img)).pad(4f).size(52f);
-					//
-				} else t.add("" + content).pad(4f);
+				t.table(Tex.pane, p -> {
+					if (content instanceof Drawable img) {
+						p.image(img).size(52f);
+						//
+					} else if (content instanceof TextureRegion img) {
+						p.image(img).size(52f);
+						//
+					} else p.add("" + content).pad(4f);
+				}).pad(4f);
 			}
 		}).pad(4f).left().row();
 	}
