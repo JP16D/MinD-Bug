@@ -21,7 +21,6 @@ public class MainPanel {
 			for (var v : debugger.values()) t.add(v).pad(2f).row();
 		}), Styles.noBarPane);
 		//
-		panel.setSize(panel.getWidget().getWidth(), expand ? scale * 0.25f : 74f);
 		panel.setOverscroll(false, true);
 		panel.setClamp(true);
 		//
@@ -30,7 +29,9 @@ public class MainPanel {
 			update();
 		}).padRight(8f).row();
 		//
-		table.add(panel).top();
+		panel.setSize(panel.getWidget().getWidth(), expand ? scale * 0.25f : 74f);
+		//
+		table.add(panel).grow().top();
 		//
 		panel.setScrollX(x);
 		panel.setScrollY(y);
