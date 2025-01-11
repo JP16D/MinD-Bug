@@ -19,22 +19,21 @@ public class DebugField extends Table {
 	public final String name;
 	
 	public DebugField(String name, Object content, Cons<String> modifier) {
-		set(name, content);
+		this.type = (content instanceof Modifiable m ? m.type : content.getClass()).getSimpleName();
+		this.name = name;
+		this.content = content;
+		//
 		this.modifier = modifier;
 		//
 		updateContent();
 	}
 	
 	public DebugField(String name, Object content) {
-		set(name, content);
-		//
-		updateContent();
-	}
-	
-	protected void set(String name, Object content) {
 		this.type = (content instanceof Modifiable m ? m.type : content.getClass()).getSimpleName();
 		this.name = name;
 		this.content = content;
+		//
+		updateContent();
 	}
 	
 	public void updateContent() {
