@@ -24,7 +24,7 @@ public class Debugger {
 	
 	//add Modifiable object (read-only)
 	public static Object dv(String name, Object val) {
-		debugger.put(name, new DebugField(name, val));
+		debugger.put(name, new DebugField(name, val.getClass(), viewOnly(val)));
 		//
 		return val;
 	}

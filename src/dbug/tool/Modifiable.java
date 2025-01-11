@@ -82,13 +82,13 @@ public class Modifiable {
 				}).right().pad(2f).get();
 			}));
 		} else {
-			return new DebugField(name, this, (String txt) -> {
+			return new DebugField(name, type, writable(value, (String txt) -> {
 					//
 				this.value = parse(type, value, txt);
 					//
 				priority = true;
 				update();
-			});
+			}));
 		}
 	}
 	
