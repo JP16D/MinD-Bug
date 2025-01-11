@@ -41,7 +41,7 @@ public class DebugField extends Table {
 			//
 		}).pad(12f, 4f, 4f, 4f).left().row();
 		//
-		add(content);
+		add(content).pad(4f).left().row();
 	}
 	
 	public static Table viewOnly(Object content) {
@@ -57,14 +57,14 @@ public class DebugField extends Table {
 					//
 				} else p.add("" + content).pad(4f);
 			}).pad(4f);
-		}).pad(4f).left().row();
+		});
 	}
 	
 	public static Table writable(Object content, Cons<String> modifier) {
 		return new Table(Tex.button, t -> {
 			t.image(Icon.editSmall).pad(4f);
 			//
-			t.field(m.value.toString(), Styles.defaultField, modifier).pad(4f);
+			t.field(content.toString(), Styles.defaultField, modifier).pad(4f);
 		});
 	}
 	
