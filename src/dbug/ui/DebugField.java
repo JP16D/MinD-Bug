@@ -26,7 +26,7 @@ public class DebugField extends Table {
 	}
 	
 	public DebugField(String name, Object content) {
-		set(name, content)
+		set(name, content);
 		//
 		updateContent();
 	}
@@ -40,29 +40,32 @@ public class DebugField extends Table {
 	public void updateContent() {
 		clearChildren();
 		left();
-		//
 		//Nametag
 		table(Tex.buttonDown, nt -> {
 			//
 			nt.table(Tex.whiteui, t -> {
 				t.add(type).pad(4f);
 				t.setColor(Color.royal);
+				//
 			}).pad(4f).left();
 			//
 			nt.add(name, Styles.outlineLabel).pad(4f).center();
+			//
 		}).pad(12f, 4f, 4f, 4f).left().row();
-		//
 		//Value field
 		table(Tex.button, t -> {
 			//Writable value
 			if (content instanceof Modifiable m) {
 				if (m.map.size > 0) {
+					//
 					for (var k : m.map.keys()) add(new DebugField(k, m.map.get(k), modifier));
+					//
 				} else {
 					//
 					t.image(Icon.editSmall).pad(4f);
 					//
 					t.field(m.value.toString(), Styles.defaultField, modifier).pad(4f);
+					//
 				}
 			} else {
 				//View only value
