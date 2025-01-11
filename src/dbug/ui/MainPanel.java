@@ -18,9 +18,10 @@ public class MainPanel {
 		caller = table;
 		//
 		panel = new ScrollPane(new Table(t -> {
-			for (var v : debugger.values()) t.add(v).pad(2f).grow().row();
+			for (var v : debugger.values()) t.add(v).pad(2f).row();
 		}), Styles.noBarPane);
 		//
+		panel.setSize(panel.getWidget().getWidth(), expand ? scale * 0.25f : 74f);
 		panel.setOverscroll(false, true);
 		panel.setClamp(true);
 		//
@@ -29,7 +30,7 @@ public class MainPanel {
 			update();
 		}).padRight(8f).row();
 		//
-		table.add(panel).size(panel.getWidget().getWidth(), expand ? scale * 0.25f : 74f).grow().top();
+		table.add(panel).top();
 		//
 		panel.setScrollX(x);
 		panel.setScrollY(y);
