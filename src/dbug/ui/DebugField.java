@@ -33,7 +33,7 @@ public class DebugField extends Table {
 		clearChildren();
 		left();
 		//Nametag
-		table(Tex.buttonDown, nt -> {
+		table(Tex.button, nt -> {
 			//
 			nt.table(Tex.whiteui, t -> {
 				t.add(type).pad(4f);
@@ -44,7 +44,7 @@ public class DebugField extends Table {
 			nt.add(name, Styles.outlineLabel).pad(4f).center();
 			//
 			nt.add(content).pad(4f).right();
-		}).pad(12f, 4f, 4f, 4f).left().row();
+		}).pad(8f, 4f, 4f, 4f).left().row();
 	}
 	
 	public void setContent(Table content) {
@@ -59,12 +59,12 @@ public class DebugField extends Table {
 			//
 			t.table(Tex.pane, p -> {
 				if (content instanceof Drawable img) {
-					p.image(img).size(52f);
+					p.image(img).size(40f);
 					//
 				} else if (content instanceof TextureRegion img) {
 					p.image(img).size(40f);
 					//
-				} else p.add("" + content).pad(2f);
+				} else p.add("" + content).pad(2f, 4f, 2f, 4f);
 			}).pad(2f);
 		});
 	}
@@ -73,7 +73,7 @@ public class DebugField extends Table {
 		return new Table(t -> {
 			t.image(Icon.editSmall).pad(4f);
 			//
-			t.field(content.toString(), Styles.defaultField, modifier).pad(4f);
+			t.field(content.toString(), Styles.defaultField, modifier).pad(4f).get().setAlign(Align.center);
 		});
 	}
 	
