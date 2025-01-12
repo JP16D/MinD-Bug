@@ -39,7 +39,7 @@ public class DebugField extends Table {
 			//
 			nt.add(name, Styles.outlineLabel).pad(4f).center();
 			//
-		}).pad(12f, 4f, 4f, 4f).left().row();
+		}).pad(12f, 4f, 4f, 4f).left();
 		//
 		add(content).pad(4f).left().row();
 	}
@@ -56,7 +56,7 @@ public class DebugField extends Table {
 					p.image(img).size(52f);
 					//
 				} else p.add("" + content).pad(4f);
-			}).pad(4f);
+			}).pad(2f);
 		});
 	}
 	
