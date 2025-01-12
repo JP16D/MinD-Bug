@@ -20,9 +20,13 @@ public class DebugField extends Table {
 	public DebugField(String name, Class<?> type, Table content) {
 		this.type = type.getSimpleName();
 		this.name = name;
-		this.content = content;
 		//
-		updateContent();
+		setContent(content);
+	}
+	
+	public DebugField(String name, Class<?> type) {
+		this.type = type.getSimpleName();
+		this.name = name;
 	}
 	
 	public void updateContent() {
@@ -41,6 +45,12 @@ public class DebugField extends Table {
 			//
 			nt.add(content).pad(4f).right();
 		}).pad(12f, 4f, 4f, 4f).left().row();
+	}
+	
+	public void setContent(Table content) {
+		this.content = content;
+		//
+		updateContent();
 	}
 	
 	public static Table viewOnly(Object content) {

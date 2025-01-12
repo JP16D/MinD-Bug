@@ -82,7 +82,9 @@ public class Modifiable {
 				}).right().pad(2f).get();
 			}));
 		} else {
-			var table = new DebugField(name, type, writable(value, (String txt) -> {
+			var table = new DebugField(name, type);
+			//
+			table.setContent(writable(value, (String txt) -> {
 					//
 				this.value = parse(type, value, txt);
 					//
