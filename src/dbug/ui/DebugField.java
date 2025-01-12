@@ -42,13 +42,11 @@ public class DebugField extends Table {
 			nt.add(content).pad(4f).right();
 			//
 		}).pad(12f, 4f, 4f, 4f).left().row();
-		//
-		
 	}
 	
 	public static Table viewOnly(Object content) {
 		return new Table(t -> {
-			t.image(Icon.eyeSmall).pad(4f).get().setScaling();
+			t.image(Icon.gridSmall).pad(4f);
 			//
 			t.table(Tex.pane, p -> {
 				if (content instanceof Drawable img) {
