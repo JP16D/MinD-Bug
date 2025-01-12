@@ -1,12 +1,12 @@
 package dbug.ui;
 
 import arc.func.*;
-
 import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.scene.style.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
+import arc.util.*;
 import dbug.tool.*;
 import mindustry.gen.*;
 import mindustry.ui.*;
@@ -39,29 +39,31 @@ public class DebugField extends Table {
 			//
 			nt.add(name, Styles.outlineLabel).pad(4f).center();
 			//
-		}).pad(12f, 4f, 4f, 4f).left();
+			nt.add(content).pad(4f).right();
+			//
+		}).pad(12f, 4f, 4f, 4f).left().row();
 		//
-		add(content).pad(4f).left().row();
+		
 	}
 	
 	public static Table viewOnly(Object content) {
-		return new Table(Tex.button, t -> {
-			t.image(Icon.eyeSmall).pad(4f);
+		return new Table(t -> {
+			t.image(Icon.eyeSmall).pad(4f).get().setScaling();
 			//
 			t.table(Tex.pane, p -> {
 				if (content instanceof Drawable img) {
 					p.image(img).size(52f);
 					//
 				} else if (content instanceof TextureRegion img) {
-					p.image(img).size(52f);
+					p.image(img).size(40f);
 					//
-				} else p.add("" + content).pad(4f);
+				} else p.add("" + content).pad(2f);
 			}).pad(2f);
 		});
 	}
 	
 	public static Table writable(Object content, Cons<String> modifier) {
-		return new Table(Tex.button, t -> {
+		return new Table(t -> {
 			t.image(Icon.editSmall).pad(4f);
 			//
 			t.field(content.toString(), Styles.defaultField, modifier).pad(4f);
