@@ -40,7 +40,6 @@ public class DebugField extends Table {
 			nt.add(name, Styles.outlineLabel).pad(4f).center();
 			//
 			nt.add(content).pad(4f).right();
-			//
 		}).pad(12f, 4f, 4f, 4f).left().row();
 	}
 	
