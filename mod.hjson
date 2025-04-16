@@ -4,7 +4,7 @@ author: "JP16D"
 main: "dbug.MDBug"
 description: "The solution to your mod debugging needs"
 version: 1.0
-minGameVersion: 146
+minGameVersion: 147
 java: true
 
 hidden: true
