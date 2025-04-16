@@ -1,6 +1,7 @@
 package dbug;
 
 import arc.math.geom.*;
+import arc.scene.style.*;
 import mindustry.gen.*;
 
 import static dbug.tool.Debugger.*;
