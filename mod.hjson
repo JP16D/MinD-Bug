@@ -2,9 +2,9 @@ displayName: "[lime]MinD-Bug"
 name: "mdbug"
 author: "JP16D"
 main: "dbug.MDBug"
-description: "The solution to your mod debugging needs"
+description: "Runtime mod debugging and experimentations"
 version: 1.0
-minGameVersion: 147
+minGameVersion: 155.4
 java: true
 
 hidden: true

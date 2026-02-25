@@ -40,15 +40,18 @@ public class ParseUtil {
 	//some sort of parsing shenanigans
 	public static Object parse(Class<?> type, Object def, String val) {
 		//
+		//skip parsing if string type
 		if (type == String.class) {
 			return val;
 			//
+		//parse string to selected primitive type
 		} else try {
 			var wrapped = wrap(type);
 			var method = wrapped.getMethod("valueOf", String.class);
 			//
 			return method.invoke(wrapped, val);
 			//
+		//return default if parsing fail
 		} catch (Exception e) {
 			//warn();
 			return def;
