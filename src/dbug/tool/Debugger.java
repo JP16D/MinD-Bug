@@ -37,12 +37,12 @@ public class Debugger {
 		//
 		debugger.put(name, v.call(name, val));
 		//
-		if (v.priority) {
-			v.priority = false;
-			//
+// 		if (v.priority) {
+// 			v.priority = false;
+// 			//
 			return v.value;
-			//
-		} else return val;
+// 			//
+// 		} else return val;
 	}
 	
 	//add a builder function
