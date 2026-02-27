@@ -31,18 +31,20 @@ public class Debugger {
 	
 	//add Modifiable object (writable)
 	public static Object dw(String name, Object val) {
-		if (!writable.containsKey(name)) writable.put(name, new Modifiable(val.getClass(), val));
+	    var init = !writable.containsKey(name);
+	    var writer = init ? new Modifiable(val.getClass(), val) : writable.get(name);
+        //
+        if (init) {
+            writable.put(name, writer);
+        	debugger.put(name, writer.call(name, val));
+        }
 		//
-		var v = writable.get(name);
-		//
-		debugger.put(name, v.call(name, val));
-		//
-// 		if (v.priority) {
-// 			v.priority = false;
-// 			//
+		if (v.priority) {
+			v.priority = false;
+			//
 			return v.value;
-// 			//
-// 		} else return val;
+			//
+		} else return val;
 	}
 	
 	//add a builder function

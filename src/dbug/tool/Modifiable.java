@@ -85,9 +85,9 @@ public class Modifiable {
 			var table = new DebugField(name, type);
 			//
 			table.setContent(writable(value, (String txt) -> {
-					//
+				//
 				this.value = parse(type, value, txt);
-					//
+				//
 				priority = true;
 				table.updateContent();
 			}));
