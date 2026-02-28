@@ -19,6 +19,8 @@ import static dbug.util.ParseUtil.*;
 public class Modifiable {
 	protected boolean priority;
 	//
+	public OrderedMap<String, Object> map = new OrderedMap<>();
+	//
 	public Object value;
 	public Class<?> type;
 	
@@ -29,7 +31,7 @@ public class Modifiable {
 		if (isWrapper(type) || type.isPrimitive()) return;
 		//
 		for (var field : type.getFields()) {
-			if (isWrapper(wrap(field.getType()))) map.put(field.getName(), new Writable(null));
+			if (isWrapper(wrap(field.getType()))) map.put(field.getName(), null);
 		}
 	}
 	
@@ -41,21 +43,21 @@ public class Modifiable {
 				for (var k : map.keys()) try {
 					//
 					var input = new Table();
-					var f = type.getField(k);
-					var w = map.get(k);
+					var field = type.getField(k);
+					var stored = map.get(k);
 					//
-					boolean empty = w.stored == null || w.stored == f.get(value);
-					var v = empty ? f.get(value) : w.stored;
+					boolean empty = stored == null || stored == field.get(value);
+					var v = empty ? field.get(value) : stored;
 					//
 					input.field(v.toString(), Styles.defaultField, (String txt) -> {
 						//
-						w.set(parse(wrap(f.getType()), v, txt));
+						map.put(k, parse(wrap(field.getType()), v, txt));
 						//
 					}).center().pad(4f);
 					//
-					if (!empty) input.add(f.get(value).toString()).center().pad(4f);
+					if (!empty) input.add(field.get(value).toString()).center().pad(4f);
 					
-					t.add(display(empty ? Color.darkGray : Color.green, f.getType(), f.getName(), input)).grow().row();
+					t.add(display(empty ? Color.darkGray : Color.green, field.getType(), field.getName(), input)).grow().row();
 				} catch (Exception e) {}
 				//
 				//apply changes 
@@ -63,8 +65,8 @@ public class Modifiable {
 					for (var k : map.keys()) try {
 						var v = map.get(k);
 						//
-						type.getField(k).set(this.value, v.stored);
-						v.set(null);
+						type.getField(k).set(this.value, v);
+						map.put(k, null);
 						//
 						priority = true;
 					} catch (Exception e) {}
@@ -74,7 +76,7 @@ public class Modifiable {
 				//
 				//revert changes
 				t.button(Icon.cancel, () -> {
-					for (var v : map.values()) v.set(null);
+					for (var k : map.keys()) map.put(k, null);
 					//
 					update();
 				}).right().pad(2f).get();
@@ -91,9 +93,5 @@ public class Modifiable {
 			//
 			return table;
 		}
-	}
-	
-	protected class Struct {
-	    public OrderedMap<String, Object> map = new OrderedMap<>();
 	}
 }
