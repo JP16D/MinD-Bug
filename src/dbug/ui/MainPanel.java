@@ -49,7 +49,7 @@ public class MainPanel {
 		float x = panel.getScrollX();
 		float y = panel.getScrollY();
 		//
-		//caller.clearChildren();
+		caller.clearChildren();
 		call(caller, x, y);
 	}
 }
