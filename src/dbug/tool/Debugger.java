@@ -16,20 +16,20 @@ public class Debugger {
 	public static final OrderedMap<String, Modifiable> writable = new OrderedMap<>();
 	
 	//returns a default value if main value is null to avoid null error crashes
-	//temporary, I'm planning on adding one that automatically generates a dummy value 
+	//(Temporary) I'm planning on adding one that automatically generates a dummy value 
 	public static <T extends Object> T check(T val, T def) {
 		//if (val == null) warn();
 		return val != null ? val : def;
 	}
 	
-	//add Modifiable object (read-only)
+	//add debugger (read-only)
 	public static Object dv(String name, Object val) {
 		debugger.put(name, new DebugField(name, val.getClass(), viewOnly(val)));
 		//
 		return val;
 	}
 	
-	//add Modifiable object (writable)
+	//add debugger (writable)
 	public static Object dw(String name, Object val) {
 	    var init = !writable.containsKey(name);
 	    var v = init ? new Modifiable(val.getClass(), val) : writable.get(name);
@@ -47,7 +47,7 @@ public class Debugger {
 		} else return val;
 	}
 	
-	//add a builder function
+	//add a builder function (W.I.P.)
 	public static void build(String name) {
 		var build = new Builder();
 	}

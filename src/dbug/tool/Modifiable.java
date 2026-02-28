@@ -19,8 +19,6 @@ import static dbug.util.ParseUtil.*;
 public class Modifiable {
 	protected boolean priority;
 	//
-	public OrderedMap<String, Writable> map = new OrderedMap<>();
-	//
 	public Object value;
 	public Class<?> type;
 	
@@ -84,27 +82,18 @@ public class Modifiable {
 		} else {
 			var table = new DebugField(name, type);
 			//
-			table.setContent(writable(value, (String txt) -> {
-				//
-				this.value = parse(type, value, txt);
-				//
-				priority = true;
-				table.updateContent();
-			}));
+			table.setContent(writable(value,  (String txt) -> {
+    			this.value = parse(type, value, txt);
+    			//
+    			priority = true;
+    			table.updateContent();
+    		}));
 			//
 			return table;
 		}
 	}
 	
-	protected class Writable {
-		Object stored;
-		
-		Writable(Object value) {
-			stored = value;
-		}
-		
-		void set(Object v) {
-			stored = v;
-		}
+	protected class Struct {
+	    public OrderedMap<String, Object> map = new OrderedMap<>();
 	}
 }
