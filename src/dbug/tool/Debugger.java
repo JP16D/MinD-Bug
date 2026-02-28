@@ -31,13 +31,10 @@ public class Debugger {
 	
 	//add debugger (writable)
 	public static Object dw(String name, Object val) {
-	    var init = !writable.containsKey(name);
-	    var v = init ? new Modifiable(val.getClass(), val) : writable.get(name);
+	    if (!writable.containsKey(name)) writable.put(name, new Modifiable(val.getClass(), val));
         //
-        if (init) {
-            writable.put(name, v);
-        	debugger.put(name, v.call(name, val));
-        }
+        var v = writable.get(name);
+        debugger.put(name, v.call(name, val));
 		//
 		if (v.priority) {
 			v.priority = false;
