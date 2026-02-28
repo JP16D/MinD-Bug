@@ -39,7 +39,7 @@ public class MainPanel {
 		if (scale != Core.scene.getHeight()) {
 			scale = Core.scene.getHeight();
 			//
-			update();
+			//update();
 		}
 	}
 	
