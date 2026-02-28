@@ -73,8 +73,9 @@ public class DebugField extends Table {
 		return new Table(t -> {
 			t.image(Icon.editSmall).pad(4f);
 			//
-			t.field(content.toString(), Styles.defaultField, modifier).pad(4f).get().setAlignment(Align.center);
-			t.setText(content.toString());
+			var f = t.field(content.toString(), Styles.defaultField, modifier).pad(4f).get();
+			f.setAlignment(Align.center);
+			f.setText(content.toString());
 		});
 	}
 	
