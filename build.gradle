@@ -64,26 +64,21 @@ task jarAndroid {
     dependsOn "jar"
 
     doLast {
-        if(!sdkRoot || !new File(sdkRoot).exists()) throw new GradleException("No valid Android SDK found.")
+        if(!sdkRoot || !new File(sdkRoot).exists()) throw new GradleException("No valid Android SDK found. Ensure that ANDROID_HOME is set to your Android SDK directory.")
 
         def platformRoot = new File("$sdkRoot/platforms/").listFiles()?.sort()?.reverse()?.find{ f -> new File(f, "android.jar").exists()}
-        if(!platformRoot) throw new GradleException("No android.jar found.")
+        if(!platformRoot) throw new GradleException("No android.jar found. Ensure that you have an Android platform installed.")
 
         def d8 = isWindows ? "d8.bat" : "d8"
         def buildToolsDir = new File("$sdkRoot/build-tools/").listFiles()?.sort()?.reverse()?.find{ f -> new File(f, d8).exists()}
         def d8path = buildToolsDir ? new File(buildToolsDir, d8).absolutePath : d8
 
-        // Collect dependencies
+        //collect dependencies needed for desugaring
         def dependencies = (configurations.compileClasspath.asList() + configurations.runtimeClasspath.asList() + [new File(platformRoot, "android.jar")]).unique().collect{ "--classpath $it.path" }.join(" ")
         
-        def process = "$d8path $dependencies --release --min-api 14 --output ${project.archivesBaseName}Android.jar ${project.archivesBaseName}Desktop.jar"
-            .execute(null, new File("$buildDir/libs"))
-        
-        process.waitForProcessOutput(System.out, System.err)
-        
-        if (process.exitValue() != 0) {
-            throw new GradleException("d8 execution failed with exit code ${process.exitValue()}")
-        }
+        //dex and desugar files - this requires d8 in your PATH
+        def process = "$d8path $dependencies --min-api 14 --output ${project.archivesBaseName}Android.jar ${project.archivesBaseName}Desktop.jar"
+            .execute(null, new File("$buildDir/libs")).waitForProcessOutput(System.out, System.err)
     }
 }
 

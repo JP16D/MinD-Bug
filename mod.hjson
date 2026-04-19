@@ -4,7 +4,7 @@ author: "JP16D"
 main: "dbug.MDBug"
 description: "Runtime mod debugging and experimentations"
 version: 1.0
-minGameVersion: 155.4
+minGameVersion: 157
 java: true
 
 hidden: true
