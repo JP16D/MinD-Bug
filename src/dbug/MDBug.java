@@ -15,7 +15,7 @@ public class MDBug extends Mod {
 	private static Experimental exp = new Experimental();
 	//
 	public MDBug() {
-		Events.run(EventType.ResizeEvent(), () -> scale());
+		Events.run(EventType.Trigger.update, () -> scale());
 	}
 	
 	@Override

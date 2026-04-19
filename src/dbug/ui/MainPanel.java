@@ -14,9 +14,7 @@ public class MainPanel {
 	private static float scale;
 	
 	public static void init(Table table) {
-		panel = table.add(ScrollPane(new Table(t -> {
-			for (var v : debugger.values()) t.add(v).pad(2f).grow().row();
-		}), Styles.noBarPane));
+		panel = table.add(ScrollPane(new Element(), Styles.noBarPane));
 		//
 		panel.get().setOverscroll(false, true);
 		panel.get().setClamp(true);
@@ -40,6 +38,9 @@ public class MainPanel {
 	public static void update() {
 	    if (panel == null) return;
 	    //
+	    panel.setWidget(new Table(t -> {
+			for (var v : debugger.values()) t.add(v).pad(2f).grow().row();
+		}));
 		panel.size(360f, expand ? scale * 0.25f : 74f).top();
 	}
 }
