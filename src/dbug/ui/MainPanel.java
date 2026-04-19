@@ -49,7 +49,11 @@ public class MainPanel {
 		float x = panel.getScrollX();
 		float y = panel.getScrollY();
 		//
+		var cells = caller.getChildren();
+		//
 		caller.clearChildren();
+		for (var c : cells) caller.add(c);
+		//
 		call(caller, x, y);
 	}
 }
