@@ -13,8 +13,8 @@ public class MainPanel {
 	private static boolean expand;
 	private static float scale;
 	
-	public static void init(Table table) {
-		panel = table.add(ScrollPane(new Table(), Styles.noBarPane));
+	public static void call(Table table) {
+		panel = table.add(new ScrollPane(new Table(), Styles.noBarPane));
 		//
 		panel.get().setOverscroll(false, true);
 		panel.get().setClamp(true);
