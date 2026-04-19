@@ -34,7 +34,7 @@ public class Debugger {
 	    if (!writable.containsKey(name)) writable.put(name, new Modifiable(val.getClass(), val));
         //
         var v = writable.get(name);
-        debugger.put(name, v.call(name, val));
+        //debugger.put(name, v.call(name, val));
 		//
 		if (v.priority) {
 			v.priority = false;
