@@ -21,7 +21,7 @@ public class MDBug extends Mod {
 	@Override
 	public void init() {
 		BLSetup.addTable(table -> {
-			init(table);
+			MainPanel.init(table);
 			exp.loadTest();
 		});
 	}
