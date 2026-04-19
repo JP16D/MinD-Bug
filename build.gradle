@@ -70,14 +70,14 @@ task jarAndroid {
         if(!platformRoot) throw new GradleException("No android.jar found.")
 
         def d8 = isWindows ? "d8.bat" : "d8"
-        def buildToolsDir = new File("$sdkRoot/build-tools/").listFiles()?.sort()?.reverse()?.find{ f -> new File(f, d8).exists()}
+        def buildToolsDir = new File("$sdkRoot/build-tools/").listFiles().sort().reverse().find{ f -> new File(f, d8).exists()}
         
-        //def d8path = buildToolsDir ? new File(buildToolsDir, d8).absolutePath : d8
+        def d8path = buildToolsDir ? new File(buildToolsDir, d8).absolutePath : d8
 
         // Collect dependencies
-        def dependencies = (configurations.compileClasspath.asList() + configurations.runtimeClasspath.asList() + [new File(platformRoot, "android.jar")]).collect{ "--classpath \"$it.path\"" }.join(" ")
+        def dependencies = (configurations.compileClasspath.asList() + configurations.runtimeClasspath.asList() + [new File(platformRoot, "android.jar")]).collect{ "--classpath $it.path" }.join(" ")
         
-        "$d8 $dependencies --min-api 14 --output ${project.archivesBaseName}Android.jar ${project.archivesBaseName}Desktop.jar"
+        "$d8path $dependencies --min-api 14 --output ${project.archivesBaseName}Android.jar ${project.archivesBaseName}Desktop.jar"
             .execute(null, new File("$buildDir/libs")).waitForProcessOutput(System.out, System.err)
     }
 }
