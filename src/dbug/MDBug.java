@@ -15,18 +15,14 @@ public class MDBug extends Mod {
 	private static Experimental exp = new Experimental();
 	//
 	public MDBug() {
-		Events.run(EventType.Trigger.update, () -> {
-			//
-			scale();
-			//
-			exp.loadTest();
-		});
+		Events.run(EventType.ResizeEvent(), () -> scale());
 	}
 	
 	@Override
 	public void init() {
 		BLSetup.addTable(table -> {
 			init(table);
+			exp.loadTest();
 		});
 	}
 }
