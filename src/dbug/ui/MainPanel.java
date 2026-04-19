@@ -14,15 +14,15 @@ public class MainPanel {
 	private static float scale;
 	
 	public static void call(Table table) {
+	    table.button(expand ? Icon.downOpen : Icon.upOpen, () -> {
+			expand = !expand;
+			update();
+		}).padRight(8f).row();
+		//
 		panel = table.add(new ScrollPane(new Table(), Styles.noBarPane));
 		//
 		panel.get().setOverscroll(false, true);
 		panel.get().setClamp(true);
-		//
-		table.button(expand ? Icon.downOpen : Icon.upOpen, () -> {
-			expand = !expand;
-			update();
-		}).padRight(8f).row();
 		//
 		update();
 	}
