@@ -45,10 +45,10 @@ public class DebugField extends Table {
     			}).pad(4f).left();
     			//
     			nt.add(name, Styles.outlineLabel).pad(4f).center();
-			});
+			}).fill();
 			//
 			panel.add(content).pad(4f).right();
-		}).pad(8f, 4f, 4f, 4f).left().row();
+		}).pad(4f).left().row();
 	}
 	
 	public void setContent(Table content) {
