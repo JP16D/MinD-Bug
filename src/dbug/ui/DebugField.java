@@ -6,6 +6,7 @@ import arc.graphics.g2d.*;
 import arc.scene.style.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
+import arc.scene.utils.*;
 import arc.util.*;
 import dbug.tool.*;
 import mindustry.gen.*;
@@ -73,8 +74,8 @@ public class DebugField extends Table {
 	}
 	
 	public static Table writable(Modifiable obj, Runnable exec) {
-	    var field = Elem.newField(obj.value, (String input) -> {
-            obj.value = parse(obj.type, obj.value, input); 
+	    var field = Elem.newField(obj.value.toString(), (String txt) -> {
+            obj.pass(txt);
             exec.run();
         });
         //

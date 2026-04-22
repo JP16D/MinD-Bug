@@ -1,5 +1,6 @@
 package dbug.util;
 
+import arc.struct.*;
 import java.lang.*;
 import java.lang.reflect.*;
 

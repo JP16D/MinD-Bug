@@ -4,7 +4,6 @@ import arc.func.*;
 import arc.graphics.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
-import arc.scene.util.*;
 import arc.struct.*;
 import dbug.ui.*;
 import dbug.util.*;
@@ -94,5 +93,9 @@ public class Modifiable {
 			//
 			return table;
 		}
+	}
+	
+	public void pass(String input) {
+	    value = parse(type, value, input); 
 	}
 }
