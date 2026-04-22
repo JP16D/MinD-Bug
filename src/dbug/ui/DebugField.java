@@ -37,15 +37,15 @@ public class DebugField extends Table {
 		table(Tex.pane, panel -> {
 			//
 			panel.table(Tex.whiteui, nt -> {
-			    nt.setColor(Color.gold);
+			    nt.setColor(Color.slate);
+			    //
     			nt.table(Tex.whiteui, t -> {
-    				t.add(type).pad(4f);
+    				t.add(type).fontScale(0.5f).pad(4f);
     				t.setColor(Color.royal);
-    				//
     			}).pad(4f).left();
     			//
-    			nt.add(name, Styles.outlineLabel).pad(4f).center();
-			}).fill();
+    			nt.add(name, Styles.outlineLabel).fontScale(0.5f).pad(4f).center();
+			}).pad(4f).fill();
 			//
 			panel.add(content).pad(4f).right();
 		}).pad(4f).left().row();
@@ -68,7 +68,7 @@ public class DebugField extends Table {
 				} else if (content instanceof TextureRegion img) {
 					p.image(img).size(40f);
 					//
-				} else p.add("" + content).pad(2f, 4f, 2f, 4f);
+				} else p.add("" + content).fontScale(0.5f).pad(2f, 4f, 2f, 4f);
 			}).pad(2f);
 		});
 	}
