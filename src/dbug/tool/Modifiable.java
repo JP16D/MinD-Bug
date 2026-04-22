@@ -4,6 +4,7 @@ import arc.func.*;
 import arc.graphics.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
+import arc.scene.util.*;
 import arc.struct.*;
 import dbug.ui.*;
 import dbug.util.*;
@@ -19,7 +20,7 @@ import static dbug.util.ParseUtil.*;
 public class Modifiable {
 	protected boolean priority;
 	//
-	public OrderedMap<String, Object> map = new OrderedMap<>();
+	public OrderedMap<String, Modifiable> map = new OrderedMap<>();
 	//
 	public Object value;
 	public Class<?> type;
@@ -40,7 +41,7 @@ public class Modifiable {
 		//
 		if (map.size > 0) {
 			return mdisplay(Color.maroon, type, name, new Table(t -> {
-				for (var k : map.keys()) try {
+				/*for (var k : map.keys()) try {
 					//
 					var input = new Table();
 					var field = type.getField(k);
@@ -48,10 +49,12 @@ public class Modifiable {
 					//
 					boolean empty = stored == null || stored == field.get(value);
 					var v = empty ? field.get(value) : stored;
+					var mod = new Modifiable(field.getType(), v);
+					map.put(k, mod);
 					//
 					input.field(v.toString(), Styles.defaultField, (String txt) -> {
 						//
-						map.put(k, parse(wrap(field.getType()), v, txt));
+						write(txt);
 						//
 					}).center().pad(4f);
 					//
@@ -79,14 +82,12 @@ public class Modifiable {
 					for (var k : map.keys()) map.put(k, null);
 					//
 					update();
-				}).right().pad(2f).get();
+				}).right().pad(2f).get();*/
 			}));
 		} else {
 			var table = new DebugField(name, type);
 			//
-			table.setContent(writable(value,  (String txt) -> {
-    			this.value = parse(type, value, txt);
-    			//
+			table.setContent(writable(this, () -> {
     			priority = true;
     			table.updateContent();
     		}));

@@ -1,7 +1,5 @@
 package dbug.util;
 
-import arc.func.*;
-import arc.struct.*;
 import java.lang.*;
 import java.lang.reflect.*;
 
@@ -38,21 +36,19 @@ public class ParseUtil {
 	}
 	
 	//some sort of parsing shenanigans
-	public static Object parse(Class<?> type, Object def, String val) {
+	public static Object parse(Class<?> type, Object fallback, String value) {
+		//cancel parse when string type
+		if (type == String.class) return value;
 		//
-		//don't parse if string type
-		if (type == String.class) {
-			return val;
+		try {
+			var wraptype= wrap(type);
+			var parser = wraptype.getMethod("valueOf", String.class);
 			//
-		} else try {
-			var wrapped = wrap(type);
-			var method = wrapped.getMethod("valueOf", String.class);
-			//
-			return method.invoke(wrapped, val);
+			return parser.invoke(wraptype, value);
 			//
 		} catch (Exception e) {
 			//warn();
-			return def;
+			return fallback;
 		}
 	}
 }

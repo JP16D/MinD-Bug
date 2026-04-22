@@ -33,17 +33,20 @@ public class DebugField extends Table {
 		clearChildren();
 		left();
 		//Nametag
-		table(Tex.button, nt -> {
+		table(Tex.pane, panel -> {
 			//
-			nt.table(Tex.whiteui, t -> {
-				t.add(type).pad(4f);
-				t.setColor(Color.royal);
-				//
-			}).pad(4f).left();
+			panel.table(Tex.whiteui, nt -> {
+			    nt.setColor(Color.gold);
+    			nt.table(Tex.whiteui, t -> {
+    				t.add(type).pad(4f);
+    				t.setColor(Color.royal);
+    				//
+    			}).pad(4f).left();
+    			//
+    			nt.add(name, Styles.outlineLabel).pad(4f).center();
+			});
 			//
-			nt.add(name, Styles.outlineLabel).pad(4f).center();
-			//
-			nt.add(content).pad(4f).right();
+			panel.add(content).pad(4f).right();
 		}).pad(8f, 4f, 4f, 4f).left().row();
 	}
 	
@@ -69,11 +72,17 @@ public class DebugField extends Table {
 		});
 	}
 	
-	public static Table writable(Object content, Cons<String> modifier) {
+	public static Table writable(Modifiable obj, Runnable exec) {
+	    var field = Elem.newField(obj.value, (String input) -> {
+            obj.value = parse(obj.type, obj.value, input); 
+            exec.run();
+        });
+        //
+        field.setStyle(Styles.defaultField);
+        //
 		return new Table(t -> {
 			t.image(Icon.editSmall).pad(4f);
-			//
-			t.field(content.toString(), Styles.defaultField, modifier).pad(4f).get().setAlignment(Align.center);
+			t.add(field).pad(4f).get().setAlignment(Align.center);
 		});
 	}
 	
@@ -114,6 +123,4 @@ public class DebugField extends Table {
 			panel.add(val).pad(4f);
 		});
 	}
-	
-	
 }
