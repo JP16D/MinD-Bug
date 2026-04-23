@@ -56,11 +56,13 @@ public class Modifiable {
         				    entry.set(value);
         				    //
         				    hint.setText(value.toString());
-        				    hint.remove();
+        				    hint.parent.remove();
         				    //
         				    if (entry.priority) {
-        				        field.content.add(viewOnly(hint));
-        				        field.content.button(Icon.cancel, () -> entry.get()).pad(4f);
+        				        field.content.table(h -> {
+        				            h.add(hint).pad(4f);
+        				            h.button(Icon.cancel, () -> entry.get()).pad(4f);
+        				        }).center().pad(4f);
         				    }
     				    } catch (Exception e) {}
     				    //
