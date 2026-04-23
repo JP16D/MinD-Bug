@@ -49,12 +49,11 @@ public class Modifiable {
 				    //
 				    var field = entry.show();
 				    //
-				    t.addListener(a -> {
+				    entry.set(value);
+    				field.addListener(l -> {
     				    field.marker.set(entry.priority ? Color.green : Color.darkGray);
-    				    entry.set(value);
-    				    //
-    				    return a.capture;
-				    });
+    				    return l.capture;
+    				});
 				    //
 				    field.content.add(value.toString()).center().pad(4f).visible(() -> entry.priority);
 					//
@@ -78,9 +77,7 @@ public class Modifiable {
     				//
     				//cancel changes
     				actions.button(Icon.cancel, () -> {
-    					/*for (var k : map.keys()) map.put(k, null);
-    					//
-    					update();*/
+    					for (var v : map.values()) v.get();
     				}).right().pad(2f).get();
 				});
 			});
@@ -90,19 +87,12 @@ public class Modifiable {
 			table.setContent(content);
 			//
 			return table;
-		} else {
-		    var table = new DebugField(name, type);
-    		table.setContent(writable(this, () -> table.updateContent()));
-    		//
-    		return table;
-		}
+		} else return new DebugField(name, type, writable(this));
 	}
 	
-	public void pass(String input) {
-	    var old = value;
-	    value = parse(type, value, input);
-	    //
-	    priority = old != value;
+	public void push(Object input) {
+	    if (!(priority = value != input)) return;
+	    value = input;
 	}
 	
 	public void set(Object value) {
@@ -116,5 +106,9 @@ public class Modifiable {
 	
 	public Class<?> type() {
 	    return type;
+	}
+	
+	public boolean priority() {
+	    return priority;
 	}
 }

@@ -12,6 +12,8 @@ import dbug.tool.*;
 import mindustry.gen.*;
 import mindustry.ui.*;
 
+import static dbug.util.ParseUtil.*;
+
 public class DebugField extends Table {
 	public Color marker = new Color(Color.slate);
 	//
@@ -77,13 +79,16 @@ public class DebugField extends Table {
 		});
 	}
 	
-	public static Table writable(Modifiable obj, Runnable exec) {
-	    var field = Elem.newField(obj.get().toString(), (String txt) -> {
-            obj.pass(txt);
-            exec.run();
+	public static Table writable(Modifiable entry) {
+	    var field = Elem.newField(entry.get().toString(), (String txt) -> {
+	        entry.push(parse(entry.type(), entry.get(), txt));
+	    });
+	    //
+	    field.setStyle(Styles.defaultField);
+        field.addListener(l -> {
+            if (!entry.priority()) field.setText(entry.get().toString());
+            return l.capture;
         });
-        //
-        field.setStyle(Styles.defaultField);
         //
 		return new Table(t -> {
 			t.image(Icon.editSmall).pad(4f);
