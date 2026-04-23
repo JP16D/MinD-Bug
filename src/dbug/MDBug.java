@@ -24,7 +24,5 @@ public class MDBug extends Mod {
 			call(table);
 			exp.loadTest();
 		});
-		//
-		BLSetup.addTable(table -> {});
 	}
 }

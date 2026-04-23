@@ -48,8 +48,11 @@ public class Modifiable {
 				    if (entry.show() instanceof DebugField field) {
     					field.marker.set(entry.priority ? Color.green : Color.darkGray);
     					//
-        				if (entry.priority) try {
-                            field.content.add(type.getField(k).get(value).toString()).center().pad(4f);
+        				try {
+        				    var v = type.getField(k).get(value);
+        				    entry.set(v);
+        				    //
+        				    if (entry.priority) field.content.add(v.toString()).center().pad(4f);
         				} catch (Exception e) {}
     					//
     					table.add(field).grow().row();
@@ -90,7 +93,6 @@ public class Modifiable {
 			}));
 		} else {
 		    var table = new DebugField(name, type);
-		    table.marker.set(Color.slate);
     		table.setContent(writable(this, () -> table.updateContent()));
     		//
     		return table;

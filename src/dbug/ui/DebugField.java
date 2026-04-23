@@ -15,7 +15,7 @@ import mindustry.ui.*;
 public class DebugField extends Table {
 	public Table content;
 	//
-	public Color marker = new Color();
+	public Color marker = new Color(Color.slate);
 	public final String type;
 	public final String name;
 	
@@ -43,10 +43,10 @@ public class DebugField extends Table {
     			nt.table(Tex.whiteui, t -> {
     				t.add(type).fontScale(0.75f).pad(4f);
     				t.setColor(Color.royal);
-    			}).pad(8f).left();
+    			}).pad(4f).left();
     			//
-    			nt.add(name, Styles.outlineLabel).fontScale(0.75f).pad(8f).center();
-			}).pad(4f).fill();
+    			nt.add(name, Styles.outlineLabel).fontScale(0.75f).pad(4f).center();
+			}).margin(4f).pad(4f).fill();
 			//
 			if (content != null) panel.add(content).pad(4f).right();
 		}).pad(4f).left().row();
