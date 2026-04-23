@@ -23,7 +23,6 @@ public class MainPanel {
 		//
 		panel.get().setOverscroll(false, true);
 		panel.get().setClamp(true);
-		panel.row();
 		//
 		update();
 	}

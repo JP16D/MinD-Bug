@@ -21,32 +21,39 @@ public class Modifiable {
 	//
 	public OrderedMap<String, Modifiable> map = new OrderedMap<>();
 	//
+	private String name;
 	private Object value;
 	private Class<?> type;
 	
-	public Modifiable(Class<?> type, Object value) {
+	public Modifiable(String name, Class<?> type, Object value) {
+	    this.name = name;
 		this.type = type;
 		this.value = value;
 		//
 		if (isWrapper(type) || type.isPrimitive()) return;
 		//
 		for (var field : type.getFields()) try {
-			if (isWrapper(wrap(field.getType()))) map.put(field.getName(), new Modifiable(field.getType(), field.get(value)));
+			if (isWrapper(wrap(field.getType()))) map.put(field.getName(), new Modifiable(field.getName(), field.getType(), field.get(value)));
 		} catch (Exception e) {}
 	}
 	
 	//table display
-	public Table show(String name) {
+	public Table show() {
 		//
 		if (map.size > 0) {
 			return mdisplay(Color.maroon, type, name, new Table(t -> {
 				for (var k : map.keys()) {
 				    var entry = map.get(k);
-					var field = entry.show(k);
-					//
-					if (!entry.priority) try {
-					    field.add(type.getField(k).get(value).toString()).center().pad(4f);
-					} catch (Exception e) {}
+				    //
+				    if (entry.show() instanceof DebugField field) {
+    					field.marker = entry.priority ? Color.green : Color.darkGray;
+    					//
+        				if (entry.priority) try {
+                            field.content.add(type.getField(k).get(value).toString()).center().pad(4f);
+        				} catch (Exception e) {}
+    					//
+    					t.add(field).grow().row();
+				    }
 				}
 					/*/
 					input.field(v.toString(), Styles.defaultField, (String txt) -> {
@@ -82,17 +89,17 @@ public class Modifiable {
 				}).right().pad(2f).get();*/
 			}));
 		} else {
-			var table = new DebugField(name, type);
-			//
-			table.setContent(writable(this, () -> table.updateContent()));
-			//
-			return table;
+		    var table = new DebugField(name, type);
+		    table.marker = Color.slate;
+    		table.setContent(writable(this, () -> table.updateContent()));
+    		//
+    		return table;
 		}
 	}
 	
 	public void pass(String input) {
 	    var old = value;
-	    set(parse(type, value, input));
+	    value = parse(type, value, input);
 	    //
 	    priority = old != value;
 	}

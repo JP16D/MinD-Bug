@@ -13,8 +13,9 @@ import mindustry.gen.*;
 import mindustry.ui.*;
 
 public class DebugField extends Table {
-	protected Table content;
+	public Table content;
 	//
+	public Color marker;
 	public final String type;
 	public final String name;
 	
@@ -37,14 +38,14 @@ public class DebugField extends Table {
 		table(Tex.pane, panel -> {
 			//
 			panel.table(Tex.whiteui, nt -> {
-			    nt.setColor(Color.slate);
+			    nt.setColor(marker);
 			    //
     			nt.table(Tex.whiteui, t -> {
     				t.add(type).fontScale(0.75f).pad(4f);
     				t.setColor(Color.royal);
-    			}).margin(4f).left();
+    			}).pad(8f).left();
     			//
-    			nt.add(name, Styles.outlineLabel).fontScale(0.75f).margin(4f).center();
+    			nt.add(name, Styles.outlineLabel).fontScale(0.75f).pad(8f).center();
 			}).pad(4f).fill();
 			//
 			panel.add(content).pad(4f).right();
@@ -87,11 +88,11 @@ public class DebugField extends Table {
 		});
 	}
 	
-	public static Table display(Color color, Class<?> type, String name, Table val) {
+	public static Table display(Color marker, Class<?> type, String name, Table val) {
 		return new Table(Tex.pane, panel -> {
 			//
 			panel.table(Tex.whiteui, view -> {
-				view.setColor(color);
+				view.setColor(marker);
 				view.table(Tex.whiteui, tag -> {
 					//
 					tag.add(type.getSimpleName(), Styles.outlineLabel).pad(4f);
@@ -106,11 +107,11 @@ public class DebugField extends Table {
 		});
 	}
 	
-	public static Table mdisplay(Color color, Class<?> type, String name, Table val) {
+	public static Table mdisplay(Color marker, Class<?> type, String name, Table val) {
 		return new Table(Tex.pane, panel -> {
 			//
 			panel.table(Tex.whiteui, view -> {
-				view.setColor(color);
+				view.setColor(marker);
 				view.table(Tex.whiteui, tag -> {
 					//
 					tag.add(type.getSimpleName(), Styles.outlineLabel).pad(4f);
