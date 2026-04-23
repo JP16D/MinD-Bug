@@ -41,18 +41,18 @@ public class Modifiable {
 	public Table show() {
 		//
 		if (map.size > 0) {
-			return mdisplay(Color.maroon, type, name, new Table(t -> {
+			return mdisplay(Color.maroon, type, name, new Table(table -> {
 				for (var k : map.keys()) {
 				    var entry = map.get(k);
 				    //
 				    if (entry.show() instanceof DebugField field) {
-    					field.marker = entry.priority ? Color.green : Color.darkGray;
+    					field.marker.set(entry.priority ? Color.green : Color.darkGray);
     					//
         				if (entry.priority) try {
                             field.content.add(type.getField(k).get(value).toString()).center().pad(4f);
         				} catch (Exception e) {}
     					//
-    					t.add(field).grow().row();
+    					table.add(field).grow().row();
 				    }
 				}
 					/*/
@@ -90,7 +90,7 @@ public class Modifiable {
 			}));
 		} else {
 		    var table = new DebugField(name, type);
-		    table.marker = Color.slate;
+		    table.marker.set(Color.slate);
     		table.setContent(writable(this, () -> table.updateContent()));
     		//
     		return table;
