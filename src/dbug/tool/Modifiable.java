@@ -38,41 +38,31 @@ public class Modifiable {
 	}
 	
 	//table display
-	public Table show() {
+	public DebugField show() {
 		//
 		if (map.size > 0) {
-			return mdisplay(Color.maroon, type, name, new Table(table -> {
+			var table = new DebugField(name, type);
+			var content = new Table(t -> {
+			    //update fields
 				for (var k : map.keys()) {
 				    var entry = map.get(k);
+				    var field = entry.show();
 				    //
-				    if (entry.show() instanceof DebugField field) {
-    					field.marker.set(entry.priority ? Color.green : Color.darkGray);
-    					//
-        				try {
-        				    var v = type.getField(k).get(value);
-        				    entry.set(v);
-        				    //
-        				    if (entry.priority) field.content.add(v.toString()).center().pad(4f);
-        				} catch (Exception e) {}
-    					//
-    					table.add(field).grow().row();
-				    }
-				}
-					/*/
-					input.field(v.toString(), Styles.defaultField, (String txt) -> {
-						//
-						write(txt);
-						//
-					}).center().pad(4f);
+					field.marker.set(entry.priority ? Color.green : Color.darkGray);
 					//
-					if (!empty) input.add(field.get(value).toString()).center().pad(4f);
-					
-					t.add(display(empty ? Color.darkGray : Color.green, field.getType(), field.getName(), input)).grow().row();
-				} catch (Exception e) {}
-				//
+    				try {
+    				    var v = type.getField(k).get(value);
+    				    entry.set(v);
+    				    //
+    				    if (entry.priority) field.content.add(v.toString()).center().pad(4f);
+    				} catch (Exception e) {}
+					//
+					t.add(field).grow().row();
+			    }
+			    //
 				//apply changes 
 				t.button("Set", () -> {
-					for (var k : map.keys()) try {
+					/*for (var k : map.keys()) try {
 						var v = map.get(k);
 						//
 						type.getField(k).set(this.value, v);
@@ -81,16 +71,19 @@ public class Modifiable {
 						priority = true;
 					} catch (Exception e) {}
 					//
-					update();
+					update();*/
 				}).right().pad(2f);
 				//
 				//revert changes
 				t.button(Icon.cancel, () -> {
-					for (var k : map.keys()) map.put(k, null);
+					/*for (var k : map.keys()) map.put(k, null);
 					//
-					update();
-				}).right().pad(2f).get();*/
-			}));
+					update();*/
+				}).right().pad(2f).get();
+			});
+			//
+			table.setContent(content);
+			return table;
 		} else {
 		    var table = new DebugField(name, type);
     		table.setContent(writable(this, () -> table.updateContent()));

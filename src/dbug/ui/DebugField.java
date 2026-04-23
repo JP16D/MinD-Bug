@@ -13,9 +13,11 @@ import mindustry.gen.*;
 import mindustry.ui.*;
 
 public class DebugField extends Table {
-	public Table content;
-	//
 	public Color marker = new Color(Color.slate);
+	//
+	public Table content;
+	public boolean group;
+	//
 	public final String type;
 	public final String name;
 	
@@ -46,8 +48,9 @@ public class DebugField extends Table {
     			}).pad(4f).left();
     			//
     			nt.add(name, Styles.outlineLabel).fontScale(0.75f).pad(4f).center();
-			}).margin(4f).pad(4f).fill();
+			}).pad(4f).fill();
 			//
+			if (group) panel.row();
 			if (content != null) panel.add(content).pad(4f).right();
 		}).pad(4f).left().row();
 	}
