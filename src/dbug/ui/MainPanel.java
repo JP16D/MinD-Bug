@@ -23,6 +23,7 @@ public class MainPanel {
 		//
 		panel.get().setOverscroll(false, true);
 		panel.get().setClamp(true);
+		panel.row();
 		//
 		update();
 	}
@@ -39,8 +40,8 @@ public class MainPanel {
 	    if (panel == null) return;
 	    //
 	    panel.get().setWidget(new Table(t -> {
-			for (var v : debugger.values()) t.add(v).pad(2f).grow().row();
+			for (var v : debugger.values()) t.add(v).grow().row();
 		}));
-		panel.size(360f, expand ? scale * 0.25f : 74f).top();
+		panel.size(300f, expand ? scale * 0.25f : 75f).top();
 	}
 }

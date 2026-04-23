@@ -31,17 +31,14 @@ public class Debugger {
 	
 	//add debugger (writable)
 	public static Object dw(String name, Object val) {
-	    if (!writable.containsKey(name)) writable.put(name, new Modifiable(val.getClass(), val));
+	    if (!writable.containsKey(name)) {
+	        debugger.put(name, writable.put(name, new Modifiable(val.getClass(), val)).show(name));
+	    }
         //
         var v = writable.get(name);
-        debugger.put(name, v.call(name, val));
 		//
-		if (v.priority) {
-			v.priority = false;
-			//
-			return v.value;
-			//
-		} else return val;
+		v.set(val);
+		return v.get();
 	}
 	
 	//add a builder function (W.I.P.)

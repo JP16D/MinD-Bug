@@ -40,11 +40,11 @@ public class DebugField extends Table {
 			    nt.setColor(Color.slate);
 			    //
     			nt.table(Tex.whiteui, t -> {
-    				t.add(type).fontScale(0.5f).pad(4f);
+    				t.add(type).fontScale(0.75f).pad(4f);
     				t.setColor(Color.royal);
-    			}).pad(4f).left();
+    			}).margin(4f).left();
     			//
-    			nt.add(name, Styles.outlineLabel).fontScale(0.5f).pad(4f).center();
+    			nt.add(name, Styles.outlineLabel).fontScale(0.75f).margin(4f).center();
 			}).pad(4f).fill();
 			//
 			panel.add(content).pad(4f).right();
@@ -63,18 +63,18 @@ public class DebugField extends Table {
 			//
 			t.table(Tex.pane, p -> {
 				if (content instanceof Drawable img) {
-					p.image(img).size(40f);
+					p.image(img).size(20f);
 					//
 				} else if (content instanceof TextureRegion img) {
-					p.image(img).size(40f);
+					p.image(img).size(20f);
 					//
-				} else p.add("" + content).fontScale(0.5f).pad(2f, 4f, 2f, 4f);
+				} else p.add("" + content).pad(2f, 4f, 2f, 4f);
 			}).pad(2f);
 		});
 	}
 	
 	public static Table writable(Modifiable obj, Runnable exec) {
-	    var field = Elem.newField(obj.value.toString(), (String txt) -> {
+	    var field = Elem.newField(obj.get().toString(), (String txt) -> {
             obj.pass(txt);
             exec.run();
         });

@@ -21,8 +21,8 @@ public class Modifiable {
 	//
 	public OrderedMap<String, Modifiable> map = new OrderedMap<>();
 	//
-	public Object value;
-	public Class<?> type;
+	private Object value;
+	private Class<?> type;
 	
 	public Modifiable(Class<?> type, Object value) {
 		this.type = type;
@@ -30,27 +30,25 @@ public class Modifiable {
 		//
 		if (isWrapper(type) || type.isPrimitive()) return;
 		//
-		for (var field : type.getFields()) {
-			if (isWrapper(wrap(field.getType()))) map.put(field.getName(), null);
-		}
+		for (var field : type.getFields()) try {
+			if (isWrapper(wrap(field.getType()))) map.put(field.getName(), new Modifiable(field.getType(), field.get(value)));
+		} catch (Exception e) {}
 	}
 	
 	//table display
-	public Table call(String name, Object value) {
+	public Table show(String name) {
 		//
 		if (map.size > 0) {
 			return mdisplay(Color.maroon, type, name, new Table(t -> {
-				/*for (var k : map.keys()) try {
+				for (var k : map.keys()) {
+				    var entry = map.get(k);
+					var field = entry.show(k);
 					//
-					var input = new Table();
-					var field = type.getField(k);
-					var stored = map.get(k);
-					//
-					boolean empty = stored == null || stored == field.get(value);
-					var v = empty ? field.get(value) : stored;
-					var mod = new Modifiable(field.getType(), v);
-					map.put(k, mod);
-					//
+					if (!entry.priority) try {
+					    field.add(type.getField(k).get(value).toString()).center().pad(4f);
+					} catch (Exception e) {}
+				}
+					/*/
 					input.field(v.toString(), Styles.defaultField, (String txt) -> {
 						//
 						write(txt);
@@ -86,16 +84,29 @@ public class Modifiable {
 		} else {
 			var table = new DebugField(name, type);
 			//
-			table.setContent(writable(this, () -> {
-    			priority = true;
-    			table.updateContent();
-    		}));
+			table.setContent(writable(this, () -> table.updateContent()));
 			//
 			return table;
 		}
 	}
 	
 	public void pass(String input) {
-	    value = parse(type, value, input); 
+	    var old = value;
+	    set(parse(type, value, input));
+	    //
+	    priority = old != value;
+	}
+	
+	public void set(Object value) {
+	    if (!priority) this.value = value;
+	}
+	
+	public Object get() {
+	    if (priority) priority = false;
+	    return value;
+	}
+	
+	public Class<?> type() {
+	    return type;
 	}
 }
