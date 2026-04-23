@@ -49,7 +49,6 @@ public class Modifiable {
 				    //
 				    var hint = new Label("");
     				field.addListener(l -> {
-    				    field.marker.set(entry.priority ? Color.green : Color.darkGray);
     				    //
     				    try {
         				    var value = type.getField(k).get(this.value);
@@ -57,8 +56,12 @@ public class Modifiable {
         				    entry.set(value);
         				    //
         				    hint.setText(value.toString());
-        				    if (entry.priority) field.content.add(hint).center().pad(4f);
-        				    else hint.remove();
+        				    hint.remove();
+        				    //
+        				    if (entry.priority) {
+        				        field.content.add(viewOnly(hint));
+        				        field.content.button(Icon.cancel, () -> entry.get()).pad(4f);
+        				    }
     				    } catch (Exception e) {}
     				    //
     				    return l.capture;
@@ -85,7 +88,6 @@ public class Modifiable {
     				//cancel changes
     				actions.button(Icon.cancel, () -> {
     					for (var v : map.values()) v.get();
-    					
     				}).pad(2f);
 				}).right();
 			});

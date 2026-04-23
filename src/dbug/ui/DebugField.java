@@ -38,7 +38,7 @@ public class DebugField extends Table {
 	public void updateContent() {
 		clearChildren();
 		left();
-		//Nametag
+		//
 		table(Tex.pane, panel -> {
 			//
 			panel.table(Tex.whiteui, nt -> {
