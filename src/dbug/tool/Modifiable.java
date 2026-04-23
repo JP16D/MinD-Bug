@@ -79,9 +79,9 @@ public class Modifiable {
 				}).right().pad(2f).get();
 			});
 			//
-			table.setContent(content);
-			table.marker.set(Color.maroon);
 			table.group = true;
+			table.marker.set(Color.maroon);
+			table.setContent(content);
 			//
 			return table;
 		} else {
