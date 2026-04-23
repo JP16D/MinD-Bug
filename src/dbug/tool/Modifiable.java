@@ -44,21 +44,18 @@ public class Modifiable {
 			var table = new DebugField(name, type);
 			var content = new Table(t -> {
 			    //update fields
-				for (var k : map.keys()) {
+				for (var k : map.keys()) try {
 				    var entry = map.get(k);
-				    var field = entry.show();
+				    var value = type.getField(k).get(this.value);
 				    //
-					field.marker.set(entry.priority ? Color.green : Color.darkGray);
-					//
-    				try {
-    				    var v = type.getField(k).get(value);
-    				    entry.set(v);
-    				    //
-    				    if (entry.priority) field.content.add(v.toString()).center().pad(4f);
-    				} catch (Exception e) {}
+				    var field = entry.show();
+				    entry.set(value);
+				    //
+				    field.marker.set(entry.priority ? Color.green : Color.darkGray);
+				    if (entry.priority) field.content.add(value.toString()).center().pad(4f);
 					//
 					t.add(field).grow().row();
-			    }
+			    } catch (Exception e) {}
 			    //
 				//apply changes 
 				t.button("Set", () -> {
@@ -83,6 +80,9 @@ public class Modifiable {
 			});
 			//
 			table.setContent(content);
+			table.marker.set(Color.maroon);
+			table.group = true;
+			//
 			return table;
 		} else {
 		    var table = new DebugField(name, type);
