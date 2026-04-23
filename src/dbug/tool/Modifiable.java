@@ -47,15 +47,18 @@ public class Modifiable {
 				    var entry = map.get(k);
 				    var field = entry.show();
 				    //
-				    var hint = field.content.add("").center().pad(4f).visible(() -> entry.priority);
+				    var hint = new Label("");
     				field.addListener(l -> {
+    				    field.marker.set(entry.priority ? Color.green : Color.darkGray);
+    				    //
     				    try {
         				    var value = type.getField(k).get(this.value);
         				    //
         				    entry.set(value);
-        				    hint.get().setText(value.toString());
         				    //
-        				    field.marker.set(entry.priority ? Color.green : Color.darkGray);
+        				    hint.setText(value.toString());
+        				    if (entry.priority) field.content.add(hint).center().pad(4f);
+        				    else hint.remove();
     				    } catch (Exception e) {}
     				    //
     				    return l.capture;
@@ -77,13 +80,14 @@ public class Modifiable {
     					} catch (Exception e) {}
     					//
     					update();*/
-    				}).right().pad(2f);
+    				}).pad(2f);
     				//
     				//cancel changes
     				actions.button(Icon.cancel, () -> {
     					for (var v : map.values()) v.get();
-    				}).right().pad(2f).get();
-				});
+    					
+    				}).pad(2f);
+				}).right();
 			});
 			//
 			table.group = true;
