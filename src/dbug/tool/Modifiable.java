@@ -1,14 +1,13 @@
 package dbug.tool;
 
-import arc.func.*;
 import arc.graphics.*;
+import arc.scene.event.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
 import dbug.ui.*;
 import dbug.util.*;
 import mindustry.gen.*;
-import mindustry.ui.*;
 import java.lang.*;
 import java.lang.reflect.*;
 
@@ -43,40 +42,46 @@ public class Modifiable {
 		if (map.size > 0) {
 			var table = new DebugField(name, type);
 			var content = new Table(t -> {
-			    //update fields
-				for (var k : map.keys()) try {
-				    var entry = map.get(k);
-				    var value = type.getField(k).get(this.value);
-				    //
-				    var field = entry.show();
-				    entry.set(value);
-				    //
-				    field.marker.set(entry.priority ? Color.green : Color.darkGray);
-				    if (entry.priority) field.content.add(value.toString()).center().pad(4f);
-					//
-					t.add(field).grow().row();
-			    } catch (Exception e) {}
+			    t.addListener(a -> {
+    			    //update fields
+    				for (var k : map.keys()) try {
+    				    var entry = map.get(k);
+    				    var value = type.getField(k).get(this.value);
+    				    //
+    				    var field = entry.show();
+    				    entry.set(value);
+    				    //
+    				    field.marker.set(entry.priority ? Color.green : Color.darkGray);
+    				    if (entry.priority) field.content.add(value.toString()).center().pad(4f);
+    					//
+    					t.add(field).grow().row();
+			        } catch (Exception e) {}
+			        //
+			        return a.capture;
+			    });
 			    //
-				//apply changes 
-				t.button("Set", () -> {
-					/*for (var k : map.keys()) try {
-						var v = map.get(k);
-						//
-						type.getField(k).set(this.value, v);
-						map.put(k, null);
-						//
-						priority = true;
-					} catch (Exception e) {}
-					//
-					update();*/
-				}).right().pad(2f);
-				//
-				//revert changes
-				t.button(Icon.cancel, () -> {
-					/*for (var k : map.keys()) map.put(k, null);
-					//
-					update();*/
-				}).right().pad(2f).get();
+				t.table(actions -> {
+				    //apply changes
+    				actions.button("Set", () -> {
+    					/*for (var k : map.keys()) try {
+    						var v = map.get(k);
+    						//
+    						type.getField(k).set(this.value, v);
+    						map.put(k, null);
+    						//
+    						priority = true;
+    					} catch (Exception e) {}
+    					//
+    					update();*/
+    				}).right().pad(2f);
+    				//
+    				//cancel changes
+    				actions.button(Icon.cancel, () -> {
+    					/*for (var k : map.keys()) map.put(k, null);
+    					//
+    					update();*/
+    				}).right().pad(2f).get();
+				});
 			});
 			//
 			table.group = true;

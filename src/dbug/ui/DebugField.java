@@ -67,10 +67,10 @@ public class DebugField extends Table {
 			//
 			t.table(Tex.pane, p -> {
 				if (content instanceof Drawable img) {
-					p.image(img).size(20f);
+					p.image(img).size(20f).scaling(Scaling.bounded);
 					//
 				} else if (content instanceof TextureRegion img) {
-					p.image(img).size(20f);
+					p.image(img).size(20f).scaling(Scaling.bounded);
 					//
 				} else p.add("" + content).pad(2f, 4f, 2f, 4f);
 			}).pad(2f);
