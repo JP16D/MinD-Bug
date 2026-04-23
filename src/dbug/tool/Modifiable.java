@@ -43,22 +43,26 @@ public class Modifiable {
 			var table = new DebugField(name, type);
 			var content = new Table(t -> {
 			    //update fields
-				for (var k : map.keys()) try {
+				for (var k : map.keys()) {
 				    var entry = map.get(k);
-				    var value = type.getField(k).get(this.value);
-				    //
 				    var field = entry.show();
 				    //
-				    entry.set(value);
+				    var hint = field.content.add("").center().pad(4f).visible(() -> entry.priority);
     				field.addListener(l -> {
-    				    field.marker.set(entry.priority ? Color.green : Color.darkGray);
+    				    try {
+        				    var value = type.getField(k).get(this.value);
+        				    //
+        				    entry.set(value);
+        				    hint.get().setText(value.toString());
+        				    //
+        				    field.marker.set(entry.priority ? Color.green : Color.darkGray);
+    				    } catch (Exception e) {}
+    				    //
     				    return l.capture;
     				});
-				    //
-				    field.content.add(value.toString()).center().pad(4f).visible(() -> entry.priority);
 					//
 					t.add(field).grow().row();
-		        } catch (Exception e) {}
+		        }
 			    //
 				t.table(actions -> {
 				    //apply changes
