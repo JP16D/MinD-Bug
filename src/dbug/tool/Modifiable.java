@@ -48,6 +48,7 @@ public class Modifiable {
 				    var field = entry.show();
 				    //
 				    var hint = new Label("");
+				    field.marker.set(Color.darkGray);
     				field.addListener(l -> {
     				    //
     				    try {
@@ -56,18 +57,14 @@ public class Modifiable {
         				    entry.set(value);
         				    //
         				    hint.setText(value.toString());
-        				    hint.parent.remove();
+        				    hint.remove();
         				    //
-        				    if (entry.priority) {
-        				        field.content.table(h -> {
-        				            h.add(hint).pad(4f);
-        				            h.button(Icon.cancel, () -> entry.get()).pad(4f);
-        				        }).center().pad(4f);
-        				    }
+        				    if (entry.priority) field.content.add(hint).pad(4f);
     				    } catch (Exception e) {}
     				    //
     				    return l.capture;
     				});
+    				field.updateContent();
 					//
 					t.add(field).grow().row();
 		        }
