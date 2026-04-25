@@ -3,6 +3,7 @@ package dbug.ui;
 import arc.func.*;
 import arc.graphics.*;
 import arc.graphics.g2d.*;
+import arc.scene.event.*;
 import arc.scene.style.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
@@ -15,8 +16,8 @@ import mindustry.ui.*;
 import static dbug.util.ParseUtil.*;
 
 public class DebugField extends Table {
-	public Color marker = new Color(Color.slate);
-	//
+    public Color marker = new Color(Color.slate);
+    //
 	public Table content;
 	public boolean group;
 	//
@@ -91,46 +92,12 @@ public class DebugField extends Table {
         });
         //
 		return new Table(t -> {
+		    field.setValidator(txt -> {
+		        t.parent.fire(new ChangeListener.ChangeEvent());
+		        return true;
+		    });
 			t.image(Icon.editSmall).pad(4f);
 			t.add(field).pad(4f).get().setAlignment(Align.center);
-		});
-	}
-	
-	public static Table display(Color marker, Class<?> type, String name, Table val) {
-		return new Table(Tex.pane, panel -> {
-			//
-			panel.table(Tex.whiteui, view -> {
-				view.setColor(marker);
-				view.table(Tex.whiteui, tag -> {
-					//
-					tag.add(type.getSimpleName(), Styles.outlineLabel).pad(4f);
-					tag.setColor(Color.royal);
-					//
-				}).pad(4f).left();
-				//
-				view.add(name, Styles.outlineLabel).pad(4f).center();
-			}).grow();
-			//
-			panel.add(val).padLeft(8f).size(160f, 48f);
-		});
-	}
-	
-	public static Table mdisplay(Color marker, Class<?> type, String name, Table val) {
-		return new Table(Tex.pane, panel -> {
-			//
-			panel.table(Tex.whiteui, view -> {
-				view.setColor(marker);
-				view.table(Tex.whiteui, tag -> {
-					//
-					tag.add(type.getSimpleName(), Styles.outlineLabel).pad(4f);
-					tag.setColor(Color.royal);
-					//
-				}).pad(4f).height(32f);
-				//
-				view.add(name, Styles.outlineLabel).pad(4f).center();
-			}).grow().row();
-			//
-			panel.add(val).pad(4f);
 		});
 	}
 }
