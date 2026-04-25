@@ -47,7 +47,7 @@ public class Modifiable {
 				    var entry = map.get(k);
 				    var field = entry.show();
 				    //
-				    var hint = new Label("");
+				    var hint = field.content.add(new Label("")).pad(4f).get();
 				    field.marker.set(Color.darkGray);
     				field.addListener(l -> {
     				    //
@@ -57,9 +57,6 @@ public class Modifiable {
         				    entry.set(value);
         				    //
         				    hint.setText(value.toString());
-        				    hint.remove();
-        				    //
-        				    if (entry.priority) field.content.add(hint).pad(4f);
     				    } catch (Exception e) {}
     				    //
     				    return l.capture;
