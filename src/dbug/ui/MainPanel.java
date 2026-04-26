@@ -1,6 +1,7 @@
 package dbug.ui;
 
 import arc.*;
+import arc.scene.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.scene.utils.*;
@@ -37,13 +38,6 @@ public class MainPanel {
 		container.add(panel).row();
 		container.add(controls);
 		//
-		// BLUI button surgery
-		Button bluiBtn = null;
-		for (var cell : ((Table) container.parent).getCells()) if (cell.get() instanceof Button btn) bluiBtn = btn;
-		bluiBtn.setStyle(Styles.defaultt);
-		bluiBtn.remove();
-		//
-		controls.add(bluiBtn);
 		update();
 	}
 	
@@ -64,5 +58,24 @@ public class MainPanel {
 	    panel.setWidget(new Table(t -> {
 			for (var v : debugger.values()) t.add(v).grow().row();
 		}));
+	}
+	
+	public static Cell<Element> addControl(Element e) {
+	    return controls.add(e);
+	}
+	
+	public static void bluiFix() {
+	    if (container == null) return;
+	    //
+	    // BLUI button surgery
+		Button bluiBtn = null;
+		//
+		for (var cell : ((Table) container.parent).getCells()) 
+		if (cell.get() instanceof Button btn) bluiBtn = btn;
+		//
+		bluiBtn.setStyle(Styles.defaultt);
+		bluiBtn.remove();
+		//
+		controls.add(bluiBtn);
 	}
 }
