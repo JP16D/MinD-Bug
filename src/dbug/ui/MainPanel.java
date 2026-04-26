@@ -44,9 +44,8 @@ public class MainPanel {
 	}
 	
 	public static void update() {
+	    if (container == null) return;
 	    container.sizeBy(300f, expand ? scale * 0.25f : 75f);
-	    //
-	    if (panel == null) return;
 	    //
 	    expander.replaceImage(new Image(expand ? Icon.downOpen : Icon.upOpen));
 	    //
