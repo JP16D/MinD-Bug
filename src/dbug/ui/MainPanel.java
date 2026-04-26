@@ -67,15 +67,13 @@ public class MainPanel {
 	public static void bluiFix() {
 	    if (container == null) return;
 	    //
-	    // BLUI button surgery
-		Button bluiBtn = null;
-		//
-		for (var cell : ((Table) container.parent).getCells()) 
-		if (cell.get() instanceof Button btn) bluiBtn = btn;
-		//
-		bluiBtn.setStyle(Styles.defaultt);
-		bluiBtn.remove();
-		//
-		controls.add(bluiBtn);
+	    
+    		Table bluiBtn = null;
+    		//
+    		for (var cell : ((Table) container.parent).getCells()) bluiBtn = (Table) cell.get();
+    		bluiBtn.background(Tex.button);
+    		//
+    		controls.add(bluiBtn);
+
 	}
 }
