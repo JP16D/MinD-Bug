@@ -47,16 +47,13 @@ public class Modifiable {
 				    var entry = map.get(k);
 				    var field = entry.show();
 				    //
-				    var hint = field.content.add(new Label("")).pad(4f).get();
 				    field.marker.set(Color.darkGray);
     				field.addListener(l -> {
     				    //
     				    try {
         				    var value = type.getField(k).get(this.value);
-        				    //
         				    entry.set(value);
         				    //
-        				    hint.setText(value.toString());
     				    } catch (Exception e) {}
     				    //
     				    return l.capture;

@@ -13,6 +13,7 @@ import dbug.tool.*;
 import mindustry.gen.*;
 import mindustry.ui.*;
 
+import static dbug.ui.MainPanel.*;
 import static dbug.util.ParseUtil.*;
 
 public class DebugField extends Table {
@@ -93,7 +94,7 @@ public class DebugField extends Table {
         //
 		return new Table(t -> {
 		    field.setValidator(txt -> {
-		        t.parent.fire(new ChangeListener.ChangeEvent());
+		        MainPanel.update();
 		        return true;
 		    });
 			t.image(Icon.editSmall).pad(4f);
