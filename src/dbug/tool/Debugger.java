@@ -24,7 +24,7 @@ public class Debugger {
 	
 	//add debugger (read-only)
 	public static Object dv(String name, Object val) {
-		debugger.put(name, new DebugField(name, val.getClass(), viewOnly(val)));
+		if (!debugger.containsKey(name)) debugger.put(name, new DebugField(name, val.getClass(), viewable(() -> val)));
 		//
 		return val;
 	}

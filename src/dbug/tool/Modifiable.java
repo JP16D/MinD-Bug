@@ -48,15 +48,10 @@ public class Modifiable {
 				    var field = entry.show();
 				    //
 				    field.marker.set(Color.darkGray);
-    				field.addListener(l -> {
-    				    //
+    				field.update(() -> {
     				    try {
-        				    var value = type.getField(k).get(this.value);
-        				    entry.set(value);
-        				    //
+        				    entry.set(type.getField(k).get(value));
     				    } catch (Exception e) {}
-    				    //
-    				    return l.capture;
     				});
     				field.updateContent();
 					//
@@ -85,7 +80,6 @@ public class Modifiable {
 				}).right();
 			});
 			//
-			table.group = true;
 			table.marker.set(Color.maroon);
 			table.setContent(content);
 			//
