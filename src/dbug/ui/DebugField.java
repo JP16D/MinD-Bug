@@ -55,7 +55,7 @@ public class DebugField extends Table {
 			}).pad(4f).fill();
 			//
 			panel.row();
-			if (content != null) panel.add(content).pad(4f).right();
+			if (content != null) panel.add(content).pad(4f).center();
 		}).pad(4f).left().row();
 	}
 	
@@ -65,7 +65,7 @@ public class DebugField extends Table {
 		updateContent();
 	}
 	
-	public static Table viewable(Prov<Object> content) {
+	public static Table viewable(Viewable entry) {
 		return new Table(t -> {
 			t.image(Icon.gridSmall).pad(4f);
 			//
@@ -73,15 +73,15 @@ public class DebugField extends Table {
 				p.update(() -> {
 				    p.clearChildren();
 				    //
-    				if (content.get() instanceof Drawable img)
+    				if (entry.get() instanceof Drawable img)
     					p.image(img).size(20f).scaling(Scaling.bounded);
     					//
-    				else if (content.get() instanceof TextureRegion img)
+    				else if (entry.get() instanceof TextureRegion img)
     					p.image(img).size(20f).scaling(Scaling.bounded);
     					//
-    				else p.add(content.get().toString()).pad(2f, 4f, 2f, 4f);
+    				else p.add(entry.get().toString()).pad(2f, 4f, 2f, 4f);
 				});
-			}).pad(2f);
+			}).pad(2f).fill();
 		});
 	}
 	
