@@ -11,8 +11,10 @@ import static dbug.MDBugVars.*;
 
 public class MainPanel {
     private static Table container;
-	private static ScrollPane panel;
+    //
 	private static ImageButton expander;
+	private static ScrollPane panel;
+	private static Table controls;
 	//
 	private static boolean expand;
 	private static float scale;
@@ -29,9 +31,19 @@ public class MainPanel {
 	    panel.setOverscroll(false, true);
 		panel.setClamp(true);
 		//
-		container.add(expander).padRight(8f).row();
-		container.add(panel).fill().row();
-		container.add("");
+		controls = new Table(Tex.pane);
+		//
+		container.add(expander).size(35f, 20f).row();
+		container.add(panel).row();
+		container.add(controls);
+		//
+		// BLUI button surgery
+		Button bluiBtn = null;
+		for (var cell : ((Table) container.parent).getCells()) if (cell.get() instanceof Button btn) bluiBtn = btn;
+		bluiBtn.setStyle(Styles.defaultt);
+		bluiBtn.remove();
+		//
+		controls.add(bluiBtn);
 		update();
 	}
 	
@@ -45,7 +57,7 @@ public class MainPanel {
 	
 	public static void update() {
 	    if (container == null) return;
-	    container.sizeBy(300f, expand ? scale * 0.25f : 75f);
+	    container.getCell(panel).size(280f, expand ? scale * 0.25f : 75f);
 	    //
 	    expander.replaceImage(new Image(expand ? Icon.downOpen : Icon.upOpen));
 	    //
