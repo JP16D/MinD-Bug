@@ -15,7 +15,6 @@ public class MainPanel {
     //
 	private static ImageButton expander;
 	private static ScrollPane panel;
-	private static Table controls;
 	//
 	private static boolean expand;
 	private static float scale;
@@ -32,11 +31,8 @@ public class MainPanel {
 	    panel.setOverscroll(false, true);
 		panel.setClamp(true);
 		//
-		controls = new Table(Tex.pane);
-		//
-		container.add(expander).size(35f, 20f).row();
+		container.add(expander).row();
 		container.add(panel).row();
-		container.add(controls);
 		//
 		update();
 	}
@@ -58,22 +54,5 @@ public class MainPanel {
 	    panel.setWidget(new Table(t -> {
 			for (var v : debugger.values()) t.add(v).grow().row();
 		}));
-	}
-	
-	public static Cell<Element> addControl(Element e) {
-	    return controls.add(e);
-	}
-	
-	public static void bluiFix() {
-	    if (container == null) return;
-	    //
-	    
-    		Table bluiBtn = null;
-    		//
-    		for (var cell : ((Table) container.parent).getCells()) bluiBtn = (Table) cell.get();
-    		bluiBtn.background(Tex.button);
-    		//
-    		controls.add(bluiBtn);
-
 	}
 }

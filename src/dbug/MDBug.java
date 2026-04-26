@@ -18,7 +18,5 @@ public class MDBug extends Mod {
 		    MDBugTest.load();
 			MainPanel.init(table);
 		});
-		//
-		MainPanel.bluiFix();
 	}
 }
