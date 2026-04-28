@@ -43,15 +43,17 @@ public class Modifiable extends Viewable {
 				    //
 				    var hint = new Viewable("");
 				    var hintc = viewable(hint);
+				    //
 				    field.marker.set(Color.darkGray);
     				field.update(() -> {
     				    try {
-        				    entry.set(type.getField(k).get(value));
-        				    hint.set(entry.get().toString());
+    				        var v = type.getField(k).get(value);
+    				        hint.set(v.toString());
+        				    entry.set(v);
     				    } catch (Exception e) {}
     				    //
-    				    field.content.removeChild(hintc, false);
-    				    if (entry.priority) field.content.add(hintc);
+    				    field.removeChild(hintc, false);
+    				    if (entry.priority) field.add(hintc);
     				});
     				field.updateContent();
 					//
@@ -64,6 +66,7 @@ public class Modifiable extends Viewable {
     				actions.button("Set", () -> {
     					for (var v : map.values()) try {
     						type.getField(v.name).set(value, v.get());
+    						v.open();
     						//
     						priority = true;
     					} catch (Exception e) {}

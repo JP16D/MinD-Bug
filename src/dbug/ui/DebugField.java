@@ -95,10 +95,6 @@ public class DebugField extends Table {
         });
         //
 		return new Table(t -> {
-		    field.setValidator(txt -> {
-		        MainPanel.update();
-		        return true;
-		    });
 			t.image(Icon.editSmall).pad(4f);
 			t.add(field).pad(4f).get().setAlignment(Align.center);
 		});

@@ -27,9 +27,7 @@ public class MainPanel {
 			update();
 		});
 		//
-		panel = new ScrollPane(new Table(t -> {
-			for (var v : debugger.values()) t.add(v).grow().row();
-		}), Styles.noBarPane);
+		panel = new ScrollPane(new Table(), Styles.noBarPane);
 	    panel.setOverscroll(false, true);
 		panel.setClamp(true);
 		//
@@ -50,7 +48,12 @@ public class MainPanel {
 	public static void update() {
 	    if (container == null) return;
 	    container.getCell(panel).size(180f, expand ? scale * 0.25f : 75f);
-	    panel.getWidget().change();
+	    //
+	    var t = (Table) panel.getWidget();
+	    for (var v : debugger.values()) {
+	        t.removeChild(v);
+	        t.add(v).grow().row();
+	    }
 	    //
 	    expander.replaceImage(new Image(expand ? Icon.downOpen : Icon.upOpen));
 	}
