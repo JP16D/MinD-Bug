@@ -17,8 +17,8 @@ public class MDBugTest {
 		test.y = (float) dw("test-vy", test.y);
 		test = (Vec2) dw("test-v", test);
 		
-		for (var f : Icon.class.getFields()) try {
-			if (f.get(new Icon()) instanceof Drawable d) dv("icon-" + f.getName(), d);
-		} catch (Exception e) {}
+// 		for (var f : Icon.class.getFields()) try {
+// 			if (f.get(new Icon()) instanceof Drawable d) dv("icon-" + f.getName(), d);
+// 		} catch (Exception e) {}
 	}
 }
