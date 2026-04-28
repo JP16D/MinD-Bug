@@ -48,7 +48,7 @@ public class Modifiable extends Viewable {
 				    });
 				    //
 				    field.marker.set(Color.darkGray);
-    				field.update(() -> {
+    				field.content.update(() -> {
     				    try {
     				        var v = type.getField(k).get(value);
     				        hint.set(v.toString());
