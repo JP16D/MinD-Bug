@@ -60,9 +60,9 @@ public class DebugField extends Table {
 			if (content != null) panel.add(content).pad(4f).fill().center();
 		}).pad(4f).left();
 		//
-		extras.update(() -> {
+		update(() -> {
 		    extras.remove();
-		    for (var c : (Seq<Cell>) Debugger.dv("cells", extras.getCells())) if ((boolean) Debugger.dv("cell-v", c.get().visible)) {
+		    for (var c : extras.getCells()) if (c.get().visible) {
     		    add(extras).pad(4f).fillY();
     		    break;
 		    }
