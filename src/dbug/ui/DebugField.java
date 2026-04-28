@@ -16,9 +16,6 @@ import mindustry.ui.*;
 import static dbug.ui.MainPanel.*;
 import static dbug.util.ParseUtil.*;
 
-import dbug.util.*;
-import arc.struct.*;
-
 public class DebugField extends Table {
     public final Table extras = new Table(Tex.pane);
     public final Color marker = new Color(Color.slate);
