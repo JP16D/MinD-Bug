@@ -58,7 +58,11 @@ public class DebugField extends Table {
 			if (content != null) panel.add(content).pad(4f).fill().center();
 		}).pad(4f).left();
 		//
-		add(extras).row();
+		update(() -> {
+		    removeChild(extras);
+		    if (extras.getCells().size > 0) add(extras).fillY();
+		});
+		row();
 	}
 	
 	public void setContent(Table content) {
