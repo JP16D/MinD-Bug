@@ -20,6 +20,7 @@ public class DebugField extends Table {
     public Color marker = new Color(Color.slate);
     //
 	public Table content;
+	public Table extras;
 	public boolean group;
 	//
 	public final String type;
@@ -56,7 +57,11 @@ public class DebugField extends Table {
 			//
 			panel.row();
 			if (content != null) panel.add(content).pad(4f).fill().center();
-		}).pad(4f).left().row();
+		}).pad(4f).left();
+		//
+		table(Tex.pane, t -> {
+		    t.add();
+		}).row();
 	}
 	
 	public void setContent(Table content) {

@@ -9,13 +9,15 @@ import mindustry.mod.*;
 
 public class MDBug extends Mod {
 	public MDBug() {
-		Events.run(EventType.Trigger.update, () -> MainPanel.scale());
+		Events.run(EventType.Trigger.update, () -> {
+		    MDBugTest.load();
+		    MainPanel.scale();
+		});
 	}
 	
 	@Override
 	public void init() {
 		BLSetup.addTable(table -> {
-		    MDBugTest.load();
 			MainPanel.init(table);
 		});
 	}

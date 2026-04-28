@@ -42,7 +42,10 @@ public class Modifiable extends Viewable {
 				    var field = entry.show();
 				    //
 				    var hint = new Viewable("");
-				    var hintc = viewable(hint);
+				    var hintc = new Table(ht -> {
+				        ht.image(Icon.zoomSmall).pad(4f);
+				        ht.add(viewable(hint)).pad(4f);
+				    });
 				    //
 				    field.marker.set(Color.darkGray);
     				field.update(() -> {
@@ -52,8 +55,8 @@ public class Modifiable extends Viewable {
         				    entry.set(v);
     				    } catch (Exception e) {}
     				    //
-    				    field.removeChild(hintc, false);
-    				    if (entry.priority) field.add(hintc);
+    				    field.extras.removeChild(hintc, false);
+    				    if (entry.priority) field.extras.add(hintc);
     				});
     				field.updateContent();
 					//
@@ -74,7 +77,10 @@ public class Modifiable extends Viewable {
     				//
     				//cancel changes
     				actions.button(Icon.cancel, () -> {
-    					for (var v : map.values()) v.open();
+    					for (var v : map.values()) {
+    					    v.get();
+    					    v.open();
+    					}
     				}).pad(2f);
 				}).right();
 			});
