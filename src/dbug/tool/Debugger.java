@@ -42,7 +42,8 @@ public class Debugger {
 	        debugger.put(name, entries.get(name).show());
 	    }
         //
-        var entry = entries.get(name);
+        var entry = (Modifiable) entries.get(name);
+        entry.open();
 		entry.set(val);
 		//
 		return entry.get();

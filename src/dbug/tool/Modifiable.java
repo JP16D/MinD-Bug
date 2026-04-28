@@ -18,6 +18,7 @@ import static dbug.util.ParseUtil.*;
 public class Modifiable extends Viewable {
     protected OrderedMap<String, Modifiable> map = new OrderedMap<>();
 	protected boolean priority;
+	protected boolean released;
 	
 	public Modifiable(String name, Class<?> type, Object value) {
 	    super(name, type, value);
@@ -70,7 +71,7 @@ public class Modifiable extends Viewable {
     				//
     				//cancel changes
     				actions.button(Icon.cancel, () -> {
-    					for (var v : map.values()) v.get();
+    					for (var v : map.values()) v.open();
     				}).pad(2f);
 				}).right();
 			});
@@ -89,13 +90,17 @@ public class Modifiable extends Viewable {
 	
 	@Override
 	public Object get() {
-	    if (priority) priority = false;
+	    released = priority;
 	    return value;
 	}
 	
 	public void push(Object input) {
 	    if (!(priority = value != input)) return;
 	    value = input;
+	}
+	
+	public void open() {
+        if (priority && released) priority = released = false;
 	}
 	
 	public boolean priority() {

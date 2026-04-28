@@ -90,9 +90,8 @@ public class DebugField extends Table {
 	    });
 	    //
 	    field.setStyle(Styles.defaultField);
-        field.addListener(l -> {
+        field.update(() -> {
             if (!entry.priority()) field.setText(entry.get().toString());
-            return l.handled;
         });
         //
 		return new Table(t -> {
