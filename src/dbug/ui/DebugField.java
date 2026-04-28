@@ -42,7 +42,6 @@ public class DebugField extends Table {
 		left();
 		//
 		table(Tex.pane, panel -> {
-			//
 			panel.table(Tex.whiteui, nt -> {
 			    nt.setColor(marker);
 			    //
@@ -60,7 +59,10 @@ public class DebugField extends Table {
 		//
 		extras.update(() -> {
 		    extras.remove();
-		    if (extras.hasChildren()) add(extras).pad(4f).fillY();
+		    for (var c : extras.getCells()) if (c.get().visible) {
+    		    add(extras).pad(4f).fillY();
+    		    break;
+		    }
 		});
 		//
 		row();

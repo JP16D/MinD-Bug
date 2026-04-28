@@ -28,7 +28,7 @@ public class MainPanel {
 		});
 		//
 		panel = new ScrollPane(new Table(Tex.pane, t -> {
-			for (var v : debugger.values()) t.add(v).grow().row();
+			for (var v : debugger.values()) t.add(v).fill().row();
 		}), Styles.noBarPane);
 	    panel.setOverscroll(false, true);
 		panel.setClamp(true);

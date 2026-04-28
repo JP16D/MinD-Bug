@@ -42,22 +42,21 @@ public class Modifiable extends Viewable {
 				    var field = entry.show();
 				    //
 				    var hint = new Viewable("");
-				    var hintc = new Table(ht -> {
-				        ht.image(Icon.zoomSmall).pad(4f);
-				        ht.add(viewable(hint)).pad(4f);
-				    });
 				    //
-				    field.marker.set(Color.darkGray);
     				field.content.update(() -> {
     				    try {
     				        var v = type.getField(k).get(value);
     				        hint.set(v.toString());
         				    entry.set(v);
     				    } catch (Exception e) {}
-    				    //
-    				    hintc.remove();
-    				    if (entry.priority) field.extras.add(hintc);
     				});
+    				//
+    				field.extras.add(new Table(ht -> {
+				        ht.image(Icon.zoomSmall).pad(4f);
+				        ht.add(viewable(hint)).pad(4f);
+				    })).visible(entry.priority());
+				    //
+				    field.marker.set(Color.darkGray);
     				field.updateContent();
 					//
 					t.add(field).grow().row();
