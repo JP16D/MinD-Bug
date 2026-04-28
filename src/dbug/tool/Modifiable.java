@@ -55,7 +55,7 @@ public class Modifiable extends Viewable {
         				    entry.set(v);
     				    } catch (Exception e) {}
     				    //
-    				    field.extras.removeChild(hintc, false);
+    				    hintc.remove();
     				    if (entry.priority) field.extras.add(hintc);
     				});
     				field.updateContent();

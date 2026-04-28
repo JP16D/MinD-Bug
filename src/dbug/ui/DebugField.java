@@ -59,9 +59,10 @@ public class DebugField extends Table {
 		}).pad(4f).left();
 		//
 		extras.update(() -> {
-		    removeChild(extras);
-		    if (extras.getCells().size > 0) add(extras).pad(4f).fillY();
+		    extras.remove();
+		    if (extras.hasChildren()) add(extras).pad(4f).fillY();
 		});
+		//
 		row();
 	}
 	
@@ -72,20 +73,18 @@ public class DebugField extends Table {
 	}
 	
 	public static Table viewable(Viewable entry) {
-		return new Table(t -> {
-			t.table(Tex.pane, p -> {
-				p.update(() -> {
-				    p.clearChildren();
-				    //
-    				if (entry.get() instanceof Drawable img)
-    					p.image(img).size(20f).scaling(Scaling.bounded);
-    					//
-    				else if (entry.get() instanceof TextureRegion img)
-    					p.image(img).size(20f).scaling(Scaling.bounded);
-    					//
-    				else p.add(entry.get().toString()).pad(2f, 4f, 2f, 4f);
-				});
-			}).pad(2f).fill();
+		return new Table(Tex.pane, p -> {
+			p.update(() -> {
+			    p.clearChildren();
+			    //
+				if (entry.get() instanceof Drawable img)
+					p.image(img).size(20f).scaling(Scaling.bounded);
+					//
+				else if (entry.get() instanceof TextureRegion img)
+					p.image(img).size(20f).scaling(Scaling.bounded);
+					//
+				else p.add(entry.get().toString()).pad(2f, 4f, 2f, 4f);
+			});
 		});
 	}
 	

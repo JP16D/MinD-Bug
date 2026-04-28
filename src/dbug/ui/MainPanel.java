@@ -27,7 +27,7 @@ public class MainPanel {
 			update();
 		});
 		//
-		panel = new ScrollPane(new Table(t -> {
+		panel = new ScrollPane(new Table(Tex.pane, t -> {
 			for (var v : debugger.values()) t.add(v).grow().row();
 		}), Styles.noBarPane);
 	    panel.setOverscroll(false, true);
