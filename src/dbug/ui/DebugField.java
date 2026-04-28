@@ -58,12 +58,11 @@ public class DebugField extends Table {
 		}).pad(4f).left();
 		//
 		update(() -> {
-		    add("A").pad(4f).fillY();
-		});
-		var b = new Label("B");
-		update(() -> {
-		    b.remove();
-		    add(b).pad(4f).fillY();
+		   removeChild(extras);
+		    for (var c : extras.getCells()) if (c.get().visible) {
+		        add(extras).pad(4f).fillY();
+		        break;
+		    }
 		});
 		//
 		row();
