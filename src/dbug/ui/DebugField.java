@@ -58,11 +58,7 @@ public class DebugField extends Table {
 			if (content != null) panel.add(content).pad(4f).fill().center();
 		}).pad(4f).left();
 		//
-		update(() -> {
-		    removeChild(extras);
-		    if (extras.getCells().size > 0) add(extras).fillY();
-		});
-		row();
+		collapser(extras, () -> extras.getCells().size > 0).fillY().row();
 	}
 	
 	public void setContent(Table content) {
@@ -92,7 +88,6 @@ public class DebugField extends Table {
 	public static Table writable(Modifiable entry) {
 	    var field = Elem.newField(entry.get().toString(), (String txt) -> {
 	        entry.push(parse(entry.type(), entry.get(), txt));
-	        MainPanel.update();
 	    });
 	    //
 	    field.setStyle(Styles.defaultField);
