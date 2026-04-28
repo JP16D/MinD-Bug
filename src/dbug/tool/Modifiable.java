@@ -54,7 +54,7 @@ public class Modifiable extends Viewable {
     				field.extras.add(new Table(ht -> {
 				        ht.image(Icon.zoomSmall).pad(4f);
 				        ht.add(viewable(hint)).pad(4f);
-				    })).visible(entry.priority());
+				    })).visible(() -> entry.priority());
 				    //
 				    field.marker.set(Color.darkGray);
     				field.updateContent();
