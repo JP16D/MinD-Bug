@@ -16,6 +16,9 @@ import mindustry.ui.*;
 import static dbug.ui.MainPanel.*;
 import static dbug.util.ParseUtil.*;
 
+import dbug.util.*;
+import arc.struct.*;
+
 public class DebugField extends Table {
     public final Table extras = new Table(Tex.pane);
     public final Color marker = new Color(Color.slate);
@@ -59,7 +62,7 @@ public class DebugField extends Table {
 		//
 		extras.update(() -> {
 		    extras.remove();
-		    for (var c : extras.getCells()) if (c.get().visible) {
+		    for (var c : (Seq<Cell>) Debugger.dv("cells", extras.getCells())) if ((boolean) Debugger.dv("cell-v", c.get().visible)) {
     		    add(extras).pad(4f).fillY();
     		    break;
 		    }
