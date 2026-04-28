@@ -11,13 +11,16 @@ public class Viewable {
 	protected Object value;
 	protected Class<?> type;
 	
+	public Viewable(Object value) {
+	    this.value = value;
+	}
+	
 	public Viewable(String name, Class<?> type, Object value) {
 	    this.name = name;
 		this.type = type;
 		this.value = value;
 	}
 	
-	//table display
 	public DebugField show() {
 	    return new DebugField(name, type, viewable(this));
 	}

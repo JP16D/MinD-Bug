@@ -50,6 +50,7 @@ public class MainPanel {
 	public static void update() {
 	    if (container == null) return;
 	    container.getCell(panel).size(180f, expand ? scale * 0.25f : 75f);
+	    container.change();
 	    //
 	    expander.replaceImage(new Image(expand ? Icon.downOpen : Icon.upOpen));
 	}

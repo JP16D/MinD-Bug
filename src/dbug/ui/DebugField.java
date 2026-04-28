@@ -55,7 +55,7 @@ public class DebugField extends Table {
 			}).pad(4f).fill();
 			//
 			panel.row();
-			if (content != null) panel.add(content).pad(4f).center();
+			if (content != null) panel.add(content).pad(4f).fill().center();
 		}).pad(4f).left().row();
 	}
 	
@@ -67,8 +67,6 @@ public class DebugField extends Table {
 	
 	public static Table viewable(Viewable entry) {
 		return new Table(t -> {
-			t.image(Icon.gridSmall).pad(4f);
-			//
 			t.table(Tex.pane, p -> {
 				p.update(() -> {
 				    p.clearChildren();
@@ -88,11 +86,13 @@ public class DebugField extends Table {
 	public static Table writable(Modifiable entry) {
 	    var field = Elem.newField(entry.get().toString(), (String txt) -> {
 	        entry.push(parse(entry.type(), entry.get(), txt));
+	        MainPanel.update();
 	    });
 	    //
 	    field.setStyle(Styles.defaultField);
-        field.update(() -> {
+        field.addListener(l -> {
             if (!entry.priority()) field.setText(entry.get().toString());
+            return l.handled;
         });
         //
 		return new Table(t -> {

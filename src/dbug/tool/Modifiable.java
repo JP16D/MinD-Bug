@@ -40,16 +40,17 @@ public class Modifiable extends Viewable {
 				    var entry = map.get(k);
 				    var field = entry.show();
 				    //
-				    var hint = new Label("");
+				    var hint = new Viewable("");
+				    var hintc = viewable(hint);
 				    field.marker.set(Color.darkGray);
     				field.update(() -> {
     				    try {
         				    entry.set(type.getField(k).get(value));
-        				    hint.setText(entry.get().toString());
+        				    hint.set(entry.get().toString());
     				    } catch (Exception e) {}
     				    //
-    				    field.removeChild(hint, false);
-    				    if (priority) field.add(hint);
+    				    field.content.removeChild(hintc, false);
+    				    if (entry.priority) field.content.add(hintc);
     				});
     				field.updateContent();
 					//
