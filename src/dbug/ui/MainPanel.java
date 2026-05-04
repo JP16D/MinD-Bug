@@ -5,14 +5,16 @@ import arc.scene.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.scene.utils.*;
+import arc.struct.*;
 import mindustry.gen.*;
 import mindustry.ui.*;
 
 import static dbug.tool.Debugger.*;
 
 public class MainPanel {
-    private static Table container;
+    private static OrderedMap<String, Table> map = new OrderedMap();
     //
+    private static Table container;
 	private static ImageButton expander;
 	private static ScrollPane panel;
 	//
@@ -53,9 +55,11 @@ public class MainPanel {
 	    //
 	    var widget = (Table) panel.getWidget();
 	    widget.update(() -> {
-			for (var v : entries.values()) {
-			    var entry = v.show();
-			    if (!entry.hasParent()) widget.add(entry).fill().row();
+			for (var k : entries.keys()) {
+			    if (!map.containsKey(k)) map.put(k, entries.get(k).show());
+		        //
+		        var entry = map.get(k);
+		        if (!entry.hasParent()) widget.add(entry).fill().row();
 			}
 	    });
 	}
