@@ -61,7 +61,7 @@ public class DebugField extends Table {
 		   removeChild(extras);
 		   for (var c : extras.getCells()) if ((boolean) Debugger.dv("vis", c.get().visibility.get())) {
 		       add(extras).pad(4f).left().fill().row();
-		       break;j
+		       break;
 		   }
 		});
 		//
