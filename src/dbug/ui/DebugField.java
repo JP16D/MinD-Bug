@@ -64,16 +64,19 @@ public class DebugField extends Table {
 		}).pad(4f).get();
 		//
 		update(() -> {
-		    var nt = getCell(nametag);
-		    nt.setElement(nametag = nametag());
-            //
             removeChild(extras);
             for (var c : extras.getCells()) if (c.get().visibility.get()) {
                 add(extras).pad(4f).fill();
                 break;
             }
             //
-            nt.pad(4f).fill();
+            if (!extras.hasParent()) {
+                var nt = getCell(nametag);
+                if (nt != null) {
+        		    nt.setElement(nametag = nametag());
+                    nt.pad(4f).fill();
+                }
+            }
 		});
 		//
 		row();
