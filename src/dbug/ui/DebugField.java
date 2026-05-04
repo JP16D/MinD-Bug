@@ -52,21 +52,17 @@ public class DebugField extends Table {
 			if (content != null) p.add(content).pad(4f).fill().center();
 		}).pad(4f).get();
 		//
-		var ex = add(extras);
-		ex.visible(() -> {
-            var vis = false;
+		update(() -> {
             var nt = panel.getCell(nametag);
-            //
-            ex.set(Cell.defaults());
             nt.set(Cell.defaults());
             //
+            removeChild(extras);
             for (var c : extras.getCells()) if (c.get().visibility.get()) {
-                ex.pad(4f).fill();
-                vis = true;
+                add(extras).pad(4f).fill();
+                break;
             }
             //
             nt.pad(4f).fill();
-            return vis;
 		});
 		//
 		row();
