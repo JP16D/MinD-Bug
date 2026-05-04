@@ -16,7 +16,7 @@ public class Debugger {
 	
 	//add debugger (read-only)
 	public static Object dv(String name, Object val) {
-		if (!entries.containsKey(name)) entries.put(name, new Viewable(name, val.getClass(), val));
+		if (!entries.containsKey(name)) entries.put(name, new Viewable(val.getClass(), name, val));
 		//
 		var entry = entries.get(name);
 		entry.set(val);
@@ -26,7 +26,7 @@ public class Debugger {
 	
 	//add debugger (writable)
 	public static Object dw(String name, Object val) {
-	    if (!entries.containsKey(name)) entries.put(name, new Modifiable(name, val.getClass(), val));
+	    if (!entries.containsKey(name)) entries.put(name, new Modifiable(val.getClass(), name, val));
         //
         var entry = (Modifiable) entries.get(name);
         entry.open();

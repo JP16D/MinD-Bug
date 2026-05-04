@@ -7,22 +7,23 @@ import java.lang.reflect.*;
 import static dbug.ui.DebugField.*;
 
 public class Viewable {
+    protected Class<?> type;
 	protected String name;
 	protected Object value;
-	protected Class<?> type;
 	
 	public Viewable(Object value) {
+	    this.type = Object.class;
 	    this.value = value;
 	}
 	
-	public Viewable(String name, Class<?> type, Object value) {
+	public Viewable(Class<?> type, String name, Object value) {
+	    this.type = type;
 	    this.name = name;
-		this.type = type;
 		this.value = value;
 	}
 	
 	public DebugField show() {
-	    return new DebugField(name, type, viewable(this));
+	    return new DebugField(type, name, viewable(this));
 	}
 	
 	public void set(Object value) {

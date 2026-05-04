@@ -17,6 +17,8 @@ import static dbug.ui.MainPanel.*;
 import static dbug.util.ParseUtil.*;
 
 public class DebugField extends Table {
+    private final String type, name;
+    //
     public final Table extras = new Table(Tex.pane);
     public final Color marker = new Color(Color.slate);
     //
@@ -24,16 +26,25 @@ public class DebugField extends Table {
 	public Table content;
 	public boolean group;
 	
-	public DebugField(String name, Class<?> type, Table content) {
-		this(name, type);
+	public DebugField(Class<?> type, String name, Table content) {
+		this(type, name);
 		//
 		setContent(content);
 	}
 	
-	public DebugField(String name, Class<?> type) {
-		nametag = new Table(Tex.whiteui, nt -> {
+	public DebugField(Class<?> type, String name) {
+	    this.type = type.getSimpleName();
+	    this.name = name;
+	    //
+		nametag = nametag();
+	}
+	
+	private Table nametag() {
+	    return new Table(Tex.whiteui, nt -> {
+		    nt.setColor(marker);
+		    //
             nt.table(Tex.whiteui, t -> {
-            	t.add(type.getSimpleName()).fontScale(0.75f).pad(4f);
+            	t.add(type).fontScale(0.75f).pad(4f);
             	t.setColor(Color.royal);
             }).pad(4f).left();
             //
@@ -46,15 +57,15 @@ public class DebugField extends Table {
 		left();
 		//
 		var panel = table(Tex.pane, p -> {
-			p.add(nametag).color(marker);
+			p.add(nametag);
 			//
 			p.row();
 			if (content != null) p.add(content).pad(4f).fill().center();
 		}).pad(4f).get();
 		//
 		update(() -> {
-            var nt = panel.getCell(nametag);
-            nt.set(Cell.defaults());
+		    var nt = getCell(nametag);
+		    nt.setElement(nametag = nametag());
             //
             removeChild(extras);
             for (var c : extras.getCells()) if (c.get().visibility.get()) {

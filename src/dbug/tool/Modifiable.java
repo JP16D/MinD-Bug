@@ -20,13 +20,13 @@ public class Modifiable extends Viewable {
 	protected boolean priority;
 	protected boolean released;
 	
-	public Modifiable(String name, Class<?> type, Object value) {
-	    super(name, type, value);
+	public Modifiable(Class<?> type, String name, Object value) {
+	    super(type, name, value);
 		//
 		if (isWrapper(type) || type.isPrimitive()) return;
 		//
 		for (var field : type.getFields()) try {
-			if (isWrapper(wrap(field.getType()))) map.put(field.getName(), new Modifiable(field.getName(), field.getType(), field.get(value)));
+			if (isWrapper(wrap(field.getType()))) map.put(field.getName(), new Modifiable(field.getType(), field.getName(), field.get(value)));
 		} catch (Exception e) {}
 	}
 	
@@ -34,7 +34,7 @@ public class Modifiable extends Viewable {
 	public DebugField show() {
 		//
 		if (map.size > 0) {
-			var table = new DebugField(name, type);
+			var table = new DebugField(type, name);
 			var content = new Table(t -> {
 			    //update fields
 				for (var k : map.keys()) {
@@ -88,7 +88,7 @@ public class Modifiable extends Viewable {
 			table.setContent(content);
 			//
 			return table;
-		} else return new DebugField(name, type, writable(this));
+		} else return new DebugField(type, name, writable(this));
 	}
 	
 	@Override
