@@ -20,11 +20,9 @@ public class DebugField extends Table {
     public final Table extras = new Table(Tex.pane);
     public final Color marker = new Color(Color.slate);
     //
+    public Table nametag;
 	public Table content;
 	public boolean group;
-	//
-	public final String type;
-	public final String name;
 	
 	public DebugField(String name, Class<?> type, Table content) {
 		this(name, type);
@@ -33,36 +31,42 @@ public class DebugField extends Table {
 	}
 	
 	public DebugField(String name, Class<?> type) {
-		this.type = type.getSimpleName();
-		this.name = name;
+		nametag = new Table(Tex.whiteui, nt -> {
+            nt.table(Tex.whiteui, t -> {
+            	t.add(type.getSimpleName()).fontScale(0.75f).pad(4f);
+            	t.setColor(Color.royal);
+            }).pad(4f).left();
+            //
+            nt.add(name, Styles.outlineLabel).fontScale(0.75f).pad(4f).center();
+		});
 	}
 	
 	public void updateContent() {
 		clearChildren();
 		left();
 		//
-		table(Tex.pane, panel -> {
-			panel.table(Tex.whiteui, nt -> {
-			    nt.setColor(marker);
-			    //
-    			nt.table(Tex.whiteui, t -> {
-    				t.add(type).fontScale(0.75f).pad(4f);
-    				t.setColor(Color.royal);
-    			}).pad(4f).left();
-    			//
-    			nt.add(name, Styles.outlineLabel).fontScale(0.75f).pad(4f).center();
-			}).pad(4f).fill();
+		var panel = table(Tex.pane, p -> {
+			p.add(nametag).color(marker);
 			//
-			panel.row();
-			if (content != null) panel.add(content).pad(4f).fill().center();
-		}).pad(4f).left();
+			p.row();
+			if (content != null) p.add(content).pad(4f).fill().center();
+		}).pad(4f).get();
 		//
-		update(() -> {
-		   removeChild(extras);
-		   for (var c : extras.getCells()) if ((boolean) Debugger.dv("vis", c.get().visibility.get())) {
-		       add(extras).pad(4f).left().fill();
-		       break;
-		   }
+		var ex = add(extras);
+		ex.visible(() -> {
+            var vis = false;
+            var nt = panel.getCell(nametag);
+            //
+            ex.set(Cell.defaults());
+            nt.set(Cell.defaults());
+            //
+            for (var c : extras.getCells()) if (c.get().visibility.get()) {
+                ex.pad(4f).fill();
+                vis = true;
+            }
+            //
+            nt.pad(4f).fill();
+            return vis;
 		});
 		//
 		row();
@@ -77,8 +81,8 @@ public class DebugField extends Table {
 	public static Table viewable(Viewable entry) {
 		return new Table(Tex.pane, p -> {
 			p.update(() -> {
-			    p.clearChildren();
-			    //
+                p.clearChildren();
+                //
 				if (entry.get() instanceof Drawable img)
 					p.image(img).size(20f).scaling(Scaling.bounded);
 					//
@@ -91,13 +95,13 @@ public class DebugField extends Table {
 	}
 	
 	public static Table writable(Modifiable entry) {
-	    var field = Elem.newField(entry.get().toString(), (String txt) -> {
-	        entry.push(parse(entry.type(), entry.get(), txt));
-	    });
-	    //
-	    field.setStyle(Styles.defaultField);
+        var field = Elem.newField(entry.get().toString(), (String txt) -> {
+            entry.push(parse(entry.type(), entry.get(), txt));
+        });
+        //
+        field.setStyle(Styles.defaultField);
         field.update(() -> {
-            if (!entry.priority()) field.setText(entry.get().toString());
+            if (!entry.priority() || entry.get() == parse(entry.type(), entry.get(), field.getText())) field.setText(entry.get().toString());
         });
         //
 		return new Table(t -> {
