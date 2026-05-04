@@ -8,7 +8,7 @@ import arc.scene.utils.*;
 import mindustry.gen.*;
 import mindustry.ui.*;
 
-import static dbug.MDBugVars.*;
+import static dbug.tool.Debugger.*;
 
 public class MainPanel {
     private static Table container;
@@ -27,9 +27,7 @@ public class MainPanel {
 			update();
 		});
 		//
-		panel = new ScrollPane(new Table(Tex.pane, t -> {
-			for (var v : debugger.values()) t.add(v).fill().row();
-		}), Styles.noBarPane);
+		panel = new ScrollPane(new Table(Tex.pane), Styles.noBarPane);
 	    panel.setOverscroll(false, true);
 		panel.setClamp(true);
 		//
@@ -52,5 +50,13 @@ public class MainPanel {
 	    container.getCell(panel).size(180f, expand ? scale * 0.25f : 75f);
 	    //
 	    expander.replaceImage(new Image(expand ? Icon.downOpen : Icon.upOpen));
+	    //
+	    var widget = (Table) panel.getWidget();
+	    widget.update(() -> {
+			for (var v : entries.values()) {
+			    var entry = v.show();
+			    if (!entry.hasParent()) widget.add(entry).fill().row();
+			}
+	    });
 	}
 }

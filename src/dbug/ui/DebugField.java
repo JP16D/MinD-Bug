@@ -59,8 +59,7 @@ public class DebugField extends Table {
 		//
 		update(() -> {
 		   removeChild(extras);
-		    
-		   add(extras).pad(4f).fillY();
+		   if (!extras.hasParent()) add(extras).pad(4f).fillY();
 		});
 		//
 		row();

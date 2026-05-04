@@ -28,10 +28,8 @@ public class ParseUtil {
 			double.class, Double.class,
 			void.class, Void.class
 		);
-			
-		for (var k : map.keys()) {
-			if (type == k) return (Class) map.get(k);
-		}
+		//
+		for (var k : map.keys()) if (type == k) return (Class) map.get(k);
 		//
 		return type;
 	}

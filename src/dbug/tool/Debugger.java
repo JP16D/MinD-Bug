@@ -1,16 +1,8 @@
 package dbug.tool;
 
 import arc.*;
-import arc.graphics.*;
-import arc.scene.style.*;
-import arc.scene.ui.*;
-import arc.scene.ui.layout.*;
 import arc.struct.*;
 import dbug.ui.*;
-import mindustry.gen.*;
-
-import static dbug.MDBugVars.*;
-import static dbug.ui.DebugField.*;
 
 public class Debugger {
 	public static final OrderedMap<String, Viewable> entries = new OrderedMap<>();
@@ -24,10 +16,7 @@ public class Debugger {
 	
 	//add debugger (read-only)
 	public static Object dv(String name, Object val) {
-		if (!debugger.containsKey(name)) {
-		    entries.put(name, new Viewable(name, val.getClass(), val));
-		    debugger.put(name, entries.get(name).show());
-		}
+		if (!entries.containsKey(name)) entries.put(name, new Viewable(name, val.getClass(), val));
 		//
 		var entry = entries.get(name);
 		entry.set(val);
@@ -37,10 +26,7 @@ public class Debugger {
 	
 	//add debugger (writable)
 	public static Object dw(String name, Object val) {
-	    if (!entries.containsKey(name)) {
-	        entries.put(name, new Modifiable(name, val.getClass(), val));
-	        debugger.put(name, entries.get(name).show());
-	    }
+	    if (!entries.containsKey(name)) entries.put(name, new Modifiable(name, val.getClass(), val));
         //
         var entry = (Modifiable) entries.get(name);
         entry.open();
