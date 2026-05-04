@@ -21,10 +21,9 @@ public class MainPanel {
 	private static boolean expand;
 	private static float scale;
 	
-	public static void init(Table container) {
-	    MainPanel.container = container;
-	    //
-		expander = Elem.newImageButton(Icon.upOpen, () -> {
+	public static void init() {
+	    if (panel != null) return;
+	    expander = Elem.newImageButton(Icon.upOpen, () -> {
 			expand = !expand;
 			update();
 		});
@@ -32,6 +31,11 @@ public class MainPanel {
 		panel = new ScrollPane(new Table(Tex.pane), Styles.noBarPane);
 	    panel.setOverscroll(false, true);
 		panel.setClamp(true);
+	}
+	
+	public static void load(Table container) {
+	    MainPanel.container = container;
+		init();
 		//
 		container.add(expander).row();
 		container.add(panel).row();
