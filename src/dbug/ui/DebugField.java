@@ -55,7 +55,15 @@ public class DebugField extends Table {
 			//
 			panel.row();
 			if (content != null) panel.add(content).pad(4f).fill().center();
-		}).pad(4f).left();
+		}).pad(4f).left().row();
+		//
+		update(() -> {
+		   removeChild(extras);
+		   for (var c : extras.getCells()) if (c.get().visible) {
+		       add(extras).pad(4f).fill();
+		       break;
+		   }
+		});
 		//
 		row();
 	}
