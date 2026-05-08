@@ -45,15 +45,13 @@ public class Modifiable extends Viewable {
     				field.content.update(() -> {
     				    try {
     				        var v = type.getField(k).get(value);
-    				        hint.set(v.toString());
+    				        hint.set(entry.priority() ? v.toString() : "--");
         				    entry.set(v);
     				    } catch (Exception e) {}
     				});
     				//
-    				field.extras.add(new Table(ht -> {
-				        ht.image(Icon.zoomSmall).pad(4f);
-				        ht.add(viewable(hint)).pad(4f);
-				    })).visible(() -> entry.priority());
+    				field.content.image(Icon.zoomSmall).pad(4f);
+				    field.content.add(viewable(hint)).pad(4f);
 				    //
 				    field.marker.set(Color.darkGray);
     				field.updateContent();

@@ -17,10 +17,9 @@ import static dbug.ui.MainPanel.*;
 import static dbug.util.ParseUtil.*;
 
 public class DebugField extends Table {
-    private final String type, name;
-    //
-    public final Table extras = new Table(Tex.pane);
     public final Color marker = new Color(Color.slate);
+    //
+    private final String type, name;
     //
 	public Table content;
 	public boolean group;
@@ -59,15 +58,6 @@ public class DebugField extends Table {
 			p.row();
 			if (content != null) p.add(content).pad(4f).fill().center();
 		}).pad(4f).get();
-		//
-		var ex = add(extras).pad(4f).fill();
-		extras.update(() -> {
-		    extras.setSize(0f, 0f);
-            for (var c : extras.getCells()) if (c.get().visibility.get()) {
-                extras.setSize(ex.prefWidth(), ex.prefHeight());
-                break;
-            }
-		});
 		//
 		row();
 	}
