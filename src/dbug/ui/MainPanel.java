@@ -57,7 +57,7 @@ public class MainPanel {
 	    //
 	    expander.replaceImage(new Image(expand ? Icon.downOpen : Icon.upOpen));
 	    //
-	    var final widget = (Table) panel.getWidget();
+	    var widget = (Table) panel.getWidget();
 	    widget.update(() -> {
 			for (var k : entries.keys()) {
 			    if (!map.containsKey(k)) map.put(k, entries.get(k).show());
