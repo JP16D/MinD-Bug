@@ -97,6 +97,6 @@ public class Modifiable extends Viewable {
 	}
 	
 	public boolean priority() {
-	    return incoming != null;
+	    return incoming != null && incoming != value;
 	}
 }

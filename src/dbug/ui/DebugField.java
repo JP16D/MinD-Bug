@@ -60,10 +60,11 @@ public class DebugField extends Table {
 			if (content != null) p.add(content).pad(4f).fill().center();
 		}).pad(4f).get();
 		//
-		update(() -> {
-            removeChild(extras);
+		var ex = add(extras).pad(4f).fill();
+		extras.update(() -> {
+		    extras.setSize(0f, 0f);
             for (var c : extras.getCells()) if (c.get().visibility.get()) {
-                add(extras).pad(4f).fill();
+                extras.setSize(ex.prefWidth(), ex.prefHeight());
                 break;
             }
 		});
