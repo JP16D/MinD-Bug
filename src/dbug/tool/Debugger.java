@@ -29,10 +29,9 @@ public class Debugger {
 	    if (!entries.containsKey(name)) entries.put(name, new Modifiable(val.getClass(), name, val));
         //
         var entry = (Modifiable) entries.get(name);
-        entry.open();
 		entry.set(val);
 		//
-		return entry.get();
+		return entry.release();
 	}
 	
 	//add a builder function (W.I.P.)

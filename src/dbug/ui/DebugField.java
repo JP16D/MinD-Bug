@@ -22,7 +22,6 @@ public class DebugField extends Table {
     public final Table extras = new Table(Tex.pane);
     public final Color marker = new Color(Color.slate);
     //
-    public Table nametag;
 	public Table content;
 	public boolean group;
 	
@@ -35,8 +34,6 @@ public class DebugField extends Table {
 	public DebugField(Class<?> type, String name) {
 	    this.type = type.getSimpleName();
 	    this.name = name;
-	    //
-		nametag = nametag();
 	}
 	
 	private Table nametag() {
@@ -57,7 +54,7 @@ public class DebugField extends Table {
 		left();
 		//
 		var panel = table(Tex.pane, p -> {
-			p.add(nametag);
+			p.add(nametag()).color(marker).pad(4f).fill();
 			//
 			p.row();
 			if (content != null) p.add(content).pad(4f).fill().center();
@@ -68,14 +65,6 @@ public class DebugField extends Table {
             for (var c : extras.getCells()) if (c.get().visibility.get()) {
                 add(extras).pad(4f).fill();
                 break;
-            }
-            //
-            if (!extras.hasParent()) {
-                var nt = getCell(nametag);
-                if (nt != null) {
-        		    nt.setElement(nametag = nametag());
-                    nt.pad(4f).fill();
-                }
             }
 		});
 		//
@@ -89,7 +78,7 @@ public class DebugField extends Table {
 	}
 	
 	public static Table viewable(Viewable entry) {
-		return new Table(Tex.pane, p -> {
+	    return new Table(Tex.pane, p -> {
 			p.update(() -> {
                 p.clearChildren();
                 //

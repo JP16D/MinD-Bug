@@ -17,8 +17,7 @@ import static dbug.util.ParseUtil.*;
 
 public class Modifiable extends Viewable {
     protected OrderedMap<String, Modifiable> map = new OrderedMap<>();
-	protected boolean priority;
-	protected boolean released;
+    protected Object incoming;
 	
 	public Modifiable(Class<?> type, String name, Object value) {
 	    super(type, name, value);
@@ -67,19 +66,13 @@ public class Modifiable extends Viewable {
 				    //apply changes
     				actions.button("Set", () -> {
     					for (var v : map.values()) try {
-    						type.getField(v.name).set(value, v.get());
-    						v.open();
-    						//
-    						priority = true;
+    						type.getField(v.name).set(value, v.release());
     					} catch (Exception e) {}
     				}).pad(2f);
     				//
     				//cancel changes
     				actions.button(Icon.cancel, () -> {
-    					for (var v : map.values()) {
-    					    v.get();
-    					    v.open();
-    					}
+    					for (var v : map.values()) v.release();
     				}).pad(2f);
 				}).right();
 			});
@@ -91,27 +84,19 @@ public class Modifiable extends Viewable {
 		} else return new DebugField(type, name, writable(this));
 	}
 	
-	@Override
-	public void set(Object value) {
-	    if (!priority) this.value = value;
+	public void push(Object input) {
+	    incoming = input;
 	}
 	
-	@Override
-	public Object get() {
-	    released = priority;
+	public Object release() {
+	    if (priority()) {
+	        value = incoming;
+	        incoming = null;
+	    }
 	    return value;
 	}
 	
-	public void push(Object input) {
-	    if (!(priority = value != input)) return;
-	    value = input;
-	}
-	
-	public void open() {
-        if (priority && released) priority = released = false;
-	}
-	
 	public boolean priority() {
-	    return priority;
+	    return incoming != null;
 	}
 }
