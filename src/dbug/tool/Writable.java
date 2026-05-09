@@ -15,17 +15,17 @@ import static dbug.ui.DebugField.*;
 import static dbug.ui.MainPanel.*;
 import static dbug.util.ParseUtil.*;
 
-public class Modifiable extends Viewable {
-    protected OrderedMap<String, Modifiable> map = new OrderedMap<>();
+public class Writable extends Viewable {
+    protected OrderedMap<String, Writable> map = new OrderedMap<>();
     protected Object incoming;
 	
-	public Modifiable(Class<?> type, String name, Object value) {
+	public Writable(Class<?> type, String name, Object value) {
 	    super(type, name, value);
 		//
 		if (isWrapper(type) || type.isPrimitive()) return;
 		//
 		for (var field : type.getFields()) try {
-			if (isWrapper(wrap(field.getType()))) map.put(field.getName(), new Modifiable(field.getType(), field.getName(), field.get(value)));
+			if (isWrapper(wrap(field.getType()))) map.put(field.getName(), new Writable(field.getType(), field.getName(), field.get(value)));
 		} catch (Exception e) {}
 	}
 	

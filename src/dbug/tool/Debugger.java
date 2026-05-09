@@ -26,9 +26,9 @@ public class Debugger {
 	
 	//add debugger (writable)
 	public static Object dw(String name, Object val) {
-	    if (!entries.containsKey(name)) entries.put(name, new Modifiable(val.getClass(), name, val));
+	    if (!entries.containsKey(name)) entries.put(name, new Writable(val.getClass(), name, val));
         //
-        var entry = (Modifiable) entries.get(name);
+        var entry = (Writable) entries.get(name);
 		entry.set(val);
 		//
 		return entry.release();

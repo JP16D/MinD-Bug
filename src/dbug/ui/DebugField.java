@@ -84,7 +84,7 @@ public class DebugField extends Table {
 		});
 	}
 	
-	public static Table writable(Modifiable entry) {
+	public static Table writable(Writable entry) {
         var field = Elem.newField(entry.get().toString(), (String txt) -> {
             entry.push(parse(entry.type(), entry.get(), txt));
         });
