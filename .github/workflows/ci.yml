@@ -8,12 +8,12 @@ jobs:
 
     steps:
     - name: Commencing Bugfest
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
     - name: Bug Invasion
       run: |
         echo "${ANDROID_HOME}/build-tools/35.0.0" >> $GITHUB_PATH
     - name: Bug Infestation
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         java-version: 17
         distribution: 'oracle'
@@ -22,7 +22,7 @@ jobs:
         chmod +x ./gradlew
         ./gradlew deploy
     - name: Bug Extermination
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: MinD-Bug
         path: build/libs/${{ github.event.repository.name }}.jar
