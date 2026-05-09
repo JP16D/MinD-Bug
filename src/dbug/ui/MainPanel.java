@@ -28,7 +28,9 @@ public class MainPanel {
 			update();
 		});
 		//
-		panel = new ScrollPane(new Table(Tex.pane), Styles.noBarPane);
+		panel = new ScrollPane(new Table(), new ScrollPane.ScrollPaneStyle(){{
+		    background = Tex.pane;
+		}});
 	    panel.setOverscroll(false, true);
 		panel.setClamp(true);
 	}
