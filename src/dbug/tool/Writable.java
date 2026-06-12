@@ -33,50 +33,8 @@ public class Writable extends Viewable {
 	public DebugField show() {
 		//
 		if (map.size > 0) {
-			var table = new DebugField(type, name);
-			var content = new Table(t -> {
-			    //update fields
-				for (var k : map.keys()) {
-				    var entry = map.get(k);
-				    var field = entry.show();
-				    //
-				    var hint = new Viewable("");
-				    //
-    				field.content.update(() -> {
-    				    try {
-    				        var v = type.getField(k).get(value);
-    				        hint.set(entry.priority() ? v.toString() : "--");
-        				    entry.set(v);
-    				    } catch (Exception e) {}
-    				});
-    				//
-    				field.content.image(Icon.zoomSmall).pad(4f);
-				    field.content.add(viewable(hint)).pad(4f);
-				    //
-				    field.marker.set(Color.darkGray);
-    				field.updateContent();
-					//
-					t.add(field).grow().row();
-		        }
-			    //
-			    //group actions
-				t.table(actions -> {
-				    //apply changes
-    				actions.button("Set", () -> {
-    					for (var v : map.values()) try {
-    						type.getField(v.name).set(value, v.release());
-    					} catch (Exception e) {}
-    				}).pad(2f);
-    				//
-    				//cancel changes
-    				actions.button(Icon.cancel, () -> {
-    					for (var v : map.values()) v.release();
-    				}).pad(2f);
-				}).right();
-			});
-			//
-			table.marker.set(Color.maroon);
-			table.setContent(content);
+			var table = new DebugField(type, name, group(this, map));
+			table.setHighlight(Color.maroon);
 			//
 			return table;
 		} else return new DebugField(type, name, writable(this));

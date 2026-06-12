@@ -26,15 +26,19 @@ public class Viewable {
 	    return new DebugField(type, name, viewable(this));
 	}
 	
+	public Class<?> type() {
+	    return type;
+	}
+	
+	public String name() {
+	    return name;
+	}
+	
 	public void set(Object value) {
 	    this.value = value;
 	}
 	
 	public Object get() {
 	    return value;
-	}
-	
-	public Class<?> type() {
-	    return type;
 	}
 }

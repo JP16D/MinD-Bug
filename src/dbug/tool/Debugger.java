@@ -14,7 +14,7 @@ public class Debugger {
 		return val != null ? val : def;
 	}
 	
-	//add debugger (read-only)
+	//add debugger (view-only)
 	public static Object dv(String name, Object val) {
 		if (!entries.containsKey(name)) entries.put(name, new Viewable(val.getClass(), name, val));
 		//
