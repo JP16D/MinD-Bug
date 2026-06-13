@@ -1,13 +1,9 @@
 package dbug.tool;
 
 import arc.graphics.*;
-import arc.scene.event.*;
-import arc.scene.ui.*;
-import arc.scene.ui.layout.*;
 import arc.struct.*;
 import dbug.ui.*;
 import dbug.util.*;
-import mindustry.gen.*;
 import java.lang.*;
 import java.lang.reflect.*;
 
@@ -31,13 +27,12 @@ public class Writable extends Viewable {
 	
 	@Override
 	public DebugField show() {
+	    var table = new DebugField(type, name);
 		//
-		if (map.size > 0) {
-			var table = new DebugField(type, name, group(this, map));
-			table.setHighlight(Color.maroon);
-			//
-			return table;
-		} else return new DebugField(type, name, writable(this));
+		table.setHighlight(Color.tan);
+		table.setContent(map.size > 0 ? group(this, map) : writable(this));
+		//
+		return table;
 	}
 	
 	public void push(Object input) {
