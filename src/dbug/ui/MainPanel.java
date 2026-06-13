@@ -65,10 +65,8 @@ public class MainPanel {
 			    if (!map.containsKey(k)) map.put(k, entries.get(k).show());
 		        //
 		        var entry = map.get(k);
-		        if (!entry.hasParent()) widget.add(entry).fill().row();
+		        if (!entry.hasParent()) widget.add(entry).fill().uniform().row();
 			}
-			//
-			for (var c : widget.getCells()) c.grow();
 	    });
 	}
 }
