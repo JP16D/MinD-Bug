@@ -55,7 +55,7 @@ public class MainPanel {
 	
 	public static void update() {
 	    if (container == null) return;
-	    container.getCell(panel).size(180f, expand ? scale * 0.25f : 75f);
+	    container.getCell(panel).size(300f, expand ? scale * 0.25f : 75f);
 	    //
 	    expander.replaceImage(new Image(expand ? Icon.downOpen : Icon.upOpen));
 	    //
@@ -67,8 +67,6 @@ public class MainPanel {
 		        var entry = map.get(k);
 		        if (!entry.hasParent()) widget.add(entry).row();
 			}
-			//
-			for (var cell : widget.getCells()) cell.fill().uniformX();
 	    });
 	}
 }

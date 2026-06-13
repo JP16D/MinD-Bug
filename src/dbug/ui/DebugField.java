@@ -122,12 +122,12 @@ public class DebugField extends Table {
                 p.clearChildren();
                 //
 				if (entry.get() instanceof Drawable img)
-					p.image(img).size(20f).scaling(Scaling.bounded);
+					p.image(img).size(15f).scaling(Scaling.bounded);
 					//
 				else if (entry.get() instanceof TextureRegion img)
-					p.image(img).size(20f).scaling(Scaling.bounded);
+					p.image(img).size(15f).scaling(Scaling.bounded);
 					//
-				else p.add(entry.get().toString()).pad(2f, 4f, 2f, 4f);
+				else p.add(entry.get().toString()).fontScale(0.75f).pad(2f, 4f, 2f, 4f);
 			});
 		});
 	}
@@ -137,7 +137,10 @@ public class DebugField extends Table {
             entry.push(parse(entry.type(), entry.get(), txt));
         });
         //
-        field.setStyle(Styles.defaultField);
+        var style = Styles.defaultField;
+        style.font.getData().setScale(0.75f);
+        //
+        field.setStyle(style);
         field.update(() -> {
             if (!entry.priority() || entry.get() == parse(entry.type(), entry.get(), field.getText())) field.setText(entry.get().toString());
         });
