@@ -68,9 +68,7 @@ public class MainPanel {
 		        if (!entry.hasParent()) widget.add(entry).fill().row();
 			}
 			//
-			for (var c : widget.getCells()) {
-			    c.fill().row();
-			}
+			for (var c : widget.getCells()) c.grow();
 	    });
 	}
 }
