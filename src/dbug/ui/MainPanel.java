@@ -67,6 +67,10 @@ public class MainPanel {
 		        var entry = map.get(k);
 		        if (!entry.hasParent()) widget.add(entry).fill().row();
 			}
+			//
+			for (var c : widget.getCells()) {
+			    c.fill().row();
+			}
 	    });
 	}
 }
