@@ -27,6 +27,7 @@ public class MainPanel {
 			expand = !expand;
 			update();
 		});
+		expander.setBackground(null);
 		//
 		panel = new ScrollPane(new Table(), new ScrollPane.ScrollPaneStyle(){{
 		    background = Tex.pane;
@@ -57,7 +58,7 @@ public class MainPanel {
 	public static void update() {
 	    if (container == null) return;
 	    container.getCell(panel).size(Math.max(scale.x * 0.4f, 300f), expand ? scale.y * 0.8f : 32f);
-		container.getCell(expander).size(64f, 52f);
+		container.getCell(expander).size(64f, 48f);
 		container.setPosition(scale.x * 0.5f, scale.y - (expand ? panel.getHeight() * 0.5f + 20f : 0f));
 	    //
 	    expander.replaceImage(new Image(expand ? Icon.upOpen : Icon.downOpen));

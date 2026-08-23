@@ -35,26 +35,30 @@ public class DebugField extends Table {
 	private Table nametag() {
 	    return new Table(Tex.whiteui, nt -> {
 		    nt.setColor(highlight);
+			nt.left();
 		    //
             nt.table(Tex.whiteui, t -> {
-            	t.add(type).fontScale(0.75f).pad(4f);
+            	t.add(type, 0.75f).labelAlign(Align.center).pad(4f).center();
             	t.setColor(Color.royal);
             }).pad(4f).left();
             //
-            nt.add(name, Styles.outlineLabel).fontScale(0.75f).pad(4f).center();
+			var label = nt.table().grow().center().get();
+			nt.update(() -> {
+				label.clearChildren();
+				label.add(name, Styles.outlineLabel, 0.75f).pad(8f).labelAlign(Align.center).grow().center();
+			});
 		});
 	}
 	
 	public void updateContent() {
 		clearChildren();
-		left();
 		//
 		table(Tex.pane, p -> {
-			p.add(nametag()).color(highlight).pad(4f).fill();
+			p.add(nametag()).color(highlight).pad(4f).fill().center();
 			//
 			p.row();
-			if (content != null) p.add(content).pad(4f).fill().center();
-		}).pad(4f).get();
+			if (content != null) p.add(content).pad(4f).fill().left();
+		}).pad(4f).left().get();
 		//
 		row();
 	}
