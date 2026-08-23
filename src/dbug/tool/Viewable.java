@@ -1,8 +1,7 @@
 package dbug.tool;
 
 import dbug.ui.*;
-import java.lang.*;
-import java.lang.reflect.*;
+
 
 import static dbug.ui.DebugField.*;
 

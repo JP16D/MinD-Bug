@@ -1,15 +1,13 @@
 package dbug.util;
 
 import arc.struct.*;
-import java.lang.*;
-import java.lang.reflect.*;
 
 public class ParseUtil {
 	//confirm if class is a primitive wrapper
 	public static boolean isWrapper(Class<?> type) {
 		try {
 			 var t = type.getField("TYPE");
-			 return ((Class) t.get(type)).isPrimitive();
+			 return ((Class<?>) t.get(type)).isPrimitive();
 			//
 		} catch (Exception e) {/*do nothing*/}
 		//
@@ -29,7 +27,7 @@ public class ParseUtil {
 			void.class, Void.class
 		);
 		//
-		for (var k : map.keys()) if (type == k) return (Class) map.get(k);
+		for (var k : map.keys()) if (type == k) return (Class<?>) map.get(k);
 		//
 		return type;
 	}

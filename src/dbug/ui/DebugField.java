@@ -1,11 +1,8 @@
 package dbug.ui;
 
-import arc.func.*;
 import arc.graphics.*;
 import arc.graphics.g2d.*;
-import arc.scene.event.*;
 import arc.scene.style.*;
-import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.scene.utils.*;
 import arc.struct.*;
@@ -14,7 +11,6 @@ import dbug.tool.*;
 import mindustry.gen.*;
 import mindustry.ui.*;
 
-import static dbug.ui.MainPanel.*;
 import static dbug.util.ParseUtil.*;
 
 public class DebugField extends Table {
@@ -53,7 +49,7 @@ public class DebugField extends Table {
 		clearChildren();
 		left();
 		//
-		var panel = table(Tex.pane, p -> {
+		table(Tex.pane, p -> {
 			p.add(nametag()).color(highlight).pad(4f).fill();
 			//
 			p.row();
@@ -106,7 +102,7 @@ public class DebugField extends Table {
 					for (var v : map.values()) try {
 						group.type().getField(v.name()).set(group.get(), v.release());
 					} catch (Exception e) {}
-				}).pad(2f);
+				}).pad(2f).minWidth(60f);
 				//
 				//cancel changes
 				actions.button(Icon.cancel, () -> {
@@ -122,10 +118,10 @@ public class DebugField extends Table {
                 p.clearChildren();
                 //
 				if (entry.get() instanceof Drawable img)
-					p.image(img).size(15f).scaling(Scaling.bounded);
+					p.image(img).size(15f).scaling(Scaling.bounded).pad(8f);
 					//
 				else if (entry.get() instanceof TextureRegion img)
-					p.image(img).size(15f).scaling(Scaling.bounded);
+					p.image(img).size(15f).scaling(Scaling.bounded).pad(8f);
 					//
 				else p.add(entry.get().toString()).fontScale(0.75f).pad(2f, 4f, 2f, 4f);
 			});

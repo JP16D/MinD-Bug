@@ -1,8 +1,6 @@
 package dbug.tool;
 
-import arc.*;
 import arc.struct.*;
-import dbug.ui.*;
 
 public class Debugger {
 	public static final OrderedMap<String, Viewable> entries = new OrderedMap<>();
@@ -36,6 +34,6 @@ public class Debugger {
 	
 	//add a builder function (W.I.P.)
 	public static void build(String name) {
-		var build = new Builder();
+		new Builder();
 	}
 }

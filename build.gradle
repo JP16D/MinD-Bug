@@ -36,8 +36,6 @@ dependencies{
     compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
 
     annotationProcessor "com.github.Anuken:jabel:$jabelVersion"
-
-    implementation "com.github.MEEPofFaith:bottom-left-ui:$bluiVersion"
 }
 
 //force arc version

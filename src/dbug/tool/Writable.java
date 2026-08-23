@@ -3,12 +3,8 @@ package dbug.tool;
 import arc.graphics.*;
 import arc.struct.*;
 import dbug.ui.*;
-import dbug.util.*;
-import java.lang.*;
-import java.lang.reflect.*;
 
 import static dbug.ui.DebugField.*;
-import static dbug.ui.MainPanel.*;
 import static dbug.util.ParseUtil.*;
 
 public class Writable extends Viewable {

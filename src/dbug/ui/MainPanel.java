@@ -1,25 +1,25 @@
 package dbug.ui;
 
 import arc.*;
-import arc.scene.*;
+import arc.math.geom.Vec2;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.scene.utils.*;
 import arc.struct.*;
 import mindustry.gen.*;
-import mindustry.ui.*;
+
 
 import static dbug.tool.Debugger.*;
 
 public class MainPanel {
-    private static OrderedMap<String, Table> map = new OrderedMap();
-    //
+    private static OrderedMap<String, Table> map = new OrderedMap<>();
+    private static Vec2 scale = new Vec2();
+	//
     private static Table container;
 	private static ImageButton expander;
 	private static ScrollPane panel;
 	//
 	private static boolean expand;
-	private static float scale;
 	
 	public static void init() {
 	    if (panel != null) return;
@@ -35,19 +35,20 @@ public class MainPanel {
 		panel.setClamp(true);
 	}
 	
-	public static void load(Table container) {
-	    MainPanel.container = container;
+	public static Table load() {
+	    MainPanel.container = new Table();
 		init();
 		//
-		container.add(expander).row();
-		container.add(panel).row();
+		container.add(panel).center().row();
+		container.add(expander).center().row();
 		//
 		update();
+		return container;
 	}
 	
 	public static void scale() {
-		if (scale != Core.scene.getHeight()) {
-			scale = Core.scene.getHeight();
+		if (scale.x != Core.scene.getHeight()) {
+			scale.set(Core.scene.getWidth(), Core.scene.getHeight());
 			//
 			update();
 		}
@@ -55,9 +56,11 @@ public class MainPanel {
 	
 	public static void update() {
 	    if (container == null) return;
-	    container.getCell(panel).size(300f, expand ? scale * 0.25f : 75f);
+	    container.getCell(panel).size(Math.max(scale.x * 0.4f, 300f), expand ? scale.y * 0.8f : 32f);
+		container.getCell(expander).size(64f, 52f);
+		container.setPosition(scale.x * 0.5f, scale.y - (expand ? panel.getHeight() * 0.5f + 20f : 0f));
 	    //
-	    expander.replaceImage(new Image(expand ? Icon.downOpen : Icon.upOpen));
+	    expander.replaceImage(new Image(expand ? Icon.upOpen : Icon.downOpen));
 	    //
 	    var widget = (Table) panel.getWidget();
 	    widget.update(() -> {
