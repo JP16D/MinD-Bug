@@ -2,7 +2,6 @@ package dbug.tool;
 
 import dbug.ui.*;
 
-
 import static dbug.ui.DebugField.*;
 
 public class Viewable {

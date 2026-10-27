@@ -1,9 +1,10 @@
 package dbug;
 
 import arc.*;
-import dbug.ui.*;
 import mindustry.game.*;
 import mindustry.mod.*;
+
+import dbug.ui.*;
 
 public class MDBug extends Mod {
 	public MDBug() {

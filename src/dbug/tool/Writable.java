@@ -1,7 +1,10 @@
 package dbug.tool;
 
+import java.lang.reflect.*;
+
 import arc.graphics.*;
 import arc.struct.*;
+
 import dbug.ui.*;
 
 import static dbug.ui.DebugField.*;
@@ -16,11 +19,14 @@ public class Writable extends Viewable {
 		//
 		if (isWrapper(type) || type.isPrimitive()) return;
 		//
-		for (var field : type.getFields()) try {
-			if (isWrapper(wrap(field.getType()))) map.put(field.getName(), new Writable(field.getType(), field.getName(), field.get(value)));
+		for (var field : type.getFields())
+		if (isWrapper(wrap(field.getType()))) try {
+			if (Modifier.isStatic(field.getModifiers())) continue;
+
+			map.put(field.getName(), new Writable(field.getType(), field.getName(), value != null ? field.get(value) : null));
 		} catch (Exception e) {}
 	}
-	
+
 	@Override
 	public DebugField show() {
 	    var table = new DebugField(type, name);

@@ -1,13 +1,12 @@
 package dbug.ui;
 
 import arc.*;
-import arc.math.geom.Vec2;
+import arc.math.geom.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.scene.utils.*;
 import arc.struct.*;
 import mindustry.gen.*;
-
 
 import static dbug.tool.Debugger.*;
 

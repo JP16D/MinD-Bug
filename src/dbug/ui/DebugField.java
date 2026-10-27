@@ -7,9 +7,10 @@ import arc.scene.ui.layout.*;
 import arc.scene.utils.*;
 import arc.struct.*;
 import arc.util.*;
-import dbug.tool.*;
 import mindustry.gen.*;
 import mindustry.ui.*;
+
+import dbug.tool.*;
 
 import static dbug.util.ParseUtil.*;
 
