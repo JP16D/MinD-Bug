@@ -5,6 +5,7 @@ import arc.struct.*;
 import mindustry.gen.*;
 
 public class Builder {
+	
 	static final Seq<Runnable> functions = new Seq<>();
 	
 	public Table run() {

@@ -8,29 +8,27 @@ import mindustry.gen.*;
 import static dbug.tool.Debugger.*;
 
 public class MDBugTest {
-    // Registered automatically via annotation
-	@Debuggable(name = "test-v")
-    @Debuggable(name = "test-w", writable = true)
-    public static Vec2 test = new Vec2();
-
-	@Debuggable(writable = true)
-	public static Table table = new Table();
-    
-    public static void load() {
-        register(MDBugTest.class);
-        
-        dv("test-x", test.x);
-        dv("test-y", test.y);
-        
-        test.x = dw("test-vx", test.x);
-        test.y = dw("test-vy", test.y);
-        
-        for (var f : Icon.class.getFields()) {
-            try {
-                if (f.get(new Icon()) instanceof Drawable d) {
-                    dv("icon-" + f.getName(), d);
-                }
-            } catch (Exception e) {}
-        }
-    }
+	
+	@Debug("(view)test-v")
+	@Debug("(write)test-w")
+	public static Vec2 test = new Vec2();
+	//
+	@Guarded
+	@Debug("(writable):5")
+	public static Table table;
+	
+	public static void load() {
+		debug("test-vx", test.x);
+		debug("test-vy", test.y);
+		//
+		test.x = debug("(w)test-wx", test.x);
+		test.y = debug("(w)test-wy", test.y);
+		//
+		register(MDBugTest.class);
+		//
+		for (var f : Icon.class.getFields()) try {
+			if (f.get(new Icon()) instanceof Drawable d)
+			debug("icon-" + f.getName(), d);
+		} catch (Exception e) {}
+	}
 }

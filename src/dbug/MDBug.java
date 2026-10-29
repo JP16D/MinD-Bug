@@ -7,6 +7,7 @@ import mindustry.mod.*;
 import dbug.ui.*;
 
 public class MDBug extends Mod {
+
 	public MDBug() {
 		Events.run(EventType.Trigger.update, () -> {
 			MDBugTest.load();

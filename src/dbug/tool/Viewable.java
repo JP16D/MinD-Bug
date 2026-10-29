@@ -5,38 +5,42 @@ import dbug.ui.*;
 import static dbug.ui.DebugField.*;
 
 public class Viewable {
-    protected Class<?> type;
+		
+	protected Class<?> type;
 	protected String name;
 	protected Object value;
-	
-	public Viewable(Object value) {
-	    this.type = Object.class;
-	    this.value = value;
-	}
-	
-	public Viewable(Class<?> type, String name, Object value) {
-	    this.type = type;
-	    this.name = name;
+
+	Viewable(Class<?> type, String name, Object value) {
+		this.type = type;
+		this.name = name;
 		this.value = value;
 	}
-	
+
+	public static Viewable entry(Class<?> type, String name, Object value, int depth) {
+		return new Viewable(type, name, value);
+	}
+
+	public static Viewable entry(Object value) {
+		return entry(Object.class, null, value, 1);
+	}
+
 	public DebugField show() {
-	    return new DebugField(type, name, viewable(this));
+		return new DebugField(type, name, viewable(this));
 	}
-	
+
 	public Class<?> type() {
-	    return type;
+		return type;
 	}
-	
+
 	public String name() {
-	    return name;
+		return name;
 	}
-	
+
 	public void set(Object value) {
-	    this.value = value;
+		this.value = value;
 	}
-	
+
 	public Object get() {
-	    return value;
+		return value;
 	}
 }

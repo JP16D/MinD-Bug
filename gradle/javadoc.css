@@ -1,0 +1,22 @@
+/* MDBug Javadoc Stylesheet - Light/Dark Mode Override */
+:root {
+    --bg: #ffffff !important;
+    --fg: #24292e !important;
+    --code-bg: #f6f8fa !important;
+    --border: #e1e4e8 !important;
+    --link: #0366d6 !important;
+}
+[data-theme="dark"] {
+    --bg: #0d1117 !important;
+    --fg: #c9d1d9 !important;
+    --code-bg: #161b22 !important;
+    --border: #30363d !important;
+    --link: #58a6ff !important;
+}
+body { background: var(--bg) !important; color: var(--fg) !important; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important; margin: 0 !important; }
+.top-nav { background: var(--code-bg) !important; border-bottom: 1px solid var(--border) !important; padding: 8px 16px !important; }
+pre { background: var(--code-bg) !important; border: 1px solid var(--border) !important; border-radius: 6px !important; padding: 12px !important; overflow-x: auto !important; }
+table { border-collapse: collapse !important; width: 100% !important; }
+th, td { border: 1px solid var(--border) !important; padding: 6px 10px !important; text-align: left !important; }
+th { background: var(--code-bg) !important; }
+a { color: var(--link) !important; }

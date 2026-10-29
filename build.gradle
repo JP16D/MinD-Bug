@@ -25,7 +25,6 @@ ext{
 }
 
 //java target version
-
 dependencies{
     compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
     compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
