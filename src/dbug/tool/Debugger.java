@@ -124,8 +124,8 @@ public class Debugger {
         var instance = isClass ? null : target;
 
         for (Field field : type.getDeclaredFields()) {
-			debugRegister(field, instance);
 			guardRegister(field, instance);
+			debugRegister(field, instance);
         }
     }
 
