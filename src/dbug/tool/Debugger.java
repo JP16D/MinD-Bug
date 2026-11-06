@@ -122,24 +122,26 @@ public class Debugger {
         var isClass = target instanceof Class<?>;
         var type = isClass ? (Class<?>) target : target.getClass();
         var instance = isClass ? null : target;
-
+		//
         for (Field field : type.getDeclaredFields()) {
-			guardRegister(field, instance);
-			debugRegister(field, instance);
+			field = guardRegister(field, instance);
+			field = debugRegister(field, instance);
         }
     }
 
-	private static void guardRegister(Field field, Object instance) {
-		if (field.isAnnotationPresent(Guarded.class)) try {
+	private static Field guardRegister(Field field, Object instance) {
+		if (field.isAnnotationPresent(Guarded.class) || field.isAnnotationPresent(Debug.class)) try {
 			var guard = field.getAnnotation(Guarded.class);
 			var ftype = guard.value() != void.class ? guard.value() : field.getType();
 			var value = field.get(instance);
 
 			field.set(instance, guard(ftype, value));
 		} catch (IllegalAccessException | IllegalArgumentException e) {}
+		//
+		return field;
 	}
 
-	private static void debugRegister(Field field, Object instance) {
+	private static Field debugRegister(Field field, Object instance) {
 		var debugs = field.getAnnotationsByType(Debug.class);
 		//
 		if (debugs.length > 0) {
@@ -161,6 +163,7 @@ public class Debugger {
 				}
 			} catch (IllegalAccessException | IllegalArgumentException e) {}
 		}
+		return field;
 	}
 
 	private static Object dummy(Class<?> type, int depth, Seq<Class<?>> ancestry) {

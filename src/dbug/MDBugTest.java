@@ -13,7 +13,6 @@ public class MDBugTest {
 	@Debug("(write)test-w")
 	public static Vec2 test = new Vec2();
 	//
-	@Guarded
 	@Debug("(writable):5")
 	public static Table table;
 	
